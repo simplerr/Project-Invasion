@@ -12,10 +12,11 @@ Player::Player(D3DXVECTOR3 position)
 	mElapsed	= 0.0f;
 	mJumping	= false;
 	mWalkAccel	= 0.1;
-	mMaxSpeed	= 1.0f;
+	mMaxSpeed	= 1.1f;
 	mHeightOffset = 30.0f;
 
 	setAnimation(2, 0.1f);
+	setSpeedAdjust(3.2f);
 }
 
 Player::~Player()
@@ -25,6 +26,19 @@ Player::~Player()
 
 void Player::update(float dt)
 {
+	if(gInput->keyPressed('1'))
+		mMaxSpeed += 0.1f;
+	if(gInput->keyPressed('2'))
+		mMaxSpeed -= 0.1f;
+
+	// Walking or running.
+	if(getVelocity().x != 0 || getVelocity().y != 0 && getOnGround()) {
+		float speed = sqrt(	getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z);
+		setSpeedAdjust(1.7f);
+	}
+	else
+		setSpeedAdjust(1.0f);
+
 	/*if(abs(sqrt(	getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z)) < 0.0001)
 		setSpeedAdjust(1.0f);
 	else
@@ -33,10 +47,7 @@ void Player::update(float dt)
 	if(mJumping) {
 		mElapsed += dt;
 		if(mElapsed > 0.4f) {
-			//if(abs(getVelocity().x) > 0.0001 || abs(getVelocity().z) > 0.0001)
-			//	setAnimation(1, 0.80f);
-			//else
-				setAnimation(2, 0.80f);
+			setAnimation(2, 0.80f);
 			mJumping = false;
 		}
 	}
@@ -74,21 +85,18 @@ void Player::draw()
 
 	gGraphics->drawSkinnedMesh(mKnifeMesh);
 
-	//drawDebug();
+	drawDebug();
 }
 
 void Player::pollMovement()
 {
-	if(gInput->keyDown(VK_LBUTTON)) {
-		mKnifeMesh->setAnimation(1);
-		mElapsed = 0.0f;
-		//mJumping = true;
-	}
-
 	// Movement.
 	D3DXVECTOR3 nv = mVelocity;
 	D3DXVECTOR3 dir = gCamera->getDirection();
 	dir.y = 0.0f;
+
+	D3DXVec3Normalize(&dir, &dir);
+
 	if(gInput->keyDown('W')) 
 		nv += dir * mWalkAccel;
 	if(gInput->keyDown('S')) 

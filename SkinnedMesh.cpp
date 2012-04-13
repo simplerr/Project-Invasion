@@ -20,7 +20,7 @@ SkinnedMesh::SkinnedMesh(std::string filename, D3DXVECTOR3 position, float scale
 
 	// Starting values.
 	mCurrentTrack =  mCurrentAnimationSet = mCurrentTime = mNumBones = mNumTriangles = mNumVertices = 0;
-	mVelocityAdjust = 1.0f;
+	mSpeedAdjust = 1.0f;
 
 	// Setup the bone matrices, build the toRoot and the skinned mesh.
 	setupBoneMatrices((FrameEx*)mRoot);
@@ -80,9 +80,9 @@ void SkinnedMesh::update(float dt)
 	// Animate the mesh.  The AnimationController has pointers to the  hierarchy frame
 	// transform matrices.  The AnimationController updates these matrices to reflect 
 	// the given pose at the current time by interpolating between animation keyframes.
-	HR(mAnimCtrl->AdvanceTime(dt*mVelocityAdjust, 0));
+	HR(mAnimCtrl->AdvanceTime(dt*mSpeedAdjust, 0));
 	
-	mCurrentTime += dt;
+	mCurrentTime += dt*mSpeedAdjust;
 
 	D3DXMATRIX identity;
 	D3DXMatrixIdentity(&identity);
@@ -391,5 +391,5 @@ void SkinnedMesh::setAnimation(UINT index, float transisitionTime)
 
 void SkinnedMesh::setSpeedAdjust(float speedAdjust)
 {
-	mVelocityAdjust = speedAdjust;
+	mSpeedAdjust = speedAdjust;
 }
