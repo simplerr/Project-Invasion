@@ -26,11 +26,6 @@ Player::~Player()
 
 void Player::update(float dt)
 {
-	if(gInput->keyPressed('1'))
-		mMaxSpeed += 0.1f;
-	if(gInput->keyPressed('2'))
-		mMaxSpeed -= 0.1f;
-
 	// Walking or running.
 	if(getVelocity().x != 0 || getVelocity().y != 0 && getOnGround()) {
 		float speed = sqrt(	getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z);
@@ -38,11 +33,6 @@ void Player::update(float dt)
 	}
 	else
 		setSpeedAdjust(1.0f);
-
-	/*if(abs(sqrt(	getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z)) < 0.0001)
-		setSpeedAdjust(1.0f);
-	else
-		setSpeedAdjust(1.5f);*/
 
 	if(mJumping) {
 		mElapsed += dt;
@@ -63,11 +53,10 @@ void Player::update(float dt)
 	if(getVelocity().y < -7.0f)
 		setVelocity(D3DXVECTOR3(getVelocity().x, -7.0f, getVelocity().z));
 
-	gCamera->setPosition(getPosition() + D3DXVECTOR3(25, 100, 0) - gCamera->getDirection()*200);
+	// Set the camera position.
+	gCamera->setPosition(getPosition());// + D3DXVECTOR3(25, 100, 0) - gCamera->getDirection()*200);
 
-	D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, atan2f(gCamera->getDirection().x, gCamera->getDirection().z), 0);//D3DXVECTOR3(0.0f, gCamera->getDirection().y, 0.0f);;
-
-	setRotation(rot);
+	setRotation(D3DXVECTOR3(0.0f, atan2f(gCamera->getDirection().x, gCamera->getDirection().z), 0));
 
 	SkinnedMesh::update(dt);
 	mKnifeMesh->update(dt);
@@ -75,7 +64,7 @@ void Player::update(float dt)
 	
 void Player::draw()
 {
-	gGraphics->drawSkinnedMesh(this);
+	//gGraphics->drawSkinnedMesh(this);
 
 	D3DXVECTOR3 knifePos = gCamera->getPosition();
 	knifePos += gCamera->getDirection() * 15.0f;

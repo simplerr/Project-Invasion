@@ -49,6 +49,7 @@ private:
 	float		mSensitivity;
 	float		mHeightOffset;
 	float height;
+	float mYaw, mPitch;
 };
 
 extern Camera* gCamera;

@@ -4,6 +4,11 @@
 #include "Terrain.h"
 #include "Mesh.h"
 
+float angle;
+float Y;
+
+D3DXVECTOR3 dirXZ;
+
 Camera::Camera()
 {
 	// Set the sensitivity and speed
@@ -16,6 +21,8 @@ Camera::Camera()
 	mPosition   = D3DXVECTOR3(100, 200, 100);
 	mUp			= D3DXVECTOR3(0.0f, 1.0f, 0.0f);		// Weird up vector
 	mTarget		= D3DXVECTOR3(0, 0, 0);
+	mYaw = 0.0f;
+	mPitch = 0.0f;
 
 	// Build the projection matrix
 	D3DXMatrixPerspectiveFovLH(&mProj, D3DX_PI * 0.25f, 1200/800, 1.0f, 5000.0f);
@@ -98,31 +105,40 @@ void Camera::move()
 	
 void Camera::rotate()
 {
-	D3DXVECTOR3 direction, rotAxis;
-	D3DXMATRIX matRotAxis,matRotZ;
+	// Increase the pitch and yaw angles.
+	mPitch += gInput->mouseDy() / (-13.0f / mSensitivity);
+	mYaw += gInput->mouseDx() / (13.0f / mSensitivity);
 
-	// Get the look direction and it's orthogonal
-	D3DXVec3Normalize(&direction, &(mTarget - mPosition));
-	D3DXVec3Cross(&rotAxis,&direction,&mUp);
-	D3DXVec3Normalize(&rotAxis,&rotAxis);
+	// Limit to PI/2 radians.
+	if(mPitch > 0)
+		mPitch = min(mPitch, 1.54f);
+	else
+		mPitch = max(mPitch, -1.54f);
+	
+	// Calculate the new direction.
+	D3DXVECTOR3 direction;
+	float r = cosf(mPitch);
+	direction.y = sinf(mPitch);
+	direction.z = r * cosf(mYaw);
+	direction.x = r * sinf(mYaw);
 
-	// Build the rotation matrices
-	D3DXMatrixRotationAxis(&matRotAxis, &rotAxis, gInput->mouseDy() / (-13.0f / mSensitivity));
-	D3DXMatrixRotationY(&matRotZ, gInput->mouseDx() / (13.0f / mSensitivity));
-
-	// Transform the direction and up vector
-	D3DXVec3TransformCoord(&direction,&direction,&(matRotAxis * matRotZ));
-	D3DXVec3TransformCoord(&mUp,&mUp,&(matRotAxis * matRotZ));
-
-	// The new target
+	// Set the new target.
 	mTarget = mPosition + direction;
 }
 
 void Camera::drawDebug()
 {
 	char buffer[256];
-	sprintf(buffer, "Position: (%f, %f, %f)\nTarget: (%f, %f, %f)Height: %f", mPosition.x, mPosition.y, mPosition.z, mTarget.x, mTarget.y, mTarget.z, height);
+	sprintf(buffer, "Up: (%f, %f, %f)\nTarget: (%f, %f, %f)Height: %f", mUp.x, mUp.y, mUp.z, mTarget.x, mTarget.y, mTarget.z, height);
 	gGraphics->drawText(buffer, 20, 200, BLUE);
+	sprintf(buffer, "[Direction] x: %f, y: %f, z: %f", getDirection().x, getDirection().y, getDirection().z);
+	gGraphics->drawText(buffer, 20, 240, BLUE);
+	sprintf(buffer, "[dirXZ] x: %f, y: %f, z: %f", dirXZ.x, dirXZ.y, dirXZ.z);
+	gGraphics->drawText(buffer, 20, 280, BLUE);
+	sprintf(buffer, "Angle: %f", angle);
+	gGraphics->drawText(buffer, 20, 320, WHITE);
+	sprintf(buffer, "Yaw: %f", Y);
+	gGraphics->drawText(buffer, 20, 360, WHITE);
 }
 
 void Camera::setHeightOffset(float heightOffset)
