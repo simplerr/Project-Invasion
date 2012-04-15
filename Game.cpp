@@ -114,7 +114,7 @@ void Game::draw()
 	mWorld->draw();
 
 	// Debug (very slow).
-	gCamera->drawDebug();
+	//gCamera->drawDebug();
 	mGfxStats->display();
 
 	gGraphics->drawMesh(mCastleMesh);
@@ -170,4 +170,18 @@ void Game::buildBillboard()
 
 	mBillboard->UnlockVertexBuffer();
 	mBillboard->UnlockIndexBuffer();
+}
+
+void Game::onLostDevice()
+{
+	mGfxStats->onLostDevice();
+	mWorld->onLostDevice();
+	gGraphics->onLostDevice();
+}
+	
+void Game::onResetDevice()
+{
+	mGfxStats->onResetDevice();
+	mWorld->onLostDevice();
+	gGraphics->onResetDevice();
 }

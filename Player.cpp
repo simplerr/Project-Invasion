@@ -74,7 +74,7 @@ void Player::draw()
 
 	gGraphics->drawSkinnedMesh(mKnifeMesh);
 
-	drawDebug();
+	//drawDebug();
 }
 
 void Player::pollMovement()

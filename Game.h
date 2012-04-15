@@ -24,6 +24,8 @@ public:
 
 	World* getWorld();
 
+	void onLostDevice();
+	void onResetDevice();
 	LRESULT msgProc(UINT msg, WPARAM wParam, LPARAM lParam);
 private:
 	IDirect3DTexture9* mTexture;

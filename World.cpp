@@ -27,6 +27,17 @@ World::~World()
 	delete mSky;
 }
 
+void World::onLostDevice()
+{
+	mSky->onLostDevice();
+}
+	
+void World::onResetDevice()
+{
+	mSky->onResetDevice();
+}
+
+
 void World::update(float dt)
 {
 	// Update all the objects.

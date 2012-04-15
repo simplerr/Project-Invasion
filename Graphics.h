@@ -31,12 +31,14 @@ public:
 	void drawBoundingBox(Object3D* object, D3DXCOLOR color, float opacity = 0.5f);
 	void drawBoundingBox(D3DXVECTOR3 position, Dimensions dimensions, D3DXCOLOR color = WHITE, float opacity = 0.5f);
 
-
 	void drawTexturedCube(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, Material material = Material(), float rotation = 0.0f, bool solid = true, D3DXMATRIX m = D3DXMATRIX());
 	void drawSkinnedMesh(SkinnedMesh* skinnedMesh);
 	void drawTerrain(Terrain* terrain);
 	void drawMesh(Mesh* mesh);
 	void drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, float width);
+
+	void onLostDevice();
+	void onResetDevice();
 
 	// OLD AND UGLY
 	void drawText(string text, int x, int y, DWORD color = 0xff000000);

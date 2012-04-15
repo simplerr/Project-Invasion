@@ -38,6 +38,18 @@ Graphics::~Graphics()
 	ReleaseCOM(mFX);
 }
 
+void Graphics::onLostDevice()
+{
+	mFX->OnLostDevice();
+	mFont->OnLostDevice();
+}
+	
+void Graphics::onResetDevice()
+{
+	mFX->OnResetDevice();
+	mFont->OnResetDevice();
+}
+
 IDirect3DTexture9* Graphics::loadTexture(string filename, DWORD colorKey)
 {
 	// Already loaded?

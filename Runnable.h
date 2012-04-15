@@ -42,6 +42,8 @@ public:
 	//! Wraps up MessageBox(...)
 	void message(std::string msg);
 
+	void enableFullScreenMode(bool enable);
+
 	HINSTANCE				getAppInst();
 	HWND					getMainWnd();
 	D3DPRESENT_PARAMETERS	getPresParams();

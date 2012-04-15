@@ -31,6 +31,9 @@ public:
 
 	Terrain* getTerrain();
 
+	void onLostDevice();
+	void onResetDevice();
+
 	// TODO: Add private
 	vector<Object3D*>		mObjectList;
 	vector<Light*>			mLightList;
