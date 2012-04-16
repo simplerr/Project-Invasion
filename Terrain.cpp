@@ -40,7 +40,7 @@ Terrain::Terrain(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, f
 		{
 			DWORD index = i * rows + j;
 			v[index].pos	= verts[index];
-			v[index].pos.y	= mHeightmap->operator()(i, j);// - (int)mHeightmap->operator()(i, j) % 3;
+			v[index].pos.y	= mHeightmap->operator()(i, j);
 			v[index].tex0.x = (v[index].pos.x + (0.5f*w)) / w;
 			v[index].tex0.y = (v[index].pos.z - (0.5f*d)) / -d;
 		}

@@ -17,7 +17,7 @@ World::World()
 
 	// Create the skybox.
 	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
-	setGravity(-0.043f);
+	setGravity(-0.023f);
 }
 	
 World::~World()
@@ -45,15 +45,11 @@ void World::update(float dt)
 	{
 		Object3D* object = mObjectList[i];
 
-		// Get height above the ground.
-		DWORD faceIndex;
-		BOOL hit;
-		float distance;
-	
-		hit = mTerrain->getMesh()->rayIntersectMesh(object->getPosition(), D3DXVECTOR3(0, -1, 0), faceIndex, distance);
+		// Get the distance above the ground.
+		float distance = object->getPosition().y - mTerrain->getHeight(object->getPosition().x, object->getPosition().z);
 
 		// Snap to ground.
-		if(hit && distance < object->getHeightOffset() && object->getVelocity().y <= 0)
+		if(distance < object->getHeightOffset() && object->getVelocity().y <= 0)
 		{
 			object->setPosition(object->getPosition() - D3DXVECTOR3(0, distance, 0) + D3DXVECTOR3(0, object->getHeightOffset(), 0));
 			object->setVelocity(D3DXVECTOR3(object->getVelocity().x, 0, object->getVelocity().z));
@@ -89,7 +85,8 @@ void World::update(float dt)
 	gCamera->update(mTerrain, dt);
 
 	// Terrain editing.
-	editTerrain();
+	// [NOTE] Disabled.
+	//editTerrain();
 }
 	
 void World::draw()
