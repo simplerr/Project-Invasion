@@ -17,6 +17,7 @@ Player::Player(D3DXVECTOR3 position)
 
 	setAnimation(2, 0.1f);
 	setSpeedAdjust(3.2f);
+	mBoost = false;
 }
 
 Player::~Player()
@@ -94,14 +95,27 @@ void Player::pollMovement()
 		nv += -gCamera->getRight() * mWalkAccel;
 	if(gInput->keyDown('D')) 
 		nv += gCamera->getRight()  * mWalkAccel;
+	if(gInput->keyDown('F')) {
+		nv += dir * mWalkAccel * 10.0f;
+		mBoost = true;
+	}
+	if(gInput->keyReleased('F'))
+		mBoost = false;
 
 	// Set walking animation.
 	if(gInput->keyDown('W') || gInput->keyDown('A') || gInput->keyDown('S') || gInput->keyDown('D'))
 		setAnimation(1, 0.5f);
 
 	// Below the maximum speed?
-	if(sqrt(nv.x * nv.x + nv.z * nv.z) < mMaxSpeed)
+	if(!mBoost) {
+		if(sqrt(nv.x * nv.x + nv.z * nv.z) < mMaxSpeed)
 			mVelocity = nv;
+	}
+	else {
+		if(sqrt(nv.x * nv.x + nv.z * nv.z) < mMaxSpeed+10.0f)
+			mVelocity = nv;
+	}
+
 
 	// Jumping.
 	if(gInput->keyDown(VK_SPACE) && getOnGround())

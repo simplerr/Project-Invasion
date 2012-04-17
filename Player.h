@@ -22,6 +22,7 @@ private:
 	ID3DXMesh* mesh;
 	float	mElapsed;
 	bool	mJumping;
+	bool	mBoost;
 	float	mWalkAccel;
 	float	mMaxSpeed;
 	float	mHeightOffset;

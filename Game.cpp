@@ -68,7 +68,15 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	mCastleMesh = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), 5.0f);
 
 	normal = D3DXVECTOR3 (0, 1, 0);
-	buildBillboard();
+	mTexture = gGraphics->loadTexture("data/aim.png");
+
+	// Hide the cursor.
+	ShowCursor(false);
+
+	// Use texture alpha channel.
+	gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 
 //! Destructor.
@@ -105,6 +113,25 @@ void Game::update(float dt)
 		gCamera->setType(FPS);
 	else if(gInput->keyPressed(VK_F3)) 
 		gCamera->setType(NOCLIP);
+
+	// Limits the mouse position to within the window.
+	if(GetFocus() == getMainWnd()) {
+		POINT cursorPos;
+		GetCursorPos(&cursorPos);
+		ScreenToClient(getMainWnd(), &cursorPos);
+
+		if(cursorPos.x < 0) 
+			cursorPos.x = 0;
+		else if(cursorPos.x > 1200-15)
+			cursorPos.x = 1200-15;
+		if(cursorPos.y < 0)
+			cursorPos.y = 0;
+		else if(cursorPos.y > 800-40)
+			cursorPos.y = 800-40;
+
+		ClientToScreen(getMainWnd(), &cursorPos);
+		SetCursorPos(cursorPos.x, cursorPos.y);
+	}
 }
 	
 //! Draws everything.
@@ -122,6 +149,8 @@ void Game::draw()
 	//gGraphics->drawTest(mBillboard, mTexture, D3DXVECTOR3(500, 500, 500), D3DXVECTOR3(500, 500, 500) - gCamera->getPosition());
 
 	//gGraphics->drawRay(gCamera->getPosition() + D3DXVECTOR3(0, -10, 0) - gCamera->getDirection() * 15, gCamera->getDirection(), 500.0f, 1.0f);
+
+	gGraphics->drawScreenTexture(mTexture, 600, 400, 32, 32);
 }
 
 World* Game::getWorld()

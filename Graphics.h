@@ -36,6 +36,7 @@ public:
 	void drawTerrain(Terrain* terrain);
 	void drawMesh(Mesh* mesh);
 	void drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, float width);
+	void drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height);
 
 	void onLostDevice();
 	void onResetDevice();
@@ -44,21 +45,24 @@ public:
 	void drawText(string text, int x, int y, DWORD color = 0xff000000);
 	void drawTest(ID3DXMesh* mesh, IDirect3DTexture9* texture, D3DXVECTOR3 position, D3DXVECTOR3 rotation);
 public:
-	// Texture map
+	// Texture map.
 	map<string, IDirect3DTexture9*> mTextureMap;
 
-	// Buffer factory
+	// Buffer factory.
 	BufferFactory* mBufferFactory;
 
-	// Colored Cube buffers
+	// Colored Cube buffers.
 	IDirect3DVertexBuffer9* mCubeVB;
 	IDirect3DIndexBuffer9*	mCubeIB;
 
-	// Textured Cube buffers
+	// Textured Cube buffers.
 	IDirect3DVertexBuffer9* mTexturedCubeVB;
-	IDirect3DIndexBuffer9* mTexturedCubeIB;
+	IDirect3DIndexBuffer9*	mTexturedCubeIB;
 
-	// Textured cube effect handlers
+	// Textured screen rectangle buffers.
+	IDirect3DVertexBuffer9* mTexturedRectangleVB;
+
+	// Textured cube effect handlers.
 	ID3DXEffect* mFX;
 	D3DXHANDLE   mhTexTech;
 	D3DXHANDLE   mhWVP;
@@ -70,14 +74,14 @@ public:
 	D3DXHANDLE	 mhLights;
 	D3DXHANDLE   mhNumLights;
 	
-	// Terrain effect handlers
+	// Terrain effect handlers.
 	D3DXHANDLE   mhTerrainTech;
 	D3DXHANDLE   mhTex0;
 	D3DXHANDLE   mhTex1;
 	D3DXHANDLE   mhTex2;
 	D3DXHANDLE   mhBlendMap;
 
-	// Skinned mesh effect handlers
+	// Skinned mesh effect handlers.
 	D3DXHANDLE   mhSkinnedMeshTech;
 	D3DXHANDLE   mhFinalXForms;
 	D3DXHANDLE	 mhBoneTransform;

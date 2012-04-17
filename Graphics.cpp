@@ -27,6 +27,16 @@ Graphics::Graphics()
 	UINT numElems = 0;
 	VertexPNT::Decl->GetDeclaration(elems, &numElems);
 	D3DXCreateMesh(2, 4, D3DXMESH_MANAGED, elems, gd3dDevice, &mRayMesh);
+
+	// Ortho projection when not using shader pipeline.
+	D3DXMATRIX m;
+    D3DXMatrixIdentity(&m);
+
+	gd3dDevice->SetTransform(D3DTS_WORLD, &m);
+    gd3dDevice->SetTransform(D3DTS_VIEW, &m);
+
+    D3DXMatrixOrthoOffCenterRH (&m, 0, 1200, 800, 0, 0, 1);
+    gd3dDevice->SetTransform(D3DTS_PROJECTION, &m);
 }
 	
 Graphics::~Graphics()
@@ -121,6 +131,7 @@ void Graphics::initBuffers()
 	mTexturedCubeVB = mBufferFactory->textureCubeBuffer();
 	mCubeIB = mBufferFactory->coloredCubeIndices();
 	mTexturedCubeIB = mBufferFactory->texturedCubeIndices();
+	HR(gd3dDevice->CreateVertexBuffer(24 * sizeof(VertexPNT), D3DUSAGE_WRITEONLY, 0, D3DPOOL_MANAGED, &mTexturedRectangleVB, 0));
 }
 
 void Graphics::initFonts()
@@ -412,6 +423,51 @@ void Graphics::drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, f
 	HR(mFX->End());
 
 	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false));
+}
+
+void Graphics::drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height)
+{
+	gd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
+	gd3dDevice->SetVertexDeclaration(VertexPNT::Decl);
+	gd3dDevice->SetStreamSource(0, mTexturedRectangleVB, 0, sizeof(VertexPNT));	
+
+	VertexPNT *vertices = 0;
+	mTexturedRectangleVB->Lock(0, 0, (void**)&vertices, 0);
+
+	vertices[0].pos.x = x - width/2;
+	vertices[0].pos.y = y - height/2;
+	vertices[0].pos.z = 0.0f;
+	vertices[0].tex0.x = 0.0f;
+	vertices[0].tex0.y = 0.0f;
+
+	vertices[1].pos.x = x + width/2;
+	vertices[1].pos.y = y - height/2;
+	vertices[1].pos.z = 0.0f;
+	vertices[1].tex0.x = 1.0f;
+	vertices[1].tex0.y = 0.0f;
+
+	vertices[2].pos.x = x + width/2;
+	vertices[2].pos.y = y + height/2;
+	vertices[2].pos.z = 0.0f;
+	vertices[2].tex0.x = 1.0f;
+	vertices[2].tex0.y = 1.0f;
+
+	vertices[3].pos.x = x - width/2;
+	vertices[3].pos.y = y + height/2;
+	vertices[3].pos.z = 0.0f;
+	vertices[3].tex0.x = 0.0f;
+	vertices[3].tex0.y = 1.0f;
+
+	// Unlock the vertex buffer.
+	mTexturedRectangleVB->Unlock();
+
+	// Set texture.
+	gd3dDevice->SetTexture(0, texture);
+
+	// Draw image.
+	gd3dDevice->DrawPrimitive(D3DPT_TRIANGLEFAN, 0, 2);
+	gd3dDevice->SetTexture(0, NULL);
+	gd3dDevice->SetRenderState(D3DRS_LIGHTING, true);
 }
 
 void Graphics::drawText(string text, int x, int y, D3DCOLOR textColor)

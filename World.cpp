@@ -13,7 +13,7 @@
 World::World()
 {
 	// Create the terrain.
-	mTerrain = new Terrain(D3DXVECTOR3(0, 0, 0), 257, 257, 10, 10, 3.0f);
+	mTerrain = new Terrain(D3DXVECTOR3(0, 0, 0), 257, 257, 100, 100, 16.0f);
 
 	// Create the skybox.
 	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
@@ -36,7 +36,6 @@ void World::onResetDevice()
 {
 	mSky->onResetDevice();
 }
-
 
 void World::update(float dt)
 {
@@ -215,7 +214,7 @@ void World::addAmbientLight(D3DXCOLOR color)
 	light->setPosition(D3DXVECTOR3(0, 0, 0));
 	light->setDirection(D3DXVECTOR3(0, 0, 0));
 	light->setSpotPower(0.0f);
-	light->setLength(5000.0f);
+	light->setLength(10000.0f);
 	addLight(light);
 }
 
