@@ -13,6 +13,8 @@ public:
 	Mesh(D3DXVECTOR3 position);
 	~Mesh();
 
+	void draw();
+
 	void loadFromXFile(string filename);
 
 	bool rayIntersectAABB(D3DXVECTOR3 position, D3DXVECTOR3 direction);

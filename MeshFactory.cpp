@@ -5,7 +5,7 @@
 
 MeshFactory::MeshFactory()
 {
-	AllocMeshHierarchy* mAllocMeshHierarchy = new AllocMeshHierarchy();
+	mAllocMeshHierarchy = new AllocMeshHierarchy();
 }
 	
 MeshFactory::~MeshFactory()
@@ -13,27 +13,36 @@ MeshFactory::~MeshFactory()
 
 }
 
-SkinnedMesh* MeshFactory::loadSkinnedMesh(string filename, D3DXVECTOR3 position, float scale)
+void MeshFactory::loadSkinnedMesh(string filename, LPD3DXFRAME& rootFrame, LPD3DXANIMATIONCONTROLLER& animCtrl)
 {
-	// Already loaded?
-	// - Yes
-	if(mSkinnedMeshMap.find(filename) != mSkinnedMeshMap.end())
-	{
-		SkinnedMesh* mesh = new SkinnedMesh(position, mSkinnedMeshMap[filename].rootFrame, mSkinnedMeshMap[filename].animationController, scale);
-		return mesh;
-	}
-	// - No
-	else
+	// Not loaded?
+	if(mSkinnedMeshMap.find(filename) == mSkinnedMeshMap.end())
 	{
 		SkinnedMeshData data;
-		HR(D3DXLoadMeshHierarchyFromX(filename.c_str(), D3DXMESH_MANAGED, gd3dDevice, mAllocMeshHierarchy, NULL, &data.rootFrame, &data.animationController));
+		HR(D3DXLoadMeshHierarchyFromX(filename.c_str(), D3DXMESH_MANAGED, gd3dDevice, mAllocMeshHierarchy, NULL, &data.rootFrame, &data.animCtrl));
 		mSkinnedMeshMap[filename] = data;
-		SkinnedMesh* mesh = new SkinnedMesh(position, data.rootFrame, data.animationController, scale);
-		return mesh;
 	}
+
+	rootFrame = mSkinnedMeshMap[filename].rootFrame;
+
+	// Clone the animation controll.
+	LPD3DXANIMATIONCONTROLLER ctrl = mSkinnedMeshMap[filename].animCtrl;
+	ctrl->CloneAnimationController(ctrl->GetMaxNumAnimationOutputs(), ctrl->GetMaxNumAnimationSets(),
+			ctrl->GetMaxNumTracks(), ctrl->GetMaxNumEvents(), &animCtrl);
 }
 	
-Mesh* MeshFactory::loadMesh(string filename, D3DXVECTOR3 position, float scale)
+void MeshFactory::loadMesh(string filename, LPD3DXMESH& mesh, vector<Material>& materials, vector<IDirect3DTexture9*>& textures)
 {
-	return NULL;
+	// Not loaded?
+	if(mMeshMap.find(filename) == mMeshMap.end())
+	{
+		MeshData data;
+		LoadXFile(filename, &data.mesh, data.materials, data.textures);	
+		mMeshMap[filename] = data;
+	}
+
+	// Set value of the output arguments.
+	mesh = mMeshMap[filename].mesh;
+	materials = mMeshMap[filename].materials;
+	textures = mMeshMap[filename].textures;
 }

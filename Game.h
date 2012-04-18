@@ -10,6 +10,7 @@ class World;
 class Light;
 class Mesh;
 class Player;
+class MeshFactory;
 
 class Game : public Runnable
 {

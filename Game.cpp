@@ -13,6 +13,8 @@
 #include "Mesh.h"
 #include "Terrain.h"
 #include "Enemy.h"
+#include "MeshFactory.h"
+#include "MeshFactory.h"
 
 // Set the globals
 Runnable*			gGame		= 0;
@@ -20,6 +22,7 @@ IDirect3DDevice9*	gd3dDevice	= 0;
 Input*				gInput		= 0;
 Graphics*			gGraphics	= 0;
 Camera*				gCamera		= 0;
+MeshFactory*		gMeshFactory = 0;
 
 D3DXVECTOR3 normal;
 
@@ -49,12 +52,12 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	
 	gGraphics = new Graphics();
 	gCamera = new Camera();
+	gMeshFactory = new MeshFactory();
 	mGfxStats = new GfxStats();
 	
 	mRotate = true;
 
 	gCamera->setPosition(D3DXVECTOR3(0, 686, 1189));
-	//gCamera->setPosition(D3DXVECTOR3(1238, 686, -1189));
 	gCamera->setTarget(D3DXVECTOR3(0, 0, 0));
 	gCamera->setHeightOffset(50.0f);
 
@@ -75,15 +78,27 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	ShowCursor(false);
 
 	srand(time(0));
-	// Add test enemies.
-	for(int i = 0; i < 20; i++)
-	{
-		D3DXVECTOR3 position(0.0f, 10000.0f, 0.0f);
-		position.x = rand() % 24000 - 12000;
-		position.z = rand() % 24000 - 12000;
 
-		Enemy* enemy = new Enemy(position);
-		mWorld->addObject(enemy);
+	// Add test enemies.
+	for(int i = 0; i < 10; i++)
+	{
+		D3DXVECTOR3 pos(0.0f, 10000.0f, 0.0f);
+		pos.x = rand() % 24000 - 12000;
+		pos.z = rand() % 24000 - 12000;
+
+		//Enemy* enemy = new Enemy(position);
+		//mWorld->addObject(enemy);
+
+		mWorld->addObject(new Enemy(pos));
+	}
+
+	for(int i = 0; i < 100; i++)
+	{
+		D3DXVECTOR3 pos(0.0f, 10000.0f, 0.0f);
+		pos.x = rand() % 24000 - 12000;
+		pos.z = rand() % 24000 - 12000;
+
+		mWorld->addObject(new Mesh("data/castle.x", pos, 15.0f));
 	}
 }
 
@@ -94,6 +109,7 @@ Game::~Game()
 	delete gInput;
 	delete gCamera;
 	delete gGraphics;
+	delete gMeshFactory;
 	delete mGfxStats;*/
 }
 

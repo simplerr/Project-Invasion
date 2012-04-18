@@ -3,6 +3,7 @@
 #include "d3dUtil.h"
 #include "Vertex.h"
 #include "AABB.h"
+#include "MeshFactory.h"
 
 Mesh::Mesh(string filename, D3DXVECTOR3 position, float scale)
 	: Object3D(position, scale)
@@ -24,13 +25,18 @@ Mesh::~Mesh()
 void Mesh::loadFromXFile(string filename)
 {
 	// d3dUtil.h handles loading of .X files.
-	LoadXFile(filename, &mMesh, mMaterials, mTextures);
+	gMeshFactory->loadMesh(filename, mMesh, mMaterials, mTextures);
 
 	// Compute the bounding box (AABB).
 	VertexPNT* v;
 	mMesh->LockVertexBuffer(0, (void**)&v);
 	D3DXComputeBoundingBox(&v->pos, mMesh->GetNumVertices(), mMesh->GetNumBytesPerVertex(), &mAABB.min, &mAABB.max);
 	mMesh->UnlockVertexBuffer();
+}
+
+void Mesh::draw()
+{
+	gGraphics->drawMesh(this);
 }
 
 bool Mesh::rayIntersectAABB(D3DXVECTOR3 position, D3DXVECTOR3 direction)

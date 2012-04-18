@@ -1,22 +1,16 @@
-#include "SkinnedMesh.h"
-#include "AllocMeshHierarchy.h"
 #include "Vertex.h"
 #include "Input.h"
 #include "Graphics.h"
 #include "Camera.h"
+#include "SkinnedMesh.h"
+#include "AllocMeshHierarchy.h"
+#include "MeshFactory.h"
 
 SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, float scale)
 	: Object3D(position, scale) 
 {
-	char buffer[256];
-	GetCurrentDirectory(256, buffer);
-	//SetCurrentDirectory("F:/Users/Axel/Documents/Visual Studio 11/Projects/Stride3D/Stride3D/data");
-
 	// Load the mesh hierarchy.
-	AllocMeshHierarchy* allocMeshHierarchy = new AllocMeshHierarchy();
-	HR(D3DXLoadMeshHierarchyFromX(filename.c_str(), D3DXMESH_MANAGED, gd3dDevice, allocMeshHierarchy, NULL, &mRoot, &mAnimCtrl));
-
-	SetCurrentDirectory(buffer);
+	gMeshFactory->loadSkinnedMesh(filename, mRoot, mAnimCtrl);
 
 	// Starting values.
 	mCurrentTrack =  mCurrentAnimationSet = mCurrentTime = mNumBones = mNumTriangles = mNumVertices = 0;
@@ -29,12 +23,6 @@ SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, float scale)
 	loadTextures(mRoot);
 
 	setRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-}
-
-SkinnedMesh(D3DXVECTOR3 position, D3DXFRAME* root, ID3DXAnimationController* animController, float scale)
-	: Object3D(position, scale)
-{
-
 }
 
 SkinnedMesh::~SkinnedMesh()
@@ -142,7 +130,8 @@ void SkinnedMesh::updateWorldMatrix()
 void SkinnedMesh::draw()
 {
 	// Draw all frames.
-	drawFrame(mRoot);
+	gGraphics->drawSkinnedMesh(this);
+	//drawFrame(mRoot);
 }
 
 void SkinnedMesh::drawFrameHierarchy()

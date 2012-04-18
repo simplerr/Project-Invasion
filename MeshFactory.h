@@ -13,7 +13,7 @@ class AllocMeshHierarchy;
 struct SkinnedMeshData
 {
 	D3DXFRAME* rootFrame;
-	ID3DXAnimationController* animationController;
+	ID3DXAnimationController* animCtrl;
 };
 
 struct MeshData
@@ -29,10 +29,12 @@ public:
 	MeshFactory();
 	~MeshFactory();
 
-	SkinnedMesh* loadSkinnedMesh(string filename, D3DXVECTOR3 position, float scale = 1.0f);
-	Mesh* loadMesh(string filename, D3DXVECTOR3 position, float scale = 1.0f);
+	void loadSkinnedMesh(string filename, LPD3DXFRAME& rootFrame, LPD3DXANIMATIONCONTROLLER& animCtrl);
+	void loadMesh(string filename, LPD3DXMESH& mesh, vector<Material>& materials, vector<IDirect3DTexture9*>& textures);
 private:
 	map<string, SkinnedMeshData>	mSkinnedMeshMap;
 	map<string, MeshData>			mMeshMap;
 	AllocMeshHierarchy*				mAllocMeshHierarchy;
 };
+
+extern MeshFactory* gMeshFactory;
