@@ -37,6 +37,11 @@ Graphics::Graphics()
 
     D3DXMatrixOrthoOffCenterRH (&m, 0, 1200, 800, 0, 0, 1);
     gd3dDevice->SetTransform(D3DTS_PROJECTION, &m);
+
+	// Use texture alpha channel.
+	gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 	
 Graphics::~Graphics()

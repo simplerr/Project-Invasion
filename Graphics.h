@@ -10,6 +10,7 @@ class Terrain;
 class SkinnedMesh;
 class Mesh;
 class Object3D;
+class Material;
 struct Material;
 struct Dimensions;
 

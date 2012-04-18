@@ -1,12 +1,11 @@
 #pragma once
 #include <vector>
 #include "d3dUtil.h"
-#include "Material.h"
 #include "Heightmap.h"
+#include "Material.h"
 using namespace std;
 
 class Mesh;
-
 class Graphics;
 
 class Terrain

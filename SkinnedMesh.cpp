@@ -5,7 +5,7 @@
 #include "Graphics.h"
 #include "Camera.h"
 
-SkinnedMesh::SkinnedMesh(std::string filename, D3DXVECTOR3 position, float scale)
+SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, float scale)
 	: Object3D(position, scale) 
 {
 	char buffer[256];
@@ -29,6 +29,12 @@ SkinnedMesh::SkinnedMesh(std::string filename, D3DXVECTOR3 position, float scale
 	loadTextures(mRoot);
 
 	setRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+}
+
+SkinnedMesh(D3DXVECTOR3 position, D3DXFRAME* root, ID3DXAnimationController* animController, float scale)
+	: Object3D(position, scale)
+{
+
 }
 
 SkinnedMesh::~SkinnedMesh()

@@ -96,6 +96,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="d3dUtil.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GfxStats.h" />
     <ClInclude Include="Graphics.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Runnable.h" />
@@ -121,6 +123,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="d3dUtil.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GfxStats.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -128,6 +131,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshFactory.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Runnable.cpp" />

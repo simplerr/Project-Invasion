@@ -3,7 +3,6 @@
 
 #include <d3dx9.h>
 
-
 // Call in constructor and destructor, respectively, of derived application class.
 void InitAllVertexDeclarations();
 void DestroyAllVertexDeclarations();

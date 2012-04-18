@@ -75,7 +75,7 @@ void Player::draw()
 
 	gGraphics->drawSkinnedMesh(mKnifeMesh);
 
-	//drawDebug();
+	drawDebug();
 }
 
 void Player::pollMovement()
@@ -129,7 +129,7 @@ void Player::pollMovement()
 
 void Player::drawDebug()
 {
-	char buffer[256];
+	static char buffer[256];
 	sprintf(buffer, "speed.x: %f, speed.y: %f, speed.z: %f", getVelocity().x, getVelocity().z);
 	//sprintf(buffer, "speed: %f", sqrt(getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z + getVelocity().y * getVelocity().y));
 	gGraphics->drawText(buffer, 40, 600, WHITE);
@@ -138,6 +138,9 @@ void Player::drawDebug()
 	float rot = atan2f(gCamera->getDirection().x, gCamera->getDirection().z);
 	sprintf(buffer, "rot.y: %f", rot);
 	gGraphics->drawText(buffer, 40, 700);
+
+	sprintf(buffer, "Pos.x: %f, Pos.y: %f, Pos.z: %f", getPosition().x , getPosition().y, getPosition().z);
+	gGraphics->drawText(buffer, 40,  400, GREEN);
 
 	if(getOnGround())
 		gGraphics->drawText("On ground!", 500, 400, GREEN);

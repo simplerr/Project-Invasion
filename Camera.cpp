@@ -25,7 +25,7 @@ Camera::Camera()
 	mPitch = 0.0f;
 
 	// Build the projection matrix
-	D3DXMatrixPerspectiveFovLH(&mProj, D3DX_PI * 0.25f, 1200/800, 1.0f, 50000.0f);
+	D3DXMatrixPerspectiveFovLH(&mProj, D3DX_PI * 0.25f, 1200/800, 1.0f, 500000.0f);
 }
 	
 Camera::~Camera()

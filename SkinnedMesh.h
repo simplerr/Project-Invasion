@@ -1,10 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <d3dx9.h>
-#include "d3dUtil.h"
+#include <string>
 #include "Object3D.h"
-#include "AABB.h"
 
 using namespace std;
 
@@ -26,6 +24,7 @@ class SkinnedMesh : public Object3D
 {
 public:
 	SkinnedMesh(string filename, D3DXVECTOR3 position, float scale = 1.0f);
+	SkinnedMesh(D3DXVECTOR3 position, D3DXFRAME* root, ID3DXAnimationController* animController, float scale = 1.0f);
 	virtual ~SkinnedMesh();
 
 	virtual void update(float dt);

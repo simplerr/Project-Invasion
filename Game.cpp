@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Mesh.h"
 #include "Terrain.h"
+#include "Enemy.h"
 
 // Set the globals
 Runnable*			gGame		= 0;
@@ -73,10 +74,17 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	// Hide the cursor.
 	ShowCursor(false);
 
-	// Use texture alpha channel.
-	gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	srand(time(0));
+	// Add test enemies.
+	for(int i = 0; i < 20; i++)
+	{
+		D3DXVECTOR3 position(0.0f, 10000.0f, 0.0f);
+		position.x = rand() % 24000 - 12000;
+		position.z = rand() % 24000 - 12000;
+
+		Enemy* enemy = new Enemy(position);
+		mWorld->addObject(enemy);
+	}
 }
 
 //! Destructor.
@@ -145,6 +153,7 @@ void Game::draw()
 	mGfxStats->display();
 
 	gGraphics->drawMesh(mCastleMesh);
+	//gGraphics->drawBoundingBox(mCastleMesh, GREEN, 0.7f);
 
 	//gGraphics->drawTest(mBillboard, mTexture, D3DXVECTOR3(500, 500, 500), D3DXVECTOR3(500, 500, 500) - gCamera->getPosition());
 

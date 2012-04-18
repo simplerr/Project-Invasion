@@ -2,14 +2,9 @@
 
 #include <string>
 #include <vector>
-#include "d3dUtil.h"
-#include "Material.h"
-#include "AABB.h"
 #include "Object3D.h"
 
 using namespace std;
-
-class AABB;
 
 class Mesh : public Object3D
 {
