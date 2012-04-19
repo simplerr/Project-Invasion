@@ -40,7 +40,7 @@ public:
 	AABB		getAABB();
 	bool		getOnGround();
 	float		getHeightOffset();
-	const vector<IDirect3DTexture9*>& getTextures();
+	vector<IDirect3DTexture9*>* getTextures();
 protected:
 	vector<IDirect3DTexture9*>	mTextures;
 	D3DXMATRIX			mWorldMatrix;

@@ -65,15 +65,14 @@ void Player::update(float dt)
 	
 void Player::draw()
 {
-	//gGraphics->drawSkinnedMesh(this);
+	//SkinnedMesh::draw();
 
 	D3DXVECTOR3 knifePos = gCamera->getPosition();
 	knifePos += gCamera->getDirection() * 15.0f;
 
 	mKnifeMesh->setPosition(knifePos);
 	mKnifeMesh->setRotation(gCamera->getDirection());
-
-	gGraphics->drawSkinnedMesh(mKnifeMesh);
+	mKnifeMesh->draw();
 
 	drawDebug();
 }

@@ -364,12 +364,12 @@ void Graphics::drawMesh(Mesh* mesh)
 	HR(mFX->Begin(0, 0));
 	HR(mFX->BeginPass(0));
 
-	vector<IDirect3DTexture9*> textures = mesh->getTextures();
+	vector<IDirect3DTexture9*>* textures = mesh->getTextures();
 	ID3DXMesh* d3dmesh = mesh->getMesh();
 
-	for(int i = 0; i < textures.size(); i++)
+	for(int i = 0; i < textures->size(); i++)
 	{
-		HR(mFX->SetTexture(mhTex, textures[i]));
+		HR(mFX->SetTexture(mhTex, (*textures)[i]));
 		HR(mFX->CommitChanges());
 		d3dmesh->DrawSubset(i);
 	}

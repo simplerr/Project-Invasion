@@ -66,7 +66,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	mWorld->addLight(mLight); 
 	mWorld->addAmbientLight(D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	mPlayer = new Player(D3DXVECTOR3(400, 1200, 700));
+	mPlayer = new Player(D3DXVECTOR3(0, 1200, 0));
 	mWorld->addObject(mPlayer);
 
 	mCastleMesh = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), 5.0f);
@@ -80,25 +80,15 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	srand(time(0));
 
 	// Add test enemies.
-	for(int i = 0; i < 10; i++)
+	for(int i = 0; i < 30; i++)
 	{
-		D3DXVECTOR3 pos(0.0f, 10000.0f, 0.0f);
-		pos.x = rand() % 24000 - 12000;
-		pos.z = rand() % 24000 - 12000;
+		D3DXVECTOR3 pos(0.0f, 3000.0f, 0.0f);
+		pos.x = rand() % 2000 - 1000;
+		pos.z = rand() % 2000 - 1000;
 
-		//Enemy* enemy = new Enemy(position);
-		//mWorld->addObject(enemy);
-
-		mWorld->addObject(new Enemy(pos));
-	}
-
-	for(int i = 0; i < 100; i++)
-	{
-		D3DXVECTOR3 pos(0.0f, 10000.0f, 0.0f);
-		pos.x = rand() % 24000 - 12000;
-		pos.z = rand() % 24000 - 12000;
-
-		mWorld->addObject(new Mesh("data/castle.x", pos, 15.0f));
+		Enemy* enemy = new Enemy("data/monster.x", pos);
+		enemy->setTarget(mPlayer);
+		mWorld->addObject(enemy);
 	}
 }
 

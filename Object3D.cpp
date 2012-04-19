@@ -122,9 +122,9 @@ D3DXVECTOR3 Object3D::getRotation()
 	return mRotation;
 }
 
-const vector<IDirect3DTexture9*>& Object3D::getTextures()
+vector<IDirect3DTexture9*>* Object3D::getTextures()
 {
-	return mTextures;
+	return &mTextures;
 }
 
 AABB Object3D::getAABB()

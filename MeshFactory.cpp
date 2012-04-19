@@ -23,12 +23,17 @@ void MeshFactory::loadSkinnedMesh(string filename, LPD3DXFRAME& rootFrame, LPD3D
 		mSkinnedMeshMap[filename] = data;
 	}
 
-	rootFrame = mSkinnedMeshMap[filename].rootFrame;
+	//rootFrame = mSkinnedMeshMap[filename].rootFrame;
+	//animCtrl = mSkinnedMeshMap[filename].animCtrl;
+	rootFrame = new D3DXFRAME();
+	memcpy(rootFrame, mSkinnedMeshMap[filename].rootFrame, sizeof(D3DXFRAME));
 
 	// Clone the animation controll.
 	LPD3DXANIMATIONCONTROLLER ctrl = mSkinnedMeshMap[filename].animCtrl;
 	ctrl->CloneAnimationController(ctrl->GetMaxNumAnimationOutputs(), ctrl->GetMaxNumAnimationSets(),
 			ctrl->GetMaxNumTracks(), ctrl->GetMaxNumEvents(), &animCtrl);
+
+	D3DXFrameRegisterNamedMatrices(rootFrame, animCtrl);
 }
 	
 void MeshFactory::loadMesh(string filename, LPD3DXMESH& mesh, vector<Material>& materials, vector<IDirect3DTexture9*>& textures)
