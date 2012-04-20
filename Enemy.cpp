@@ -5,13 +5,14 @@
 Enemy::Enemy(string filename, D3DXVECTOR3 position)
 	: SkinnedMesh(filename, position)
 {
-	setAnimation(2);
+	setAnimation(3);
 	mTarget = NULL;
 	mHealth = 100.0f;
 	mVisionRange = 1000.0f;
 	mChasing = false;
 	mIdling = false;
 	mTargetOffset = 0.0f;
+	mDeathTimer = -1;
 }
 
 Enemy::~Enemy()
@@ -23,6 +24,14 @@ void Enemy::update(float dt)
 {
 	// Update the skinned mesh.
 	SkinnedMesh::update(dt);
+
+	if(mDeathTimer > 1.0f)
+		kill();
+
+	if(mDeathTimer != -1) {
+		mDeathTimer += dt;
+		return;
+	}
 
 	// Will be used later.
 	D3DXVECTOR3 direction = mTarget->getPosition() - getPosition();
@@ -50,7 +59,7 @@ void Enemy::update(float dt)
 		D3DXVECTOR3 pos = getPosition();
 		mTargetPosition.y = getPosition().y;
 		if(equals(getPosition(), mTargetPosition, 1.0f)) {
-			setAnimation(2);
+			setAnimation(3);
 			mIdling = true;
 			setVelocity(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		}
@@ -58,7 +67,7 @@ void Enemy::update(float dt)
 	else {
 		mIdling = false;
 		mChasing = true;
-		setAnimation(0);
+		setAnimation(1);
 	}
 
 	// Set the new velocity.
@@ -75,6 +84,12 @@ void Enemy::update(float dt)
 void Enemy::draw()
 {
 	SkinnedMesh::draw();
+}
+
+void Enemy::attacked()
+{
+	setAnimation(0);
+	mDeathTimer = 0;
 }
 
 D3DXVECTOR3 Enemy::calculateChasingDirection()

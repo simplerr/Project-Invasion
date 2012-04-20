@@ -9,6 +9,7 @@ public:
 
 	void update(float dt);
 	void draw();
+	void attacked();
 
 	void setTarget(Object3D* target);
 private:
@@ -22,4 +23,5 @@ private:
 	float mHealth;
 	float mVisionRange;
 	float mTargetOffset;
+	float mDeathTimer;
 };

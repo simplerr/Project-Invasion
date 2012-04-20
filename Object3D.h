@@ -17,6 +17,7 @@ public:
 	virtual void draw();
 	virtual void updateWorldMatrix();
 
+	virtual void attacked() {};
 	virtual bool rayIntersectAABB(D3DXVECTOR3 position, D3DXVECTOR3 direction) {return false;}
 	virtual bool rayIntersectMesh(D3DXVECTOR3 position, D3DXVECTOR3 direction, DWORD& faceIndex, float& distance) {return false;}
 
@@ -30,6 +31,7 @@ public:
 	void setScale(Dimensions dimensions);
 	void setOnGround(bool onGround);
 	void setHeightOffset(float heightOffset);
+	void kill();
 
 	Dimensions	getScale();
 	D3DXVECTOR3 getPosition();
@@ -39,6 +41,7 @@ public:
 	D3DXMATRIX	getInvWorldMatrix();
 	AABB		getAABB();
 	bool		getOnGround();
+	bool		getAlive();
 	float		getHeightOffset();
 	vector<IDirect3DTexture9*>* getTextures();
 protected:
@@ -54,5 +57,6 @@ protected:
 	Dimensions			mScale;
 	AABB				mAABB;
 	bool				mOnGround;
+	bool				mAlive;
 	float				mHeightOffset;
 };

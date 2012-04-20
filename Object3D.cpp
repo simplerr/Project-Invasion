@@ -141,3 +141,13 @@ float Object3D::getHeightOffset()
 {
 	return mHeightOffset;
 }
+
+void Object3D::kill()
+{
+	mAlive = false;
+}
+
+bool Object3D::getAlive()
+{
+	return mAlive;
+}

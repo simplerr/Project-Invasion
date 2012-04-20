@@ -48,7 +48,7 @@ void World::update(float dt)
 				DWORD faceIndex;
 				float dist;
 				if(mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, dist))
-					mObjectList[i]->accelerate(0, 1.0f, 0);
+					mObjectList[i]->attacked();//mObjectList[i]->accelerate(0, 1.0f, 0);
 			}
 		}
 	}
@@ -56,6 +56,8 @@ void World::update(float dt)
 	// Update all the objects.
 	for(int i = 0; i < mObjectList.size(); i++)
 	{
+		if(!mObjectList[i]->getAlive())
+			continue;
 		Object3D* object = mObjectList[i];
 
 		// Get the distance above the ground.
@@ -112,6 +114,8 @@ void World::draw()
 
 	// Draw all the objects.
 	for(int i = 0; i < mObjectList.size(); i++) {
+		if(!mObjectList[i]->getAlive())
+			continue;
 		mObjectList[i]->draw();
 	}
 
