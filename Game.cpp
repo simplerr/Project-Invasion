@@ -80,9 +80,9 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	srand(time(0));
 
 	// Add test enemies.
-	for(int i = 0; i < 30; i++)
+	for(int i = 0; i < 20; i++)
 	{
-		D3DXVECTOR3 pos(0.0f, 3000.0f, 0.0f);
+		D3DXVECTOR3 pos(0.0f, 2000.0f, 0.0f);
 		pos.x = rand() % 2000 - 1000;
 		pos.z = rand() % 2000 - 1000;
 

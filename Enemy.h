@@ -12,8 +12,14 @@ public:
 
 	void setTarget(Object3D* target);
 private:
+	D3DXVECTOR3 calculateChasingDirection();
+	D3DXVECTOR3 calculateIdlePosition();
+
 	Object3D* mTarget;
+	D3DXVECTOR3 mTargetPosition;
 	bool mChasing;
+	bool mIdling;
 	float mHealth;
 	float mVisionRange;
+	float mTargetOffset;
 };

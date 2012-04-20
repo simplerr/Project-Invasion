@@ -4,6 +4,15 @@
 #include "d3dUtil.h"
 #include "Vertex.h"
 #include "Graphics.h"
+#include "Vector.h"
+
+bool equals(D3DXVECTOR3 a, D3DXVECTOR3 b, float epsilion)
+{
+	if(equal(a.x,b.x, epsilion) && equal(a.y,b.y, epsilion) && equal(a.z,b.z, epsilion)) 
+			return true;
+		else 
+			return false;
+}
 
 void LoadXFile(
 	const std::string& filename, 

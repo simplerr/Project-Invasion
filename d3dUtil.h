@@ -35,7 +35,9 @@
 
 class Material;
 
-const float EPSILON  = 0.001f;
+const float EPSILON  = 1.0f;
+
+bool equals(D3DXVECTOR3 a, D3DXVECTOR3 b, float epsilion = 0.001);
 
 struct Dimensions
 {

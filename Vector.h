@@ -11,13 +11,13 @@
 /// to templatize this class, optimize it with template metaprogramming and
 /// offer a range of pre-fab vector data Vector<2>, Vector<3>, Vector<4> etc.
 
-inline bool equal(float a, float b)
+inline bool equal(float a, float b, float epsilon = 0.001f)
 {
 	const float d = a - b;
-	if (d<EPSILON && d>-EPSILON) 
+	if (d<epsilon && d>-epsilon) 
 		return true;
 	else 
-		return false;
+ 		return false;
 }
 
 class Vector
