@@ -65,6 +65,7 @@ protected:
 	UINT				mCurrentAnimationSet;
 	float				mCurrentTime;
 	float				mSpeedAdjust;
+	float				mDeltaTime;
 
 	ID3DXMesh*			mBaseMesh;
 

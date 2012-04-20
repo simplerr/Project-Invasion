@@ -33,7 +33,7 @@ void MeshFactory::loadSkinnedMesh(string filename, LPD3DXFRAME& rootFrame, LPD3D
 	ctrl->CloneAnimationController(ctrl->GetMaxNumAnimationOutputs(), ctrl->GetMaxNumAnimationSets(),
 			ctrl->GetMaxNumTracks(), ctrl->GetMaxNumEvents(), &animCtrl);
 
-	D3DXFrameRegisterNamedMatrices(rootFrame, animCtrl);
+	//D3DXFrameRegisterNamedMatrices(rootFrame, animCtrl);
 }
 	
 void MeshFactory::loadMesh(string filename, LPD3DXMESH& mesh, vector<Material>& materials, vector<IDirect3DTexture9*>& textures)

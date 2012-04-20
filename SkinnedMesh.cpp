@@ -71,19 +71,7 @@ UINT SkinnedMesh::numBones()
 
 void SkinnedMesh::update(float dt)
 {
-	// Animate the mesh.  The AnimationController has pointers to the  hierarchy frame
-	// transform matrices.  The AnimationController updates these matrices to reflect 
-	// the given pose at the current time by interpolating between animation keyframes.
-	HR(mAnimCtrl->AdvanceTime(dt*mSpeedAdjust, 0));
-	
-	mCurrentTime += dt*mSpeedAdjust;
-
-	D3DXMATRIX identity;
-	D3DXMatrixIdentity(&identity);
-
-	// Recurse down the tree and generate a frame's toRoot transform from the updated pose.
-	updateToRootXForms((FrameEx*)mRoot, identity);
-	updateSkinnedMesh((FrameEx*)mRoot);
+	mDeltaTime = dt;
 }
 
 void SkinnedMesh::updateSkinnedMesh(FrameEx* frame)
@@ -129,9 +117,21 @@ void SkinnedMesh::updateWorldMatrix()
 
 void SkinnedMesh::draw()
 {
+	// Advance the time (must be done here).
+	// All D3DXANIMATIONCONTROLLS share the same frame hierarchy so once
+	// it gets updated we have to draw it immedietly!!
+	HR(mAnimCtrl->AdvanceTime(mDeltaTime*mSpeedAdjust, 0));
+	mCurrentTime += mDeltaTime*mSpeedAdjust;
+
+	D3DXMATRIX identity;
+	D3DXMatrixIdentity(&identity);
+
+	// Recurse down the tree and generate a frame's toRoot transform from the updated pose.
+	updateToRootXForms((FrameEx*)mRoot, identity);
+	updateSkinnedMesh((FrameEx*)mRoot);
+
 	// Draw all frames.
 	gGraphics->drawSkinnedMesh(this);
-	//drawFrame(mRoot);
 }
 
 void SkinnedMesh::drawFrameHierarchy()
