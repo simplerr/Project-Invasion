@@ -75,12 +75,12 @@ void Enemy::update(float dt)
 	// Set the new velocity.
 	D3DXVECTOR3 dir = calculateChasingDirection() * 1.0f * !mIdling;
 	dir.y = getVelocity().y;
-	//setVelocity(dir);
+	setVelocity(dir);
 
 	// Set facing direction in the velocitys direction.
 	D3DXVECTOR3 velocity = getVelocity();
 	D3DXVec3Normalize(&velocity, &velocity);
-	setRotation(D3DXVECTOR3(0.0f, atan2f(velocity.x, velocity.z), 0));
+	setRotation(D3DXVECTOR3(0.0f, atan2f(direction.x, direction.z), 0));
 }
 	
 void Enemy::draw()
@@ -90,13 +90,17 @@ void Enemy::draw()
 
 void Enemy::attacked()
 {
+	// Death animation started? Dont add more blood particles!
+	if(mDeathTimer != -1)
+		return;
+
 	setAnimation(0);
 	mDeathTimer = 0;
 
 	// Add blood effect.
 	BloodPSystem* bloodEffect = new BloodPSystem(getPosition(), "particle.fx", "ParticleTech", 
-		"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 100, 0.003f);
-	bloodEffect->setLifetime(10.0f);
+		"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 200, 0.0002f);
+	bloodEffect->setLifetime(0.30f);
 	getWorld()->addObject(bloodEffect);
 }
 

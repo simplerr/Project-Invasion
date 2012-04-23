@@ -96,7 +96,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	srand(time(0));
 
 	// Add test enemies.
-	for(int i = 0; i < 10; i++)
+	for(int i = 0; i < 30; i++)
 	{
 		D3DXVECTOR3 pos(0.0f, 2000.0f, 0.0f);
 		pos.x = rand() % 2000 - 1000;
@@ -189,9 +189,7 @@ void Game::draw()
 	mGfxStats->display();
 
 	//gGraphics->drawBoundingBox(mCastleMesh, GREEN, 0.7f);
-
 	//gGraphics->drawTest(mBillboard, mTexture, D3DXVECTOR3(500, 500, 500), D3DXVECTOR3(500, 500, 500) - gCamera->getPosition());
-
 	//gGraphics->drawRay(gCamera->getPosition() + D3DXVECTOR3(0, -10, 0) - gCamera->getDirection() * 15, gCamera->getDirection(), 500.0f, 1.0f);
 
 	gGraphics->drawScreenTexture(mTexture, 600, 400, 32, 32);

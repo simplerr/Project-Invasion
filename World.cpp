@@ -46,7 +46,7 @@ void World::onResetDevice()
 void World::update(float dt)
 {
 	// Testing...
-	if(gInput->keyPressed(VK_LBUTTON))
+	if(gInput->keyDown(VK_LBUTTON))
 	{
 		for(int i = 1; i < mObjectList.size(); i++)
 		{
@@ -54,7 +54,7 @@ void World::update(float dt)
 				DWORD faceIndex;
 				float dist;
 				if(mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, dist)) {
-					mObjectList[i]->attacked();//mObjectList[i]->accelerate(0, 1.0f, 0);
+					mObjectList[i]->attacked();
 					break;
 				}
 			}
