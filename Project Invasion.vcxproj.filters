@@ -25,15 +25,21 @@
     <Filter Include="Source Files\World">
       <UniqueIdentifier>{d94153e0-aeac-4004-981d-412e208fecc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Effects">
+      <UniqueIdentifier>{4ae12d03-5e1b-4798-831b-ef03fc98c087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Effects">
+      <UniqueIdentifier>{f9e1efad-9b2b-4243-a0d9-ae6bc82e0c6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Particles">
+      <UniqueIdentifier>{1fc6662a-de59-485e-8d1a-e9dc4d2868c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Stackwalker">
+      <UniqueIdentifier>{94aa22ec-2221-4975-95b7-eae24d5c4bdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
@@ -42,22 +48,13 @@
     <ClInclude Include="GfxStats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Heightmap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Runnable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sky.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
@@ -102,36 +99,48 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Header Files\Graphics\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Header Files\Graphics\Effects</Filter>
+    </ClInclude>
     <ClInclude Include="MeshFactory.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Heightmap.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Header Files\Graphics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodPSystem.h">
+      <Filter>Header Files\Graphics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.h">
+      <Filter>Header Files\Stackwalker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GfxStats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HeightMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Runnable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sky.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AllocMeshHierarchy.cpp">
@@ -174,7 +183,31 @@
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="MeshFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="HeightMap.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Source Files\Graphics\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Source Files\Graphics\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.cpp">
+      <Filter>Header Files\Stackwalker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +215,9 @@
       <Filter>Resource Files</Filter>
     </FxCompile>
     <FxCompile Include="sky.fx">
+      <Filter>Resource Files</Filter>
+    </FxCompile>
+    <FxCompile Include="particle.fx">
       <Filter>Resource Files</Filter>
     </FxCompile>
   </ItemGroup>

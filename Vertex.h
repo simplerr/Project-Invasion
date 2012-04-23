@@ -7,7 +7,6 @@
 void InitAllVertexDeclarations();
 void DestroyAllVertexDeclarations();
 
-
 //===============================================================
 struct VertexCol
 {
@@ -33,6 +32,20 @@ struct VertexPNT
 	D3DXVECTOR3 pos;
 	D3DXVECTOR3 normal;
 	D3DXVECTOR2 tex0;
+
+	static IDirect3DVertexDeclaration9* Decl;
+};
+
+//===============================================================
+struct Particle
+{
+	D3DXVECTOR3 initialPos;
+	D3DXVECTOR3 initialVelocity;
+	float       initialSize; // In pixels.
+	float       initialTime;
+	float       lifeTime;
+	float       mass;
+	D3DCOLOR    initialColor;
 
 	static IDirect3DVertexDeclaration9* Decl;
 };

@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "Graphics.h"
 #include "Camera.h"
+#include "World.h"
+#include "BloodPSystem.h"
 
 Enemy::Enemy(string filename, D3DXVECTOR3 position)
 	: SkinnedMesh(filename, position)
@@ -25,7 +27,7 @@ void Enemy::update(float dt)
 	// Update the skinned mesh.
 	SkinnedMesh::update(dt);
 
-	if(mDeathTimer > 1.0f)
+	if(mDeathTimer > 1.0f) 
 		kill();
 
 	if(mDeathTimer != -1) {
@@ -73,7 +75,7 @@ void Enemy::update(float dt)
 	// Set the new velocity.
 	D3DXVECTOR3 dir = calculateChasingDirection() * 1.0f * !mIdling;
 	dir.y = getVelocity().y;
-	setVelocity(dir);
+	//setVelocity(dir);
 
 	// Set facing direction in the velocitys direction.
 	D3DXVECTOR3 velocity = getVelocity();
@@ -90,6 +92,12 @@ void Enemy::attacked()
 {
 	setAnimation(0);
 	mDeathTimer = 0;
+
+	// Add blood effect.
+	BloodPSystem* bloodEffect = new BloodPSystem(getPosition(), "particle.fx", "ParticleTech", 
+		"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 100, 0.003f);
+	bloodEffect->setLifetime(10.0f);
+	getWorld()->addObject(bloodEffect);
 }
 
 D3DXVECTOR3 Enemy::calculateChasingDirection()
@@ -121,4 +129,4 @@ void Enemy::setTarget(Object3D* target)
 {
 	mTarget = target;
 	mTargetPosition = mTarget->getPosition();
-}
+} 

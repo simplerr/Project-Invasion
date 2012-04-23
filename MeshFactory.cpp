@@ -10,7 +10,20 @@ MeshFactory::MeshFactory()
 	
 MeshFactory::~MeshFactory()
 {
+	for(auto iter = mSkinnedMeshMap.begin(); iter != mSkinnedMeshMap.end(); iter++) {
+		SkinnedMeshData data = iter->second;
+		ReleaseCOM(data.animCtrl);
+		D3DXFrameDestroy(data.rootFrame, mAllocMeshHierarchy);
+		//delete data.rootFrame;
+	}
 
+	for(auto iter = mMeshMap.begin(); iter != mMeshMap.end(); iter++) {
+		MeshData data = iter->second;
+		data.materials.clear();
+		ReleaseCOM(data.mesh);
+	}
+
+	delete mAllocMeshHierarchy;
 }
 
 void MeshFactory::loadSkinnedMesh(string filename, LPD3DXFRAME& rootFrame, LPD3DXANIMATIONCONTROLLER& animCtrl)
@@ -25,8 +38,9 @@ void MeshFactory::loadSkinnedMesh(string filename, LPD3DXFRAME& rootFrame, LPD3D
 
 	//rootFrame = mSkinnedMeshMap[filename].rootFrame;
 	//animCtrl = mSkinnedMeshMap[filename].animCtrl;
-	rootFrame = new D3DXFRAME();
-	memcpy(rootFrame, mSkinnedMeshMap[filename].rootFrame, sizeof(D3DXFRAME));
+	//rootFrame = new D3DXFRAME();
+	//memcpy(rootFrame, mSkinnedMeshMap[filename].rootFrame, sizeof(D3DXFRAME));
+	rootFrame = mSkinnedMeshMap[filename].rootFrame;
 
 	// Clone the animation controll.
 	LPD3DXANIMATIONCONTROLLER ctrl = mSkinnedMeshMap[filename].animCtrl;
@@ -50,4 +64,5 @@ void MeshFactory::loadMesh(string filename, LPD3DXMESH& mesh, vector<Material>& 
 	mesh = mMeshMap[filename].mesh;
 	materials = mMeshMap[filename].materials;
 	textures = mMeshMap[filename].textures;
+	mesh->AddRef();
 }

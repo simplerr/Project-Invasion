@@ -6,6 +6,8 @@
 #include "AABB.h"
 using namespace std;
 
+class World;
+
 //! Base class for all Object3Ds.
 class Object3D
 {
@@ -31,6 +33,7 @@ public:
 	void setScale(Dimensions dimensions);
 	void setOnGround(bool onGround);
 	void setHeightOffset(float heightOffset);
+	void setWorld(World* world);
 	void kill();
 
 	Dimensions	getScale();
@@ -44,8 +47,10 @@ public:
 	bool		getAlive();
 	float		getHeightOffset();
 	vector<IDirect3DTexture9*>* getTextures();
+	World*		getWorld();
 protected:
 	vector<IDirect3DTexture9*>	mTextures;
+	World*				mWorld;
 	D3DXMATRIX			mWorldMatrix;
 	D3DXMATRIX			mInvWorldMatrix;
 //private:

@@ -9,17 +9,20 @@ Mesh::Mesh(string filename, D3DXVECTOR3 position, float scale)
 	: Object3D(position, scale)
 {
 	loadFromXFile(filename);
+	mFromFile = true;
 }
 	
 Mesh::Mesh(D3DXVECTOR3 position)
 	: Object3D(position, Dimensions())
 {
-
+	mFromFile = false;
 }
 
 Mesh::~Mesh()
 {
-	ReleaseCOM(mMesh);
+	// Meshes loaded from .X files gets cleaned up by the MeshFactory.
+	if(!mFromFile)
+		ReleaseCOM(mMesh);
 }
 
 void Mesh::loadFromXFile(string filename)

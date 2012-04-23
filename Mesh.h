@@ -27,4 +27,5 @@ public:
 //private:
 	ID3DXMesh*			mMesh;
 	vector<Material>	mMaterials;
+	bool				mFromFile;
 };

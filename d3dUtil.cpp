@@ -14,6 +14,17 @@ bool equals(D3DXVECTOR3 a, D3DXVECTOR3 b, float epsilion)
 			return false;
 }
 
+float GetRandomFloat(float a, float b)
+{
+	if( a >= b ) // bad input
+		return a;
+
+	// Get random float in [0, 1] interval.
+	float f = (rand()%10001) * 0.0001f;
+
+	return (f*(b-a))+a;
+}
+
 void LoadXFile(
 	const std::string& filename, 
 	ID3DXMesh** meshOut,

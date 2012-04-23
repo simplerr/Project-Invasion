@@ -27,15 +27,16 @@ SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, float scale)
 
 SkinnedMesh::~SkinnedMesh()
 {
-	// TODO: Clean up all mesh containers.
-	if(mRoot)
+	//TODO: Clean up all mesh containers.
+	/*if(mRoot)
 	{
 		AllocMeshHierarchy allocMeshHierarchy;
 		HR(D3DXFrameDestroy(mRoot, &allocMeshHierarchy));
 		mRoot = 0;
 	}
-
+	*/
 	ReleaseCOM(mAnimCtrl);
+	mAnimCtrl = 0;
 }
 
 void SkinnedMesh::cleanupFrame(D3DXFRAME* frame)

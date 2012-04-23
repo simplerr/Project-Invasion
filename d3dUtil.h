@@ -38,6 +38,7 @@ class Material;
 const float EPSILON  = 1.0f;
 
 bool equals(D3DXVECTOR3 a, D3DXVECTOR3 b, float epsilion = 0.001);
+float GetRandomFloat(float a, float b);
 
 struct Dimensions
 {

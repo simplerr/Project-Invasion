@@ -22,7 +22,7 @@ Player::Player(D3DXVECTOR3 position)
 
 Player::~Player()
 {
-
+	delete mKnifeMesh;
 }
 
 void Player::update(float dt)
@@ -74,7 +74,7 @@ void Player::draw()
 	mKnifeMesh->setRotation(gCamera->getDirection());
 	mKnifeMesh->draw();
 
-	drawDebug();
+	//drawDebug();
 }
 
 void Player::pollMovement()

@@ -67,6 +67,7 @@ protected:
 	float				mSpeedAdjust;
 	float				mDeltaTime;
 
+	// [HACK] !
 	ID3DXMesh*			mBaseMesh;
 
 	// Maximum bones supported.

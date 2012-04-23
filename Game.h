@@ -11,6 +11,7 @@ class Light;
 class Mesh;
 class Player;
 class MeshFactory;
+class ParticleSystem;
 
 class Game : public Runnable
 {
@@ -34,7 +35,5 @@ private:
 	GfxStats*	mGfxStats;
 	Light*		mLight;
 	bool		mRotate;
-	Mesh*		mCastleMesh;
-	ID3DXMesh*	mBillboard;
 	Player*		mPlayer;
 };

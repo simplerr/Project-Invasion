@@ -3,6 +3,8 @@
 #include <fstream>
 #include <time.h>
 #include <string>
+#include <stdlib.h>
+#include <crtdbg.h>
 #include "Game.h"
 #include "Input.h"
 #include "Vertex.h"
@@ -15,14 +17,19 @@
 #include "Enemy.h"
 #include "MeshFactory.h"
 #include "MeshFactory.h"
+#include "EffectManager.h"
+#include "ParticleSystem.h"
+#include "BloodPSystem.h"
+#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
 
 // Set the globals
-Runnable*			gGame		= 0;
-IDirect3DDevice9*	gd3dDevice	= 0;
-Input*				gInput		= 0;
-Graphics*			gGraphics	= 0;
-Camera*				gCamera		= 0;
-MeshFactory*		gMeshFactory = 0;
+Runnable*			gGame			= 0;
+IDirect3DDevice9*	gd3dDevice		= 0;
+Input*				gInput			= 0;
+Graphics*			gGraphics		= 0;
+Camera*				gCamera			= 0;
+MeshFactory*		gMeshFactory	= 0;
+EffectManager*		gEffectManager	= 0;
 
 D3DXVECTOR3 normal;
 
@@ -34,6 +41,13 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 //! The program starts here.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
 {
+	InitAllocCheck(ACOutput_XML); // ACOutput_XML
+
+	// Enable run-time memory check for debug builds.
+	/*#if defined(DEBUG) | defined(_DEBUG)
+		_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	#endif*/
+
 	Game game(hInstance, "DirectX_3D-1", 1200, 800, D3DDEVTYPE_HAL, D3DCREATE_HARDWARE_VERTEXPROCESSING);
 	gGame = &game;
 
@@ -53,6 +67,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	gGraphics = new Graphics();
 	gCamera = new Camera();
 	gMeshFactory = new MeshFactory();
+	gEffectManager = new EffectManager();
 	mGfxStats = new GfxStats();
 	
 	mRotate = true;
@@ -66,10 +81,11 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	mWorld->addLight(mLight); 
 	mWorld->addAmbientLight(D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	mPlayer = new Player(D3DXVECTOR3(0, 1200, 0));
+	mPlayer = new Player(D3DXVECTOR3(0, 2000, 0));
 	mWorld->addObject(mPlayer);
 
-	mCastleMesh = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), 5.0f);
+	Mesh* castle = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), 5.0f);
+	mWorld->addObject(castle);
 
 	normal = D3DXVECTOR3 (0, 1, 0);
 	mTexture = gGraphics->loadTexture("data/aim.png");
@@ -80,7 +96,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	srand(time(0));
 
 	// Add test enemies.
-	for(int i = 0; i < 20; i++)
+	for(int i = 0; i < 10; i++)
 	{
 		D3DXVECTOR3 pos(0.0f, 2000.0f, 0.0f);
 		pos.x = rand() % 2000 - 1000;
@@ -90,17 +106,31 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 		enemy->setTarget(mPlayer);
 		mWorld->addObject(enemy);
 	}
+
+	// Add blood effect.
+	for(int i = 0; i < 0; i++)
+	{
+		BloodPSystem* bloodEffect = new BloodPSystem(mPlayer->getPosition() + D3DXVECTOR3(0, 100, i*100), "particle.fx", "ParticleTech", 
+		"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 100, 0.003f);
+		bloodEffect->setLifetime(10.0f);
+		getWorld()->addObject(bloodEffect);
+	}
 }
 
 //! Destructor.
 Game::~Game()
 {
-	/*delete mWorld;
+	delete gMeshFactory;
+	delete mWorld;
+	delete mGfxStats;
 	delete gInput;
 	delete gCamera;
 	delete gGraphics;
-	delete gMeshFactory;
-	delete mGfxStats;*/
+	delete gEffectManager;
+	ReleaseCOM(gd3dDevice);
+
+	DeInitAllocCheck();
+	DestroyAllVertexDeclarations();
 }
 
 //! Updates everything.
@@ -158,7 +188,6 @@ void Game::draw()
 	//gCamera->drawDebug();
 	mGfxStats->display();
 
-	gGraphics->drawMesh(mCastleMesh);
 	//gGraphics->drawBoundingBox(mCastleMesh, GREEN, 0.7f);
 
 	//gGraphics->drawTest(mBillboard, mTexture, D3DXVECTOR3(500, 500, 500), D3DXVECTOR3(500, 500, 500) - gCamera->getPosition());
@@ -182,7 +211,7 @@ LRESULT Game::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 void Game::buildBillboard()
 {
-	mTexture = gGraphics->loadTexture("data/billboard.bmp");
+	/*mTexture = gGraphics->loadTexture("data/billboard.bmp");
 
 	D3DVERTEXELEMENT9 elems[MAX_FVF_DECL_SIZE];
 	UINT numElems = 0;
@@ -213,7 +242,7 @@ void Game::buildBillboard()
 	k[5] = 3;
 
 	mBillboard->UnlockVertexBuffer();
-	mBillboard->UnlockIndexBuffer();
+	mBillboard->UnlockIndexBuffer();*/
 }
 
 void Game::onLostDevice()

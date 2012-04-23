@@ -15,8 +15,7 @@ Object3D::Object3D(D3DXVECTOR3 position, Dimensions scale)
 	
 Object3D::~Object3D()
 {
-	for(UINT i = 0; i < mTextures.size(); ++i)
-		ReleaseCOM(mTextures[i]);
+	int a = 1;
 }
 
 void Object3D::update(float dt)
@@ -92,6 +91,11 @@ void Object3D::setHeightOffset(float heightOffset)
 	mHeightOffset = heightOffset;
 }
 
+void Object3D::setWorld(World* world)
+{
+	mWorld = world;
+}
+
 D3DXVECTOR3 Object3D::getPosition()
 {
 	return mPosition;
@@ -150,4 +154,9 @@ void Object3D::kill()
 bool Object3D::getAlive()
 {
 	return mAlive;
+}
+
+World* Object3D::getWorld()
+{
+	return mWorld;
 }

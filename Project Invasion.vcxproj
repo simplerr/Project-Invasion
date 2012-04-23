@@ -43,7 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>F:\Users\Axel\Documents\Visual Studio 11\Memory_and_Exception_Trace\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -88,14 +88,23 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>d3d9.lib;d3dx9d.lib;dxguid.lib;DxErr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>2.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AllocMeshHierarchy.h" />
+    <ClInclude Include="BloodPSystem.h" />
     <ClInclude Include="BufferFactory.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="d3dUtil.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GfxStats.h" />
@@ -107,6 +116,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="Object3D.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SkinnedMesh.h" />
@@ -118,11 +128,13 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.cpp" />
     <ClCompile Include="AllocMeshHierarchy.cpp" />
     <ClCompile Include="BufferFactory.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="d3dUtil.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GfxStats.cpp" />
@@ -133,6 +145,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
     <ClCompile Include="Object3D.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SkinnedMesh.cpp" />
@@ -144,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="effects.fx" />
+    <FxCompile Include="particle.fx" />
     <FxCompile Include="sky.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

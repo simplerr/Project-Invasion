@@ -25,6 +25,12 @@ World::~World()
 	// Cleanup.
 	delete mTerrain;
 	delete mSky;
+
+	for(int i = 0; i < mObjectList.size(); i++)
+		delete mObjectList[i];
+
+	for(int i = 0; i < mLightList.size(); i++)
+		delete mLightList[i];
 }
 
 void World::onLostDevice()
@@ -40,15 +46,17 @@ void World::onResetDevice()
 void World::update(float dt)
 {
 	// Testing...
-	if(gInput->keyDown(VK_LBUTTON))
+	if(gInput->keyPressed(VK_LBUTTON))
 	{
 		for(int i = 1; i < mObjectList.size(); i++)
 		{
-			if(mObjectList[i]->rayIntersectAABB(gCamera->getPosition(), gCamera->getDirection())) {
+			if(mObjectList[i]->getAlive() && mObjectList[i]->rayIntersectAABB(gCamera->getPosition(), gCamera->getDirection())) {
 				DWORD faceIndex;
 				float dist;
-				if(mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, dist))
+				if(mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, dist)) {
 					mObjectList[i]->attacked();//mObjectList[i]->accelerate(0, 1.0f, 0);
+					break;
+				}
 			}
 		}
 	}
@@ -210,6 +218,7 @@ void World::editTerrain()
 void World::addObject(Object3D* object)
 {
 	// Add object to back of list.
+	object->setWorld(this);
 	mObjectList.push_back(object);
 }
 	

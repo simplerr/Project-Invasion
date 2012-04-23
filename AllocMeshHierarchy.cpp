@@ -161,6 +161,7 @@ HRESULT AllocMeshHierarchy::DestroyFrame(D3DXFRAME* pFrameToFree)
 {
 	delete[] pFrameToFree->Name;
 	delete pFrameToFree;
+	pFrameToFree = NULL;
  
     return D3D_OK; 
 }
@@ -178,6 +179,9 @@ HRESULT AllocMeshHierarchy::DestroyMeshContainer(D3DXMESHCONTAINER* pMeshContain
 
 	ReleaseCOM(pMeshContainerBase->MeshData.pMesh);
 	ReleaseCOM(pMeshContainerBase->pSkinInfo);
+	
+	MeshContainerEx* container = (MeshContainerEx*) pMeshContainerBase;
+	ReleaseCOM(container->exSkinnedMesh);
  
 	delete pMeshContainerBase;
  

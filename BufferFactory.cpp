@@ -9,7 +9,10 @@ BufferFactory::BufferFactory()
 
 BufferFactory::~BufferFactory()
 {
-
+	ReleaseCOM(mTexturedCubeIB);
+	ReleaseCOM(mTexturedCubeVB);
+	ReleaseCOM(mColoredCubeIB);
+	ReleaseCOM(mColoredCubeVB);
 }
 
 IDirect3DVertexBuffer9* BufferFactory::coloredCubeBuffer()

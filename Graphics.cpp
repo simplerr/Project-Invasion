@@ -46,11 +46,14 @@ Graphics::Graphics()
 	
 Graphics::~Graphics()
 {
-	delete mBufferFactory;
 	ReleaseCOM(mFont);
-	ReleaseCOM(mCubeIB);
-	ReleaseCOM(mCubeVB);
 	ReleaseCOM(mFX);
+	ReleaseCOM(mTexturedRectangleVB);
+
+	for(auto iter = mTextureMap.begin(); iter != mTextureMap.end(); iter++) 
+		ReleaseCOM(iter->second);
+
+	delete mBufferFactory;
 }
 
 void Graphics::onLostDevice()

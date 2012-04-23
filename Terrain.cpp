@@ -81,6 +81,7 @@ Terrain::Terrain(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, f
 Terrain::~Terrain()
 {
 	delete mHeightmap;
+	delete mTerrainMesh;
 }
 	
 void Terrain::draw()

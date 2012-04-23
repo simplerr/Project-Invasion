@@ -8,7 +8,7 @@ Heightmap::Heightmap()
 	
 Heightmap::~Heightmap()
 {
-
+	mHeightmap.clear();
 }
 
 void Heightmap::loadRAW(int rows, int colums, string filename, float heightScale, float heightOffset)

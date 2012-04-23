@@ -29,9 +29,9 @@ Input::Input()
 //! Destructor.
 Input::~Input()
 {
+	ReleaseCOM(mDInput);
 	mMouse->Unacquire();
 	ReleaseCOM(mMouse);
-	ReleaseCOM(mDInput);
 }
 
 //! Update the key state.
