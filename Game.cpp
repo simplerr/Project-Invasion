@@ -98,22 +98,13 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	// Add test enemies.
 	for(int i = 0; i < 30; i++)
 	{
-		D3DXVECTOR3 pos(0.0f, 2000.0f, 0.0f);
-		pos.x = rand() % 2000 - 1000;
-		pos.z = rand() % 2000 - 1000;
+		D3DXVECTOR3 pos(0.0f, 2000.0f, 3000.0f);
+		pos.x += rand() % 2000 - 1000;
+		pos.z +=  rand() % 2000 - 1000;
 
 		Enemy* enemy = new Enemy("data/monster.x", pos);
 		enemy->setTarget(mPlayer);
 		mWorld->addObject(enemy);
-	}
-
-	// Add blood effect.
-	for(int i = 0; i < 0; i++)
-	{
-		BloodPSystem* bloodEffect = new BloodPSystem(mPlayer->getPosition() + D3DXVECTOR3(0, 100, i*100), "particle.fx", "ParticleTech", 
-		"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 100, 0.003f);
-		bloodEffect->setLifetime(10.0f);
-		getWorld()->addObject(bloodEffect);
 	}
 }
 

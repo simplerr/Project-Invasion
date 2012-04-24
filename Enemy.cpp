@@ -11,10 +11,10 @@ Enemy::Enemy(string filename, D3DXVECTOR3 position)
 	mTarget = NULL;
 	mHealth = 100.0f;
 	mVisionRange = 1000.0f;
-	mChasing = false;
-	mIdling = false;
 	mTargetOffset = 0.0f;
 	mDeathTimer = -1;
+	mChasing = false;
+	mIdling = true;
 }
 
 Enemy::~Enemy()
@@ -67,9 +67,15 @@ void Enemy::update(float dt)
 		}
 	}
 	else {
+		setAnimation(1);
 		mIdling = false;
 		mChasing = true;
-		setAnimation(1);
+	}
+
+	if(distance < 100.0f) {
+		setAnimation(3);
+		mIdling = true;
+		mChasing = false;
 	}
 
 	// Set the new velocity.
@@ -80,7 +86,7 @@ void Enemy::update(float dt)
 	// Set facing direction in the velocitys direction.
 	D3DXVECTOR3 velocity = getVelocity();
 	D3DXVec3Normalize(&velocity, &velocity);
-	setRotation(D3DXVECTOR3(0.0f, atan2f(direction.x, direction.z), 0));
+	setRotation(D3DXVECTOR3(0.0f, atan2f(velocity.x, velocity.z), 0));
 }
 	
 void Enemy::draw()
