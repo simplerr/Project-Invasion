@@ -14,6 +14,7 @@ public:
 	void update(float dt);
 	void draw();
 	void init();
+	void attacked(float damage);
 	void pollInput();
 	void drawDebug();
 
@@ -27,4 +28,5 @@ private:
 	float	mWalkAccel;
 	float	mMaxSpeed;
 	float	mHeightOffset;
+	float	mHealth;
 };

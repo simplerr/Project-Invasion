@@ -7,14 +7,17 @@
 Enemy::Enemy(string filename, D3DXVECTOR3 position)
 	: SkinnedMesh(filename, position)
 {
-	setAnimation(3);
+	setAnimation(4);
 	mTarget = NULL;
 	mHealth = 100.0f;
 	mVisionRange = 1000.0f;
 	mTargetOffset = 0.0f;
 	mDeathTimer = -1;
-	mChasing = false;
-	mIdling = true;
+	mActionState = AS_IDLING;
+	mAttackRange = 100.0f;
+	mAttackRate = 2.0f;
+	mAttackTimer = 0.0f;
+	mDamage = 50.0f;
 }
 
 Enemy::~Enemy()
@@ -27,12 +30,15 @@ void Enemy::update(float dt)
 	// Update the skinned mesh.
 	SkinnedMesh::update(dt);
 
+	mAttackTimer += dt;
+
 	// Remove fromt the world.
 	if(mDeathTimer > 1.0f) 
 		kill();
 
 	// Update the death timer.
-	if(mDeathTimer != -1) {
+	if(mDeathTimer != -1)
+	{
 		mDeathTimer += dt;
 		return;
 	}
@@ -42,53 +48,71 @@ void Enemy::update(float dt)
 	float distance = sqrt(direction.x * direction.x + direction.z * direction.z);
 
 	// Chasing the target.
-	if(mChasing)
+	if(mActionState == AS_CHASING)
 	{
 		if(distance <= mVisionRange)
 			mTargetPosition = mTarget->getPosition();
-		else
+		else 
+		{
 			mTargetPosition = calculateIdlePosition();
+			mActionState = AS_PATROLLING;
+		}
 	}
 	// Not chasing.
-	else if(!mChasing)
+	else
 	{
-		// Generate new target offset
+		// Generate new target offset.
 		if(distance <= mVisionRange)
 			mTargetOffset = rand() % 200 - 100;
 	}
 
 	// Set the correct animation and mChasing.
-	if(distance > mVisionRange) {
-		mChasing = false;
+	if(distance > mVisionRange) 
+	{
 		D3DXVECTOR3 pos = getPosition();
 		mTargetPosition.y = getPosition().y;
-		if(equals(getPosition(), mTargetPosition, 1.0f)) {
-			setAnimation(3);
-			mIdling = true;
+
+		// Reached the target position?
+		if(equals(getPosition(), mTargetPosition, 1.0f))
+		{
+			mActionState = AS_IDLING;
+			setAnimation(4);
 			setVelocity(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		}
 	}
-	else {
-		setAnimation(1);
-		mIdling = false;
-		mChasing = true;
+	else
+	{
+		setAnimation(2);
+		mActionState = AS_CHASING;
 	}
 
-	if(distance < 100.0f) {
-		setAnimation(3);
-		mIdling = true;
-		mChasing = false;
+	// In attack range?
+	if(distance < mAttackRange) 
+	{
+		setAnimation(0);
+		mActionState = AS_ATTACKING;
+
+		// Ready to attack?
+		if(mAttackTimer >= mAttackRate)
+		{
+			mTarget->attacked(mDamage);
+			mAttackTimer = 0.0f;
+		}
 	}
 
 	// Set the new velocity.
-	D3DXVECTOR3 dir = calculateChasingDirection() * 1.0f * !mIdling;
+	D3DXVECTOR3 dir = calculateChasingDirection() * (mActionState == AS_CHASING || mActionState == AS_PATROLLING);
 	dir.y = getVelocity().y;
 	setVelocity(dir);
 
 	// Set facing direction in the velocitys direction.
 	D3DXVECTOR3 velocity = getVelocity();
 	D3DXVec3Normalize(&velocity, &velocity);
-	setRotation(D3DXVECTOR3(0.0f, atan2f(velocity.x, velocity.z), 0));
+
+	if(mActionState == AS_PATROLLING || mActionState == AS_CHASING)
+		setRotation(D3DXVECTOR3(0.0f, atan2f(velocity.x, velocity.z), 0));
+	else 
+		setRotation(D3DXVECTOR3(0.0f, atan2f(direction.x, direction.z), 0));
 }
 	
 void Enemy::draw()
@@ -104,7 +128,7 @@ void Enemy::attacked(float damage)
 	if(mHealth <= 0 && mDeathTimer == -1)
 	{
 		// Set death animation and start the death timer.
-		setAnimation(0);
+		setAnimation(1);
 		mDeathTimer = 0;
 
 		// Add blood effect.

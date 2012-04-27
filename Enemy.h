@@ -1,6 +1,14 @@
 #pragma once
 #include "SkinnedMesh.h"
 
+enum ActionState
+{
+	AS_CHASING,
+	AS_IDLING,
+	AS_ATTACKING,
+	AS_PATROLLING
+};
+
 class Enemy : public SkinnedMesh
 {
 public:
@@ -18,10 +26,13 @@ private:
 
 	Object3D* mTarget;
 	D3DXVECTOR3 mTargetPosition;
-	bool mChasing;
-	bool mIdling;
+	ActionState mActionState;
 	float mHealth;
 	float mVisionRange;
 	float mTargetOffset;
 	float mDeathTimer;
+	float mAttackRange;
+	float mAttackRate;
+	float mAttackTimer;
+	float mDamage;
 };

@@ -15,6 +15,7 @@ Player::Player(D3DXVECTOR3 position)
 	mWalkAccel	= 0.1;
 	mMaxSpeed	= 1.1f;
 	mHeightOffset = 30.0f;
+	mHealth = 100.0f;
 
 	setAnimation(2, 0.1f);
 	setSpeedAdjust(3.2f);
@@ -89,7 +90,14 @@ void Player::draw()
 	sprintf(buffer, "Ammo: %i/%i", mWeapon->getAmmo(), mWeapon->getClipSize());
 	gGraphics->drawText(buffer, 50, 200, GREEN);
 
+	sprintf(buffer, "Health: %f/%f", mHealth, 100.0f);
+	gGraphics->drawText(buffer, 50, 300, mHealth <= 0 ? RED: GREEN);
 	//drawDebug();
+}
+
+void Player::attacked(float damage)
+{
+	mHealth -= damage;
 }
 
 void Player::pollInput()
