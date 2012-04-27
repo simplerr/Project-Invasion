@@ -19,7 +19,7 @@ public:
 	virtual void draw();
 	virtual void updateWorldMatrix();
 
-	virtual void attacked() {};
+	virtual void attacked(float damage) {};
 	virtual bool rayIntersectAABB(D3DXVECTOR3 position, D3DXVECTOR3 direction) {return false;}
 	virtual bool rayIntersectMesh(D3DXVECTOR3 position, D3DXVECTOR3 direction, DWORD& faceIndex, float& distance) {return false;}
 

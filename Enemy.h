@@ -9,7 +9,7 @@ public:
 
 	void update(float dt);
 	void draw();
-	void attacked();
+	void attacked(float damage);
 
 	void setTarget(Object3D* target);
 private:

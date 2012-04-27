@@ -45,22 +45,6 @@ void World::onResetDevice()
 
 void World::update(float dt)
 {
-	// Testing...
-	if(gInput->keyDown(VK_LBUTTON))
-	{
-		for(int i = 1; i < mObjectList.size(); i++)
-		{
-			if(mObjectList[i]->getAlive() && mObjectList[i]->rayIntersectAABB(gCamera->getPosition(), gCamera->getDirection())) {
-				DWORD faceIndex;
-				float dist;
-				if(mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, dist)) {
-					mObjectList[i]->attacked();
-					break;
-				}
-			}
-		}
-	}
-
 	// Update all the objects.
 	for(int i = 0; i < mObjectList.size(); i++)
 	{
@@ -213,6 +197,20 @@ void World::editTerrain()
 			mTerrain->smothOut(x, z, 5);
 		}
 	}
+}
+
+Object3D* World::getIntersectedObject(D3DXVECTOR3 position, D3DXVECTOR3 direction, DWORD& faceIndex, float& distance)
+{
+	for(int i = 1; i < mObjectList.size(); i++)
+	{
+		if(mObjectList[i]->getAlive() && mObjectList[i]->rayIntersectAABB(gCamera->getPosition(), gCamera->getDirection()))
+		{
+			//if(mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, distance)) 
+				return mObjectList[i];
+		}
+	}
+
+	return NULL;
 }
 
 void World::addObject(Object3D* object)

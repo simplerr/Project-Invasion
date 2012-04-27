@@ -2,7 +2,8 @@
 
 #include "SkinnedMesh.h"
 
-class WeaponMesh;
+class WeaponHandler;
+class Weapon;
 
 class Player : public SkinnedMesh
 {
@@ -12,13 +13,14 @@ public:
 
 	void update(float dt);
 	void draw();
-	void pollMovement();
+	void init();
+	void pollInput();
 	void drawDebug();
 
 	float getHeightOffset();
 private:
-	WeaponMesh* mKnifeMesh;
-	ID3DXMesh* mesh;
+	WeaponHandler* mWeaponHandler;
+	Weapon* mWeapon;
 	float	mElapsed;
 	bool	mJumping;
 	bool	mBoost;

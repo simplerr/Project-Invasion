@@ -37,6 +37,9 @@
     <Filter Include="Header Files\Stackwalker">
       <UniqueIdentifier>{94aa22ec-2221-4975-95b7-eae24d5c4bdb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TinyXML">
+      <UniqueIdentifier>{0b5b563f-dc2c-4f30-9959-21d984063417}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h">
@@ -93,9 +96,6 @@
     <ClInclude Include="World.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponMesh.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
@@ -129,6 +129,18 @@
     <ClInclude Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.h">
       <Filter>Header Files\Stackwalker</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml\tinystr.h">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml\tinyxml.h">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -159,9 +171,6 @@
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="WeaponMesh.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
@@ -209,6 +218,24 @@
     <ClCompile Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.cpp">
       <Filter>Header Files\Stackwalker</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml\tinystr.cpp">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml\tinyxml.cpp">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml\tinyxmlerror.cpp">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml\tinyxmlparser.cpp">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="effects.fx">
@@ -220,5 +247,10 @@
     <FxCompile Include="particle.fx">
       <Filter>Resource Files</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="data\weapons.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

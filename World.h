@@ -30,6 +30,7 @@ public:
 	vector<Light*>& getLights();
 
 	Terrain* getTerrain();
+	Object3D* getIntersectedObject(D3DXVECTOR3 position, D3DXVECTOR3 direction, DWORD& faceIndex, float& distance);
 
 	void onLostDevice();
 	void onResetDevice();

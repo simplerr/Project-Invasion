@@ -27,9 +27,11 @@ void Enemy::update(float dt)
 	// Update the skinned mesh.
 	SkinnedMesh::update(dt);
 
+	// Remove fromt the world.
 	if(mDeathTimer > 1.0f) 
 		kill();
 
+	// Update the death timer.
 	if(mDeathTimer != -1) {
 		mDeathTimer += dt;
 		return;
@@ -94,20 +96,23 @@ void Enemy::draw()
 	SkinnedMesh::draw();
 }
 
-void Enemy::attacked()
+void Enemy::attacked(float damage)
 {
-	// Death animation started? Dont add more blood particles!
-	if(mDeathTimer != -1)
-		return;
+	mHealth -= damage;
 
-	setAnimation(0);
-	mDeathTimer = 0;
+	// Dead?
+	if(mHealth <= 0 && mDeathTimer == -1)
+	{
+		// Set death animation and start the death timer.
+		setAnimation(0);
+		mDeathTimer = 0;
 
-	// Add blood effect.
-	BloodPSystem* bloodEffect = new BloodPSystem(getPosition(), "particle.fx", "ParticleTech", 
+		// Add blood effect.
+		BloodPSystem* bloodEffect = new BloodPSystem(getPosition(), "particle.fx", "ParticleTech", 
 		"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 200, 0.0002f);
-	bloodEffect->setLifetime(0.30f);
-	getWorld()->addObject(bloodEffect);
+		bloodEffect->setLifetime(0.30f);
+		getWorld()->addObject(bloodEffect);
+	}
 }
 
 D3DXVECTOR3 Enemy::calculateChasingDirection()

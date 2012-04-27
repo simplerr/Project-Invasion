@@ -2,13 +2,14 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "Camera.h"
-#include "WeaponMesh.h"
+#include "Weapon.h"
+#include "WeaponHandler.h"
 
 Player::Player(D3DXVECTOR3 position) 
 	: SkinnedMesh("data/smith.x", position)
 {
-	mKnifeMesh = new WeaponMesh("data/reference.x", position);
-	mKnifeMesh->setSpeedAdjust(1.20f);
+	mWeaponHandler = new WeaponHandler();
+
 	mElapsed	= 0.0f;
 	mJumping	= false;
 	mWalkAccel	= 0.1;
@@ -22,7 +23,17 @@ Player::Player(D3DXVECTOR3 position)
 
 Player::~Player()
 {
-	delete mKnifeMesh;
+	delete mWeapon;
+	delete mWeaponHandler;
+}
+
+void Player::init()
+{
+	// mWorld is set when here.
+	WeaponData data = mWeaponHandler->getData("mp5");
+	mWeapon = new Weapon(data, getPosition());
+	mWeapon->setAnimation(5);
+	mWeapon->setWorld(getWorld());
 }
 
 void Player::update(float dt)
@@ -44,7 +55,7 @@ void Player::update(float dt)
 	}
 
 	// Get keypresses from the user.
-	pollMovement();
+	pollInput();
 
 	// Standing still? Check if not jumping!
 	if(abs(getVelocity().x) <= 0.0001 && abs(getVelocity().z) <= 0.0001 && !mJumping)
@@ -60,7 +71,7 @@ void Player::update(float dt)
 	setRotation(D3DXVECTOR3(0.0f, atan2f(gCamera->getDirection().x, gCamera->getDirection().z), 0));
 
 	SkinnedMesh::update(dt);
-	mKnifeMesh->update(dt);
+	mWeapon->update(dt);
 }
 	
 void Player::draw()
@@ -70,14 +81,18 @@ void Player::draw()
 	D3DXVECTOR3 knifePos = gCamera->getPosition();
 	knifePos += gCamera->getDirection() * 15.0f;
 
-	mKnifeMesh->setPosition(knifePos);
-	mKnifeMesh->setRotation(gCamera->getDirection());
-	mKnifeMesh->draw();
+	mWeapon->setPosition(knifePos);
+	mWeapon->setRotation(gCamera->getDirection());
+	mWeapon->draw();
+
+	char buffer[256];
+	sprintf(buffer, "Ammo: %i/%i", mWeapon->getAmmo(), mWeapon->getClipSize());
+	gGraphics->drawText(buffer, 50, 200, GREEN);
 
 	//drawDebug();
 }
 
-void Player::pollMovement()
+void Player::pollInput()
 {
 	// Movement.
 	D3DXVECTOR3 nv = mVelocity;
@@ -115,7 +130,6 @@ void Player::pollMovement()
 			mVelocity = nv;
 	}
 
-
 	// Jumping.
 	if(gInput->keyDown(VK_SPACE) && getOnGround())
 	{
@@ -124,6 +138,15 @@ void Player::pollMovement()
 		mJumping = true;
 		mElapsed = 0.0f;
 	}
+
+	// Shooting?
+	if(gInput->keyDown(VK_LBUTTON)) 
+		mWeapon->triggerDown();
+	else if(gInput->keyReleased(VK_LBUTTON)) 
+		mWeapon->triggerReleased();
+
+	if(gInput->keyPressed('R')) 
+		mWeapon->reload();
 }
 
 void Player::drawDebug()

@@ -77,12 +77,13 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	gCamera->setHeightOffset(50.0f);
 
 	mWorld = new World();
-	mLight = new Light(D3DXVECTOR3(0, 25, 0), D3DXVECTOR3(0, -1, 0), Material(WHITE, 8.0f), 32, 50.0f);
+	mLight = new Light(D3DXVECTOR3(0, 25, 0), D3DXVECTOR3(0, -1, 0), Material(WHITE, 8.0f), 256, 16.0f);
 	mWorld->addLight(mLight); 
-	mWorld->addAmbientLight(D3DCOLOR_ARGB(255, 255, 255, 255));
+	mWorld->addAmbientLight(D3DCOLOR_ARGB(255, 155, 155, 155));
 
 	mPlayer = new Player(D3DXVECTOR3(0, 2000, 0));
 	mWorld->addObject(mPlayer);
+	mPlayer->init();
 
 	Mesh* castle = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), 5.0f);
 	mWorld->addObject(castle);

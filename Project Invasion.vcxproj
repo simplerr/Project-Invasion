@@ -122,9 +122,12 @@
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="tinyxml\tinystr.h" />
+    <ClInclude Include="tinyxml\tinyxml.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vertex.h" />
-    <ClInclude Include="WeaponMesh.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponHandler.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
@@ -151,14 +154,24 @@
     <ClCompile Include="SkinnedMesh.cpp" />
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="tinyxml\tinystr.cpp" />
+    <ClCompile Include="tinyxml\tinyxml.cpp" />
+    <ClCompile Include="tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="Vertex.cpp" />
-    <ClCompile Include="WeaponMesh.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponHandler.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="effects.fx" />
     <FxCompile Include="particle.fx" />
     <FxCompile Include="sky.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="data\weapons.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
