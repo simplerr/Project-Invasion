@@ -16,12 +16,12 @@ WeaponHandler::WeaponHandler()
 	{
 		WeaponData data;
 		data.name = item->Attribute("name") == NULL ? "#NOVALUE" : item->Attribute("name");
+		data.filename = item->Attribute("filename") == NULL ? "#NOVALUE" : item->Attribute("filename");
 		data.clipSize = item->Attribute("clipSize") == NULL ? 0 : atoi(item->Attribute("clipSize"));
 		data.range = item->Attribute("range") == NULL ? 0 : atof(item->Attribute("range"));
 		data.damage = item->Attribute("damage") == NULL ? 0 : atof(item->Attribute("damage"));
 		data.rateOfFire = item->Attribute("rateOfFire") == NULL ? 0 : atof(item->Attribute("rateOfFire"));
-		data.filename = item->Attribute("filename") == NULL ? "#NOVALUE" : item->Attribute("filename");
-
+		
 		mDataMap[item->Attribute("name")] = data;
 	}
 }

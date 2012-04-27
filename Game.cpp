@@ -20,6 +20,7 @@
 #include "EffectManager.h"
 #include "ParticleSystem.h"
 #include "BloodPSystem.h"
+#include "EnemyHandler.h"
 #include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
 
 // Set the globals
@@ -69,6 +70,8 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	gMeshFactory = new MeshFactory();
 	gEffectManager = new EffectManager();
 	mGfxStats = new GfxStats();
+
+	mEnemyHandler = new EnemyHandler();
 	
 	mRotate = true;
 
@@ -97,13 +100,14 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	srand(time(0));
 
 	// Add test enemies.
+	EnemyData data = mEnemyHandler->getData("toro");
 	for(int i = 0; i < 30; i++)
 	{
 		D3DXVECTOR3 pos(0.0f, 2000.0f, 2000.0f);
 		pos.x += rand() % 2000 - 1000;
 		pos.z +=  rand() % 2000 - 1000;
 
-		Enemy* enemy = new Enemy("data/monster.x", pos);
+		Enemy* enemy = new Enemy(data, pos);
 		enemy->setTarget(mPlayer);
 		mWorld->addObject(enemy);
 	}
@@ -119,6 +123,7 @@ Game::~Game()
 	delete gCamera;
 	delete gGraphics;
 	delete gEffectManager;
+	delete mEnemyHandler;
 	ReleaseCOM(gd3dDevice);
 
 	DeInitAllocCheck();

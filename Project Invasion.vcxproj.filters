@@ -141,6 +141,9 @@
     <ClInclude Include="tinyxml\tinyxml.h">
       <Filter>Header Files\TinyXML</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -236,6 +239,9 @@
     <ClCompile Include="tinyxml\tinyxmlparser.cpp">
       <Filter>Header Files\TinyXML</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="effects.fx">
@@ -250,6 +256,9 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="data\weapons.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="data\enemies.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

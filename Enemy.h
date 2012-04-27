@@ -1,5 +1,6 @@
 #pragma once
 #include "SkinnedMesh.h"
+#include "EnemyHandler.h"
 
 enum ActionState
 {
@@ -13,6 +14,7 @@ class Enemy : public SkinnedMesh
 {
 public:
 	Enemy(string filename, D3DXVECTOR3 position);
+	Enemy(EnemyData data, D3DXVECTOR3 position);
 	~Enemy();
 
 	void update(float dt);
@@ -27,12 +29,8 @@ private:
 	Object3D* mTarget;
 	D3DXVECTOR3 mTargetPosition;
 	ActionState mActionState;
-	float mHealth;
-	float mVisionRange;
+	EnemyData mData;
 	float mTargetOffset;
 	float mDeathTimer;
-	float mAttackRange;
-	float mAttackRate;
 	float mAttackTimer;
-	float mDamage;
 };

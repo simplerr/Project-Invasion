@@ -12,6 +12,7 @@ class Mesh;
 class Player;
 class MeshFactory;
 class ParticleSystem;
+class EnemyHandler;
 
 class Game : public Runnable
 {
@@ -34,6 +35,7 @@ private:
 	World*		mWorld;
 	GfxStats*	mGfxStats;
 	Light*		mLight;
-	bool		mRotate;
 	Player*		mPlayer;
+	EnemyHandler* mEnemyHandler;
+	bool		mRotate;
 };

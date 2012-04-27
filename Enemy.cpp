@@ -7,7 +7,7 @@
 Enemy::Enemy(string filename, D3DXVECTOR3 position)
 	: SkinnedMesh(filename, position)
 {
-	setAnimation(4);
+	/*setAnimation(4);
 	mTarget = NULL;
 	mHealth = 100.0f;
 	mVisionRange = 1000.0f;
@@ -17,7 +17,19 @@ Enemy::Enemy(string filename, D3DXVECTOR3 position)
 	mAttackRange = 100.0f;
 	mAttackRate = 2.0f;
 	mAttackTimer = 0.0f;
-	mDamage = 50.0f;
+	mDamage = 50.0f;*/
+}
+
+Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
+	: SkinnedMesh(data.filename, position)
+{
+	setAnimation(4);
+	mData = data;
+	mTarget = NULL;
+	mTargetOffset = 0.0f;
+	mDeathTimer = -1;
+	mActionState = AS_IDLING;
+	mAttackTimer = 0.0f;
 }
 
 Enemy::~Enemy()
@@ -50,7 +62,7 @@ void Enemy::update(float dt)
 	// Chasing the target.
 	if(mActionState == AS_CHASING)
 	{
-		if(distance <= mVisionRange)
+		if(distance <= mData.visionRange)
 			mTargetPosition = mTarget->getPosition();
 		else 
 		{
@@ -62,12 +74,12 @@ void Enemy::update(float dt)
 	else
 	{
 		// Generate new target offset.
-		if(distance <= mVisionRange)
+		if(distance <= mData.visionRange)
 			mTargetOffset = rand() % 200 - 100;
 	}
 
 	// Set the correct animation and mChasing.
-	if(distance > mVisionRange) 
+	if(distance > mData.visionRange) 
 	{
 		D3DXVECTOR3 pos = getPosition();
 		mTargetPosition.y = getPosition().y;
@@ -87,15 +99,15 @@ void Enemy::update(float dt)
 	}
 
 	// In attack range?
-	if(distance < mAttackRange) 
+	if(distance < mData.attackRange) 
 	{
 		setAnimation(0);
 		mActionState = AS_ATTACKING;
 
 		// Ready to attack?
-		if(mAttackTimer >= mAttackRate)
+		if(mAttackTimer >= mData.attackRate)
 		{
-			mTarget->attacked(mDamage);
+			mTarget->attacked(mData.damage);
 			mAttackTimer = 0.0f;
 		}
 	}
@@ -109,7 +121,7 @@ void Enemy::update(float dt)
 	D3DXVECTOR3 velocity = getVelocity();
 	D3DXVec3Normalize(&velocity, &velocity);
 
-	if(mActionState == AS_PATROLLING || mActionState == AS_CHASING)
+	if(mActionState != AS_ATTACKING)
 		setRotation(D3DXVECTOR3(0.0f, atan2f(velocity.x, velocity.z), 0));
 	else 
 		setRotation(D3DXVECTOR3(0.0f, atan2f(direction.x, direction.z), 0));
@@ -122,10 +134,10 @@ void Enemy::draw()
 
 void Enemy::attacked(float damage)
 {
-	mHealth -= damage;
+	mData.health -= damage;
 
 	// Dead?
-	if(mHealth <= 0 && mDeathTimer == -1)
+	if(mData.health <= 0 && mDeathTimer == -1)
 	{
 		// Set death animation and start the death timer.
 		setAnimation(1);
