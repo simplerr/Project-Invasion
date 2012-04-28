@@ -12,6 +12,7 @@ struct EnemyData
 	float attackRange;
 	float attackRate;
 	float visionRange;
+	float speed;
 };
 
 class EnemyHandler

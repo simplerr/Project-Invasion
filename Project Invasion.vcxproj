@@ -171,7 +171,9 @@
     <FxCompile Include="sky.fx" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="data\enemies.xml" />
+    <Xml Include="data\enemies.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="data\weapons.xml">
       <SubType>Designer</SubType>
     </Xml>

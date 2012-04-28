@@ -22,6 +22,7 @@ EnemyHandler::EnemyHandler()
 		data.attackRate = item->Attribute("attackRate") == NULL ? 0.5f : atof(item->Attribute("attackRate"));
 		data.attackRange = item->Attribute("attackRange") == NULL ? 100.0f : atof(item->Attribute("attackRange"));
 		data.health = item->Attribute("health") == NULL ? 100.0f : atof(item->Attribute("health"));
+		data.speed = item->Attribute("speed") == NULL ? 1.0f : atof(item->Attribute("speed"));
 
 		mDataMap[item->Attribute("name")] = data;
 	}

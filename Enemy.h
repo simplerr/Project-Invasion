@@ -33,4 +33,5 @@ private:
 	float mTargetOffset;
 	float mDeathTimer;
 	float mAttackTimer;
+	float mPatrolTimer;
 };

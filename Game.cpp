@@ -100,14 +100,20 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	srand(time(0));
 
 	// Add test enemies.
-	EnemyData data = mEnemyHandler->getData("toro");
+	EnemyData toroData = mEnemyHandler->getData("toro");
+	EnemyData monsterData = mEnemyHandler->getData("monster");
 	for(int i = 0; i < 30; i++)
 	{
 		D3DXVECTOR3 pos(0.0f, 2000.0f, 2000.0f);
 		pos.x += rand() % 2000 - 1000;
 		pos.z +=  rand() % 2000 - 1000;
 
-		Enemy* enemy = new Enemy(data, pos);
+		Enemy* enemy = NULL;
+		if(rand() % 3 != 0)
+			enemy = new Enemy(toroData, pos);
+		else 
+			enemy = new Enemy(monsterData, pos);
+
 		enemy->setTarget(mPlayer);
 		mWorld->addObject(enemy);
 	}

@@ -30,6 +30,7 @@ Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
 	mDeathTimer = -1;
 	mActionState = AS_IDLING;
 	mAttackTimer = 0.0f;
+	mPatrolTimer = 0.0f;
 }
 
 Enemy::~Enemy()
@@ -43,6 +44,7 @@ void Enemy::update(float dt)
 	SkinnedMesh::update(dt);
 
 	mAttackTimer += dt;
+	mPatrolTimer += dt;
 
 	// Remove fromt the world.
 	if(mDeathTimer > 1.0f) 
@@ -70,7 +72,17 @@ void Enemy::update(float dt)
 			mActionState = AS_PATROLLING;
 		}
 	}
-	// Not chasing.
+	// Not chasing, Randomize patrolling each 1 second.
+	else if(mActionState == AS_IDLING && mPatrolTimer > 1.0f)
+	{
+		// Randomize patrolling.
+		if(rand() % 3 == 1) {
+			mTargetPosition = calculateIdlePosition();
+			mActionState = AS_PATROLLING;
+			setAnimation(2);
+		}
+		mPatrolTimer = 0.0f;
+	}
 	else
 	{
 		// Generate new target offset.
@@ -105,7 +117,7 @@ void Enemy::update(float dt)
 		mActionState = AS_ATTACKING;
 
 		// Ready to attack?
-		if(mAttackTimer >= mData.attackRate)
+		if(mAttackTimer >= mData.attackRate && equals(getVelocity(), D3DXVECTOR3(0, getVelocity().y, 0)))
 		{
 			mTarget->attacked(mData.damage);
 			mAttackTimer = 0.0f;
@@ -115,13 +127,14 @@ void Enemy::update(float dt)
 	// Set the new velocity.
 	D3DXVECTOR3 dir = calculateChasingDirection() * (mActionState == AS_CHASING || mActionState == AS_PATROLLING);
 	dir.y = getVelocity().y;
-	setVelocity(dir);
+	setVelocity(dir*mData.speed);
 
 	// Set facing direction in the velocitys direction.
 	D3DXVECTOR3 velocity = getVelocity();
 	D3DXVec3Normalize(&velocity, &velocity);
 
-	if(mActionState != AS_ATTACKING)
+	// Doesn't rotate in velocity direction if really close to player.
+	if(mActionState != AS_ATTACKING && distance > mData.attackRange*1.2)	
 		setRotation(D3DXVECTOR3(0.0f, atan2f(velocity.x, velocity.z), 0));
 	else 
 		setRotation(D3DXVECTOR3(0.0f, atan2f(direction.x, direction.z), 0));
@@ -130,6 +143,11 @@ void Enemy::update(float dt)
 void Enemy::draw()
 {
 	SkinnedMesh::draw();
+
+	if(mActionState == AS_IDLING)
+		gGraphics->drawText("idling!", 50, 500, GREEN);
+	else if(mActionState == AS_PATROLLING)
+		gGraphics->drawText("patrolling!", 50, 500, GREEN);
 }
 
 void Enemy::attacked(float damage)
