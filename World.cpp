@@ -201,16 +201,21 @@ void World::editTerrain()
 
 Object3D* World::getIntersectedObject(D3DXVECTOR3 position, D3DXVECTOR3 direction, DWORD& faceIndex, float& distance)
 {
+	Object3D* closestObject = NULL;
+	float closestDist = 9999999;
 	for(int i = 1; i < mObjectList.size(); i++)
 	{
 		if(mObjectList[i]->getAlive() && mObjectList[i]->rayIntersectAABB(gCamera->getPosition(), gCamera->getDirection()))
 		{
-			//if(mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, distance)) 
-				return mObjectList[i];
+			mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, distance);
+			if(distance < closestDist) {
+				closestObject = mObjectList[i];
+				closestDist = distance;
+			}
 		}
 	}
 
-	return NULL;
+	return closestObject;
 }
 
 void World::addObject(Object3D* object)

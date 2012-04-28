@@ -143,11 +143,6 @@ void Enemy::update(float dt)
 void Enemy::draw()
 {
 	SkinnedMesh::draw();
-
-	if(mActionState == AS_IDLING)
-		gGraphics->drawText("idling!", 50, 500, GREEN);
-	else if(mActionState == AS_PATROLLING)
-		gGraphics->drawText("patrolling!", 50, 500, GREEN);
 }
 
 void Enemy::attacked(float damage)
