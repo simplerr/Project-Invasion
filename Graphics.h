@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <map>
+#include <vector>
 #include "d3dUtil.h"
 #include "Material.h"
 using namespace std;
@@ -11,6 +12,7 @@ class SkinnedMesh;
 class Mesh;
 class Object3D;
 class Material;
+class Light;
 struct Material;
 struct Dimensions;
 
@@ -45,6 +47,8 @@ public:
 	// OLD AND UGLY
 	void drawText(string text, int x, int y, DWORD color = 0xff000000);
 	void drawTest(ID3DXMesh* mesh, IDirect3DTexture9* texture, D3DXVECTOR3 position, D3DXVECTOR3 rotation);
+
+	void setLightList(vector<Light*>* lightList);
 public:
 	// Texture map.
 	map<string, IDirect3DTexture9*> mTextureMap;
@@ -95,6 +99,8 @@ public:
 
 	ID3DXFont* mFont;
 	ID3DXMesh* mRayMesh;
+
+	vector<Light*>* mLightList;
 };
 
 extern Graphics* gGraphics;

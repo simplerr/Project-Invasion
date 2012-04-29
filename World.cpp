@@ -9,6 +9,7 @@
 #include "Sky.h"
 #include "Terrain.h"
 #include "Mesh.h"
+#include "EnemyHandler.h"
 
 World::World()
 {
@@ -18,6 +19,9 @@ World::World()
 	// Create the skybox.
 	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
 	setGravity(-0.023f);
+
+	// Create the enemy handler that loads enemy data from .XML files.
+	mEnemyHandler = new EnemyHandler();
 }
 	
 World::~World()
@@ -25,6 +29,7 @@ World::~World()
 	// Cleanup.
 	delete mTerrain;
 	delete mSky;
+	delete mEnemyHandler;
 
 	for(int i = 0; i < mObjectList.size(); i++)
 		delete mObjectList[i];
@@ -270,9 +275,9 @@ void World::addLight(Light* light)
 	mLightList.push_back(light);
 }
 
-vector<Light*>& World::getLights()
+vector<Light*>* World::getLights()
 {
-	return mLightList;
+	return &mLightList;
 }
 
 void World::addAmbientLight(D3DXCOLOR color)
@@ -302,3 +307,7 @@ float World::getGravity()
 	return mGravity;
 }
 
+EnemyData World::getEnemyData(string name)
+{
+	return mEnemyHandler->getData(name);
+}

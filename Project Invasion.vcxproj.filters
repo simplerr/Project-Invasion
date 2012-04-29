@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Stackwalker">
       <UniqueIdentifier>{94aa22ec-2221-4975-95b7-eae24d5c4bdb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{1da3c1a4-aabf-4291-9269-90d2039d9a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{e8386051-0d64-48f6-9223-8d5e87674d31}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\TinyXML">
       <UniqueIdentifier>{0b5b563f-dc2c-4f30-9959-21d984063417}</UniqueIdentifier>
     </Filter>
@@ -144,6 +150,15 @@
     <ClInclude Include="EnemyHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -241,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="EnemyHandler.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorState.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

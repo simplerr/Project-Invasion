@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "d3dUtil.h"
+#include "EnemyHandler.h"
 using namespace std;
 
 class Object3D;
@@ -28,8 +29,9 @@ public:
 
 	void setGravity(float gravity);
 	float getGravity();
+	EnemyData getEnemyData(string name);
 
-	vector<Light*>& getLights();
+	vector<Light*>* getLights();
 
 	Terrain* getTerrain();
 	Object3D* getIntersectedObject(D3DXVECTOR3 position, D3DXVECTOR3 direction, DWORD& faceIndex, float& distance);
@@ -38,8 +40,10 @@ public:
 	void onResetDevice();
 
 	// TODO: Add private
+private:
 	vector<Object3D*>		mObjectList;
 	vector<Light*>			mLightList;
+	EnemyHandler*			mEnemyHandler;
 	Terrain*				mTerrain;
 	Sky*					mSky;
 	float					mGravity;

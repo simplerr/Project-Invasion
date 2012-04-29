@@ -99,6 +99,8 @@
     <ClInclude Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AllocMeshHierarchy.h" />
+    <ClInclude Include="EditorState.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="BloodPSystem.h" />
     <ClInclude Include="BufferFactory.h" />
     <ClInclude Include="Camera.h" />
@@ -119,6 +121,7 @@
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayState.h" />
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="Sky.h" />
@@ -137,6 +140,7 @@
     <ClCompile Include="BufferFactory.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="d3dUtil.cpp" />
+    <ClCompile Include="EditorState.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -152,6 +156,7 @@
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SkinnedMesh.cpp" />
     <ClCompile Include="Sky.cpp" />

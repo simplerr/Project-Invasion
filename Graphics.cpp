@@ -174,13 +174,9 @@ void Graphics::setEffectData(IDirect3DTexture9* texture, D3DXVECTOR3 position, D
 	D3DXMatrixScaling(&S, dimensions.width, dimensions.height, dimensions.depth);
 	D3DXMATRIX world = (S*R*(T));
 
-	// Get the lights in the world.
-	Game* game = (Game*)gGame;
-	//vector<Light*> lights = game->getWorld()->getLights();	// NOTE: Maybe return by reference to make faster?
-
 	Light lights1[4];
-	for(int i = 0; i < game->getWorld()->mLightList.size(); i++)
-		lights1[i] = *game->getWorld()->mLightList[i];
+	for(int i = 0; i < mLightList->size(); i++)
+		lights1[i] = *mLightList->operator[](i);
 
 	// Effect data
 	HR(mFX->SetMatrix(mhWVP, &(world*gCamera->getViewMatrix()*gCamera->getProjectionMatrix())));
@@ -191,21 +187,18 @@ void Graphics::setEffectData(IDirect3DTexture9* texture, D3DXVECTOR3 position, D
 	D3DXMatrixInverse(&worldInverseTranspose, 0, &world);
 	D3DXMatrixTranspose(&worldInverseTranspose, &worldInverseTranspose);
 	HR(mFX->SetMatrix(mhWorldInverseTranspose, &worldInverseTranspose));
-	HR(mFX->SetInt(mhNumLights, game->getWorld()->mLightList.size()));
+	HR(mFX->SetInt(mhNumLights, mLightList->size()));
 
 	// Object material and light array
 	HR(mFX->SetRawValue(mhObjectMaterial, (void*)&material, 0, sizeof(Material)));
-	HR(mFX->SetRawValue(mhLights, (void*)&lights1, 0, sizeof(Light)*game->getWorld()->mLightList.size()));
+	HR(mFX->SetRawValue(mhLights, (void*)&lights1, 0, sizeof(Light)*mLightList->size()));
 }
 
 void Graphics::setEffectParameters(D3DXMATRIX world)
 {
-	// Get the lights in the world.
-	Game* game = (Game*)gGame;
-
 	Light lights1[4];
-	for(int i = 0; i < game->getWorld()->mLightList.size(); i++)
-		lights1[i] = *game->getWorld()->mLightList[i];
+	for(int i = 0; i < mLightList->size(); i++)
+		lights1[i] = *mLightList->operator[](i);
 
 	// Calculate the inverse transpose matrix.
 	D3DXMATRIX worldInverseTranspose;
@@ -217,8 +210,8 @@ void Graphics::setEffectParameters(D3DXMATRIX world)
 	HR(mFX->SetMatrix(mhWorld, &world));
 	HR(mFX->SetVector(mhEyePos, &D3DXVECTOR4(gCamera->getPosition(), 0)));
 	HR(mFX->SetMatrix(mhWorldInverseTranspose, &worldInverseTranspose));
-	HR(mFX->SetInt(mhNumLights, game->getWorld()->mLightList.size()));
-	HR(mFX->SetRawValue(mhLights, (void*)&lights1, 0, sizeof(Light)*game->getWorld()->mLightList.size()));
+	HR(mFX->SetInt(mhNumLights, mLightList->size()));
+	HR(mFX->SetRawValue(mhLights, (void*)&lights1, 0, sizeof(Light)*mLightList->size()));
 
 	// Set the DEFUALT = WHITE object material and the light array (max 4 lights right now).
 	HR(mFX->SetRawValue(mhObjectMaterial, (void*)&Material(), 0, sizeof(Material)));
@@ -504,4 +497,9 @@ void Graphics::drawTest(ID3DXMesh* mesh, IDirect3DTexture9* texture, D3DXVECTOR3
 
 	HR(mFX->EndPass());
 	HR(mFX->End());
+}
+
+void Graphics::setLightList(vector<Light*>* lightList)
+{
+	mLightList = lightList;
 }

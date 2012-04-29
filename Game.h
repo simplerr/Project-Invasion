@@ -13,6 +13,7 @@ class Player;
 class MeshFactory;
 class ParticleSystem;
 class EnemyHandler;
+class GameState;
 
 class Game : public Runnable
 {
@@ -22,21 +23,13 @@ public:
 
 	void update(float dt);
 	void draw();
-
-	void buildBillboard();
-
-	World* getWorld();
+	void changeState(GameState* state);
 
 	void onLostDevice();
 	void onResetDevice();
 	LRESULT msgProc(UINT msg, WPARAM wParam, LPARAM lParam);
 private:
-	IDirect3DTexture9* mTexture;
-	World*		mWorld;
+	GameState*	mCurrentState;
 	GfxStats*	mGfxStats;
-	Light*		mLight;
-	Player*		mPlayer;
-	EnemyHandler* mEnemyHandler;
-	Mesh*		mCastle;
-	bool		mRotate;
+	int			mState;
 };
