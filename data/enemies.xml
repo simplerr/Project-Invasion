@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Enemies>
   <Enemy name="monster" filename="data/monster.x" speed="1.0f" damage="25.0f" health="100.0f" attackRange="100.0f" attackRate="0.5" visionRange="10000"></Enemy>
-  <Enemy name="toro" filename="data/toro.x" speed="3.00f" damage="25.0f" health="100.0f" attackRange="200.0f" attackRate="0.5" visionRange="10000"></Enemy>
+  <Enemy name="toro" filename="data/toro.x" speed="1.0f" damage="25.0f" health="100.0f" attackRange="200.0f" attackRate="0.5" visionRange="10000"></Enemy>
 </Enemies>

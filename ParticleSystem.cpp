@@ -86,7 +86,7 @@ void ParticleSystem::addParticle()
 
 void ParticleSystem::onLostDevice()
 {
-	//HR(mFX->OnLostDevice());
+	mEffect->onLostDevice();
 
 	// Default pool resources need to be freed before reset.
 	ReleaseCOM(mVB);
@@ -94,15 +94,15 @@ void ParticleSystem::onLostDevice()
 
 void ParticleSystem::onResetDevice()
 {
-	//HR(mFX->OnResetDevice());
+	mEffect->onResetDevice();
 
 	// Default pool resources need to be recreated after reset.
-	/*if(mVB == 0)
+	if(mVB == 0)
 	{
 		HR(gd3dDevice->CreateVertexBuffer(mMaxNumParticles*sizeof(Particle),
 			D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY|D3DUSAGE_POINTS,
 			0, D3DPOOL_DEFAULT, &mVB, 0));
-	}*/
+	}
 }
 
 void ParticleSystem::update(float dt)

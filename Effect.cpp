@@ -31,6 +31,16 @@ void Effect::init()
 {
 
 }
+
+void Effect::onLostDevice()
+{
+	HR(mFX->OnLostDevice());
+}
+
+void Effect::onResetDevice()
+{
+	HR(mFX->OnResetDevice());
+}
 	
 void Effect::begin()
 {

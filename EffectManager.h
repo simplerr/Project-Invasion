@@ -18,6 +18,9 @@ public:
 
 	void initEffects();
 	Effect* getEffect(EffectId id);
+
+	void onLostDevice();
+	void onResetDevice();
 private:
 	vector<Effect*> mEffectList;
 };

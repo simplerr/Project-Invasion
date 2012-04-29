@@ -170,12 +170,12 @@ void Game::update(float dt)
 
 		if(cursorPos.x < 0) 
 			cursorPos.x = 0;
-		else if(cursorPos.x > 1200-15)
-			cursorPos.x = 1200-15;
+		else if(cursorPos.x > getScreenWidth()-15)
+			cursorPos.x = getScreenWidth()-15;
 		if(cursorPos.y < 0)
 			cursorPos.y = 0;
-		else if(cursorPos.y > 800-40)
-			cursorPos.y = 800-40;
+		else if(cursorPos.y > getScreenHeight()-40)
+			cursorPos.y = getScreenHeight()-40;
 
 		ClientToScreen(getMainWnd(), &cursorPos);
 		SetCursorPos(cursorPos.x, cursorPos.y);
@@ -196,7 +196,7 @@ void Game::draw()
 	//gGraphics->drawTest(mBillboard, mTexture, D3DXVECTOR3(500, 500, 500), D3DXVECTOR3(500, 500, 500) - gCamera->getPosition());
 	//gGraphics->drawRay(gCamera->getPosition() + D3DXVECTOR3(0, -10, 0) - gCamera->getDirection() * 15, gCamera->getDirection(), 500.0f, 1.0f);
 
-	gGraphics->drawScreenTexture(mTexture, 600, 400, 32, 32);
+	gGraphics->drawScreenTexture(mTexture, getScreenWidth()/2, getScreenHeight()/2, 32, 32);
 }
 
 World* Game::getWorld()
@@ -252,6 +252,7 @@ void Game::onLostDevice()
 	mGfxStats->onLostDevice();
 	mWorld->onLostDevice();
 	gGraphics->onLostDevice();
+	gEffectManager->onLostDevice();
 }
 	
 void Game::onResetDevice()
@@ -259,4 +260,5 @@ void Game::onResetDevice()
 	mGfxStats->onResetDevice();
 	mWorld->onLostDevice();
 	gGraphics->onResetDevice();
+	gEffectManager->onResetDevice();
 }

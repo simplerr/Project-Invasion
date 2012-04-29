@@ -12,7 +12,8 @@ public:
 	virtual ~Effect();
 
 	virtual void init();
-
+	virtual void onLostDevice();
+	virtual void onResetDevice();
 
 	void begin();
 	void end();

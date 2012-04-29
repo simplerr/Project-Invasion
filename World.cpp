@@ -35,11 +35,17 @@ World::~World()
 
 void World::onLostDevice()
 {
+	for(int i = 0; i < mObjectList.size(); i++)
+		mObjectList[i]->onLostDevice();
+
 	mSky->onLostDevice();
 }
 	
 void World::onResetDevice()
 {
+	for(int i = 0; i < mObjectList.size(); i++)
+		mObjectList[i]->onResetDevice();
+
 	mSky->onResetDevice();
 }
 

@@ -28,20 +28,7 @@ Graphics::Graphics()
 	VertexPNT::Decl->GetDeclaration(elems, &numElems);
 	D3DXCreateMesh(2, 4, D3DXMESH_MANAGED, elems, gd3dDevice, &mRayMesh);
 
-	// Ortho projection when not using shader pipeline.
-	D3DXMATRIX m;
-    D3DXMatrixIdentity(&m);
-
-	gd3dDevice->SetTransform(D3DTS_WORLD, &m);
-    gd3dDevice->SetTransform(D3DTS_VIEW, &m);
-
-    D3DXMatrixOrthoOffCenterRH (&m, 0, 1200, 800, 0, 0, 1);
-    gd3dDevice->SetTransform(D3DTS_PROJECTION, &m);
-
-	// Use texture alpha channel.
-	gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	onResetDevice();
 }
 	
 Graphics::~Graphics()
@@ -66,6 +53,21 @@ void Graphics::onResetDevice()
 {
 	mFX->OnResetDevice();
 	mFont->OnResetDevice();
+
+	// Ortho projection when not using shader pipeline.
+	D3DXMATRIX m;
+    D3DXMatrixIdentity(&m);
+
+	gd3dDevice->SetTransform(D3DTS_WORLD, &m);
+    gd3dDevice->SetTransform(D3DTS_VIEW, &m);
+
+    D3DXMatrixOrthoOffCenterRH (&m, 0, 1200, 800, 0, 0, 1);
+    gd3dDevice->SetTransform(D3DTS_PROJECTION, &m);
+
+	// Use texture alpha channel.
+	gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 
 IDirect3DTexture9* Graphics::loadTexture(string filename, DWORD colorKey)

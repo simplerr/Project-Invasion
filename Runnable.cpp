@@ -309,10 +309,8 @@ LRESULT Runnable::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 	// Toggle fullscreen.
 	case WM_KEYDOWN:
-		if(wParam == VK_F10)
-			enableFullScreenMode(false);
-		else if(wParam == VK_F11)
-			enableFullScreenMode(true);
+		if(wParam == VK_F1)
+			switchScreenMode();
 		return 0;
 
 	case WM_COMMAND:
@@ -322,15 +320,11 @@ LRESULT Runnable::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(mhMainWindow, msg, wParam, lParam);
 }
 
-void Runnable::enableFullScreenMode(bool enable)
+void Runnable::switchScreenMode()
 {
 	// Switch to fullscreen mode.
-	if(enable)
+	if(md3dPP.Windowed)
 	{
-		// Are we already in fullscreen mode?
-		if(!md3dPP.Windowed) 
-			return;
-
 		int width  = GetSystemMetrics(SM_CXSCREEN);
 		int height = GetSystemMetrics(SM_CYSCREEN);
 
@@ -348,15 +342,11 @@ void Runnable::enableFullScreenMode(bool enable)
 	// Switch to windowed mode.
 	else
 	{
-		// Are we already in windowed mode?
-		if(md3dPP.Windowed) 
-			return;
-
-		RECT R = {0, 0, 800, 600};
+		RECT R = {0, 0, 1200, 800};
 		AdjustWindowRect(&R, WS_OVERLAPPEDWINDOW, false);
 		md3dPP.BackBufferFormat = D3DFMT_UNKNOWN;
-		md3dPP.BackBufferWidth  = 800;
-		md3dPP.BackBufferHeight = 600;
+		md3dPP.BackBufferWidth  = 1200;
+		md3dPP.BackBufferHeight = 800;
 		md3dPP.Windowed         = true;
 	
 		// Change the window style to a more windowed friendly style.
@@ -365,7 +355,8 @@ void Runnable::enableFullScreenMode(bool enable)
 		// If we call SetWindowLongPtr, MSDN states that we need to call
 		// SetWindowPos for the change to take effect.  In addition, we 
 		// need to call this function anyway to update the window dimensions.
-		SetWindowPos(mhMainWindow, HWND_TOP, 100, 100, R.right, R.bottom, SWP_NOZORDER | SWP_SHOWWINDOW);
+		SetWindowPos(mhMainWindow, HWND_NOTOPMOST, GetSystemMetrics(SM_CXSCREEN)/2-(1200/2), GetSystemMetrics(SM_CYSCREEN)/2-(800/2),
+			R.right, R.bottom, SWP_SHOWWINDOW);
 	}
 
 	// Reset the device with the changes.

@@ -42,7 +42,7 @@ public:
 	//! Wraps up MessageBox(...)
 	void message(std::string msg);
 
-	void enableFullScreenMode(bool enable);
+	void switchScreenMode();
 
 	HINSTANCE				getAppInst();
 	HWND					getMainWnd();

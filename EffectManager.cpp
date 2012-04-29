@@ -25,3 +25,15 @@ Effect* EffectManager::getEffect(EffectId id)
 			return mEffectList[i];
 	}
 }
+
+void EffectManager::onLostDevice()
+{
+	for(int i = 0; i < mEffectList.size(); i++)
+		mEffectList[i]->onLostDevice();
+}
+	
+void EffectManager::onResetDevice()
+{
+	for(int i = 0; i < mEffectList.size(); i++)
+		mEffectList[i]->onResetDevice();
+}
