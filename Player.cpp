@@ -14,11 +14,11 @@ Player::Player(D3DXVECTOR3 position)
 	mJumping	= false;
 	mWalkAccel	= 0.1;
 	mMaxSpeed	= 1.1f;
-	mHeightOffset = 30.0f;
-	mHealth = 100.0f;
+	mHealth = 60.0f;
 
 	setAnimation(2, 0.1f);
 	setSpeedAdjust(3.2f);
+	setHeightOffset(100.0f);
 	mBoost = false;
 }
 
@@ -176,9 +176,4 @@ void Player::drawDebug()
 		gGraphics->drawText("On ground!", 500, 400, GREEN);
 	else
 		gGraphics->drawText("In air!", 500, 400, GREEN);
-}
-
-float Player::getHeightOffset()
-{
-	return mHeightOffset;
 }

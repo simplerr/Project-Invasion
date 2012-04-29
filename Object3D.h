@@ -35,6 +35,7 @@ public:
 
 	void accelerate(float dx, float dy, float dz);
 	void move(float dx, float dy, float dz);
+	void rotate(float dx, float dy, float dz);
 
 	void setPosition(D3DXVECTOR3 position);
 	void setVelocity(D3DXVECTOR3 velocity);

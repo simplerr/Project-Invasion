@@ -17,8 +17,6 @@ public:
 	void attacked(float damage);
 	void pollInput();
 	void drawDebug();
-
-	float getHeightOffset();
 private:
 	WeaponHandler* mWeaponHandler;
 	Weapon* mWeapon;
@@ -27,6 +25,5 @@ private:
 	bool	mBoost;
 	float	mWalkAccel;
 	float	mMaxSpeed;
-	float	mHeightOffset;
 	float	mHealth;
 };

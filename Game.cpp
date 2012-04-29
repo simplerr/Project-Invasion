@@ -88,9 +88,9 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	mWorld->addObject(mPlayer);
 	mPlayer->init();
 
-	Mesh* castle = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), PROP);
-	castle->setScale(5.0f);
-	mWorld->addObject(castle);
+	mCastle = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), PROP);
+	mCastle->setScale(5.0f);
+	mWorld->addObject(mCastle);
 
 	normal = D3DXVECTOR3 (0, 1, 0);
 	mTexture = gGraphics->loadTexture("data/aim.png");
@@ -192,7 +192,7 @@ void Game::draw()
 	//gCamera->drawDebug();
 	mGfxStats->display();
 
-	//gGraphics->drawBoundingBox(mCastleMesh, GREEN, 0.7f);
+	//gGraphics->drawBoundingBox(mCastle, GREEN, 0.7f);
 	//gGraphics->drawTest(mBillboard, mTexture, D3DXVECTOR3(500, 500, 500), D3DXVECTOR3(500, 500, 500) - gCamera->getPosition());
 	//gGraphics->drawRay(gCamera->getPosition() + D3DXVECTOR3(0, -10, 0) - gCamera->getDirection() * 15, gCamera->getDirection(), 500.0f, 1.0f);
 

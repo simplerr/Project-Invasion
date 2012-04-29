@@ -15,6 +15,7 @@ Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
 	mActionState = AS_IDLING;
 	mAttackTimer = 0.0f;
 	mPatrolTimer = 0.0f;
+	setSpeedAdjust(min(data.speed, 3));
 }
 
 Enemy::~Enemy()
@@ -64,6 +65,7 @@ void Enemy::update(float dt)
 			mTargetPosition = calculateIdlePosition();
 			mActionState = AS_PATROLLING;
 			setAnimation(2);
+			setSpeedAdjust(min(mData.speed, 3));
 		}
 		mPatrolTimer = 0.0f;
 	}
@@ -86,11 +88,13 @@ void Enemy::update(float dt)
 			mActionState = AS_IDLING;
 			setAnimation(4);
 			setVelocity(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+			setSpeedAdjust(1.0f);
 		}
 	}
 	else
 	{
 		setAnimation(2);
+		setSpeedAdjust(min(mData.speed, 3));
 		mActionState = AS_CHASING;
 	}
 
@@ -98,6 +102,7 @@ void Enemy::update(float dt)
 	if(distance < mData.attackRange) 
 	{
 		setAnimation(0);
+		setSpeedAdjust(1.0f);
 		mActionState = AS_ATTACKING;
 
 		// Ready to attack?

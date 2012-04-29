@@ -54,6 +54,11 @@ void Object3D::accelerate(float dx, float dy, float dz)
 	mVelocity += D3DXVECTOR3(dx, dy, dz);
 }
 
+void Object3D::rotate(float dx, float dy, float dz)
+{
+	mRotation += D3DXVECTOR3(dx, dy, dz);
+}
+
 void Object3D::setPosition(D3DXVECTOR3 position)
 {
 	mPosition = position;

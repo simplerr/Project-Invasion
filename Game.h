@@ -37,5 +37,6 @@ private:
 	Light*		mLight;
 	Player*		mPlayer;
 	EnemyHandler* mEnemyHandler;
+	Mesh*		mCastle;
 	bool		mRotate;
 };
