@@ -9,9 +9,9 @@ using namespace std;
 class Mesh : public Object3D
 {
 public:
-	Mesh(string filename, D3DXVECTOR3 position, float scale = 1.0f);
-	Mesh(D3DXVECTOR3 position);
-	~Mesh();
+	Mesh(string filename, D3DXVECTOR3 position, ObjectType type);
+	Mesh(D3DXVECTOR3 position, ObjectType type);
+	virtual ~Mesh();
 
 	void draw();
 

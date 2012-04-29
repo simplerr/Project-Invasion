@@ -11,7 +11,7 @@
 #include "Game.h"
 
 ParticleSystem::ParticleSystem(D3DXVECTOR3 position, string fxName, string techName, string texName, D3DXVECTOR3 accel, AABB box, int maxNumParticles, float timePerParticle)
-	 : Object3D(position, Dimensions()), mAccel(accel), mBox(box), mTime(0.0f),
+	 : Object3D(position, PARTICLE_SYSTEM), mAccel(accel), mBox(box), mTime(0.0f),
 	   mMaxNumParticles(maxNumParticles), mTimePerParticle(timePerParticle)
 {
 	// Allocate memory for maximum number of particles.

@@ -82,13 +82,14 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	mWorld = new World();
 	mLight = new Light(D3DXVECTOR3(0, 25, 0), D3DXVECTOR3(0, -1, 0), Material(WHITE, 8.0f), 256, 16.0f);
 	mWorld->addLight(mLight); 
-	mWorld->addAmbientLight(D3DCOLOR_ARGB(255, 155, 155, 155));
+	mWorld->addAmbientLight(D3DCOLOR_ARGB(255, 110, 110, 110));
 
 	mPlayer = new Player(D3DXVECTOR3(0, 2000, 0));
 	mWorld->addObject(mPlayer);
 	mPlayer->init();
 
-	Mesh* castle = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), 5.0f);
+	Mesh* castle = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), PROP);
+	castle->setScale(5.0f);
 	mWorld->addObject(castle);
 
 	normal = D3DXVECTOR3 (0, 1, 0);

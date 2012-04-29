@@ -6,8 +6,8 @@
 #include "AllocMeshHierarchy.h"
 #include "MeshFactory.h"
 
-SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, float scale)
-	: Object3D(position, scale) 
+SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, ObjectType type)
+	: Object3D(position, type) 
 {
 	// Load the mesh hierarchy.
 	gMeshFactory->loadSkinnedMesh(filename, mRoot, mAnimCtrl);

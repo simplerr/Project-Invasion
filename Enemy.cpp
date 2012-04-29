@@ -4,24 +4,8 @@
 #include "World.h"
 #include "BloodPSystem.h"
 
-Enemy::Enemy(string filename, D3DXVECTOR3 position)
-	: SkinnedMesh(filename, position)
-{
-	/*setAnimation(4);
-	mTarget = NULL;
-	mHealth = 100.0f;
-	mVisionRange = 1000.0f;
-	mTargetOffset = 0.0f;
-	mDeathTimer = -1;
-	mActionState = AS_IDLING;
-	mAttackRange = 100.0f;
-	mAttackRate = 2.0f;
-	mAttackTimer = 0.0f;
-	mDamage = 50.0f;*/
-}
-
 Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
-	: SkinnedMesh(data.filename, position)
+	: SkinnedMesh(data.filename, position, ENEMY)
 {
 	setAnimation(4);
 	mData = data;
@@ -127,6 +111,7 @@ void Enemy::update(float dt)
 	// Set the new velocity.
 	D3DXVECTOR3 dir = calculateChasingDirection() * (mActionState == AS_CHASING || mActionState == AS_PATROLLING);
 	dir.y = getVelocity().y;
+
 	setVelocity(dir*mData.speed);
 
 	// Set facing direction in the velocitys direction.
@@ -134,7 +119,7 @@ void Enemy::update(float dt)
 	D3DXVec3Normalize(&velocity, &velocity);
 
 	// Doesn't rotate in velocity direction if really close to player.
-	if(mActionState != AS_ATTACKING && distance > mData.attackRange*1.2)	
+	if(mActionState != AS_ATTACKING && distance > mData.attackRange*1.5)	
 		setRotation(D3DXVECTOR3(0.0f, atan2f(velocity.x, velocity.z), 0));
 	else 
 		setRotation(D3DXVECTOR3(0.0f, atan2f(direction.x, direction.z), 0));

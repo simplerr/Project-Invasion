@@ -24,7 +24,7 @@ struct MeshContainerEx : public D3DXMESHCONTAINER
 class SkinnedMesh : public Object3D
 {
 public:
-	SkinnedMesh(string filename, D3DXVECTOR3 position, float scale = 1.0f);
+	SkinnedMesh(string filename, D3DXVECTOR3 position, ObjectType type);
 	virtual ~SkinnedMesh();
 
 	virtual void update(float dt);

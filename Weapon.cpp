@@ -4,19 +4,8 @@
 #include "World.h"
 #include "Graphics.h"
 
-Weapon::Weapon(string filename, D3DXVECTOR3 position, float scale)
-	: SkinnedMesh(filename, position, scale)
-{
-	mAmmo = 30;
-	mReloadTime = 1.0f;
-	mReloadElapsed = 0.0f;
-	counter = 0;
-	mRealoading = false;
-	mDeltaTime = 0.0f;
-}
-	
-Weapon::Weapon(WeaponData data, D3DXVECTOR3 position, float scale)
-	: SkinnedMesh(data.filename, position, scale)
+Weapon::Weapon(WeaponData data, D3DXVECTOR3 position)
+	: SkinnedMesh(data.filename, position, WEAPON)
 {
 	setData(data);
 	mReloadTime = 1.0f;

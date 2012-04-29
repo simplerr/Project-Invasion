@@ -5,15 +5,15 @@
 #include "AABB.h"
 #include "MeshFactory.h"
 
-Mesh::Mesh(string filename, D3DXVECTOR3 position, float scale)
-	: Object3D(position, scale)
+Mesh::Mesh(string filename, D3DXVECTOR3 position, ObjectType type)
+	: Object3D(position, type)
 {
 	loadFromXFile(filename);
 	mFromFile = true;
 }
 	
-Mesh::Mesh(D3DXVECTOR3 position)
-	: Object3D(position, Dimensions())
+Mesh::Mesh(D3DXVECTOR3 position, ObjectType type)
+	: Object3D(position, type)
 {
 	mFromFile = false;
 }

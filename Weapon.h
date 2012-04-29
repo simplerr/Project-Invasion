@@ -5,9 +5,8 @@
 class Weapon : public SkinnedMesh
 {
 public:
-	Weapon(string filename, D3DXVECTOR3 position, float scale = 1.0f);
-	Weapon(WeaponData data, D3DXVECTOR3 position, float scale = 1.0f);
-	~Weapon();
+	Weapon(WeaponData data, D3DXVECTOR3 position);
+	virtual ~Weapon();
 
 	void update(float dt);
 	void draw();

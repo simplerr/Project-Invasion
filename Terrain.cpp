@@ -7,7 +7,7 @@
 
 Terrain::Terrain(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, float heightScale)
 {
-	mTerrainMesh = new Mesh(center);
+	mTerrainMesh = new Mesh(center, TERRAIN);
 	mRows = rows;
 	mColums = colums;
 	mHeightmap = new Heightmap();

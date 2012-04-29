@@ -13,7 +13,6 @@ enum ActionState
 class Enemy : public SkinnedMesh
 {
 public:
-	Enemy(string filename, D3DXVECTOR3 position);
 	Enemy(EnemyData data, D3DXVECTOR3 position);
 	~Enemy();
 

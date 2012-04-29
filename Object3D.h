@@ -8,11 +8,21 @@ using namespace std;
 
 class World;
 
+enum ObjectType
+{
+	PLAYER,
+	ENEMY,
+	PROP,
+	WEAPON,
+	TERRAIN,
+	PARTICLE_SYSTEM
+};
+
 //! Base class for all Object3Ds.
 class Object3D
 {
 public:
-	Object3D(D3DXVECTOR3 position, Dimensions scale);
+	Object3D(D3DXVECTOR3 position, ObjectType type);
 	virtual ~Object3D();
 
 	virtual void update(float dt);
@@ -34,6 +44,7 @@ public:
 	void setOnGround(bool onGround);
 	void setHeightOffset(float heightOffset);
 	void setWorld(World* world);
+	void setType(ObjectType type);
 	void kill();
 
 	Dimensions	getScale();
@@ -42,6 +53,7 @@ public:
 	D3DXVECTOR3 getRotation();
 	D3DXMATRIX	getWorldMatrix();
 	D3DXMATRIX	getInvWorldMatrix();
+	ObjectType  getType();
 	AABB		getAABB();
 	bool		getOnGround();
 	bool		getAlive();
@@ -61,6 +73,7 @@ protected:
 	Material			mMaterial;
 	Dimensions			mScale;
 	AABB				mAABB;
+	ObjectType			mType;
 	bool				mOnGround;
 	bool				mAlive;
 	float				mHeightOffset;

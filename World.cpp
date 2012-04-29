@@ -56,7 +56,9 @@ void World::update(float dt)
 		float distance = object->getPosition().y - mTerrain->getHeight(object->getPosition().x, object->getPosition().z);
 
 		// Snap to ground.
-		if(distance < object->getHeightOffset() && object->getVelocity().y <= 0)
+		// Note the +50 to give it some margin (only for enemies).
+		float margin = object->getType() != PLAYER ? 50 : 0;
+		if(distance < object->getHeightOffset() + margin && object->getVelocity().y <= 0)
 		{
 			object->setPosition(object->getPosition() - D3DXVECTOR3(0, distance, 0) + D3DXVECTOR3(0, object->getHeightOffset(), 0));
 			object->setVelocity(D3DXVECTOR3(object->getVelocity().x, 0, object->getVelocity().z));

@@ -1,15 +1,16 @@
 #include "Object3D.h"
 #include "Graphics.h"
 
-Object3D::Object3D(D3DXVECTOR3 position, Dimensions scale)
+Object3D::Object3D(D3DXVECTOR3 position, ObjectType type)
 {
 	setPosition(position);
-	setScale(scale);
+	setScale(1.0f);
 	setMaterial(Material());	
 	setRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	setVelocity(D3DXVECTOR3(0, 0, 0));
 	setOnGround(false);
 	setHeightOffset(30.0f);
+	setType(type);
 	mMaterial.specularPower = 128;
 }
 	
@@ -96,6 +97,11 @@ void Object3D::setWorld(World* world)
 	mWorld = world;
 }
 
+void Object3D::setType(ObjectType type)
+{
+	mType = type;
+}
+
 D3DXVECTOR3 Object3D::getPosition()
 {
 	return mPosition;
@@ -159,4 +165,9 @@ bool Object3D::getAlive()
 World* Object3D::getWorld()
 {
 	return mWorld;
+}
+
+ObjectType  Object3D::getType()
+{
+	return mType;
 }

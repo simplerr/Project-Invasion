@@ -6,7 +6,7 @@
 #include "WeaponHandler.h"
 
 Player::Player(D3DXVECTOR3 position) 
-	: SkinnedMesh("data/smith.x", position)
+	: SkinnedMesh("data/smith.x", position, PLAYER)
 {
 	mWeaponHandler = new WeaponHandler();
 
