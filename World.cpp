@@ -54,9 +54,12 @@ void World::update(float dt)
 	// Update all the objects.
 	for(int i = 0; i < mObjectList.size(); i++)
 	{
-		if(!mObjectList[i]->getAlive())
-			continue;
 		Object3D* object = mObjectList[i];
+		// Remove from the list if dead.
+		if(!object->getAlive()) {
+			removeObject(object);
+			continue;
+		}
 
 		// Get the distance above the ground.
 		float distance = object->getPosition().y - mTerrain->getHeight(object->getPosition().x, object->getPosition().z);
@@ -118,6 +121,10 @@ void World::draw()
 			continue;
 		mObjectList[i]->draw();
 	}
+
+	char buffer[256];
+	sprintf(buffer, "objects: %i", mObjectList.size());
+	gGraphics->drawText(buffer, 500, 300, RED);
 
 	//gGraphics->drawRay(gCamera->getPosition(), gCamera->getDirection(), 200.0f, 20.0f);
 	/*for(int i = 0; i < mLightList.size(); i++) {
@@ -229,10 +236,34 @@ Object3D* World::getIntersectedObject(D3DXVECTOR3 position, D3DXVECTOR3 directio
 void World::addObject(Object3D* object)
 {
 	// Add object to back of list.
+	static int id = 0;
 	object->setWorld(this);
+	object->setId(id);
 	mObjectList.push_back(object);
+	id++;
 }
 	
+void World::removeObject(Object3D* object)
+{
+	// Loop through all objects and find out which one to delete.
+	int i = 0;
+	std::vector<Object3D*>::iterator itr =  mObjectList.begin();
+	while(itr != mObjectList.end() && i < mObjectList.size())
+	{
+		if(mObjectList[i]->getId() == object->getId())
+		{
+			delete mObjectList[i];		
+			mObjectList[i] = NULL;
+			itr = mObjectList.erase(itr);	
+			break;
+		}
+		else	{
+			itr++;
+			i++;
+		}
+	}
+}
+
 void World::addLight(Light* light)
 {
 	// Add light to back of list.

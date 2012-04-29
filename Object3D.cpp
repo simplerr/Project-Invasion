@@ -107,6 +107,11 @@ void Object3D::setType(ObjectType type)
 	mType = type;
 }
 
+void Object3D::setId(int id)
+{
+	mId = id;
+}
+
 D3DXVECTOR3 Object3D::getPosition()
 {
 	return mPosition;
@@ -175,4 +180,9 @@ World* Object3D::getWorld()
 ObjectType  Object3D::getType()
 {
 	return mType;
+}
+
+int Object3D::getId()
+{
+	return mId;
 }

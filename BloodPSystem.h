@@ -28,7 +28,7 @@ public:
 		
 		float speed = 150.0f;
 		out.initialVelocity.x = GetRandomFloat(-1.0f, 1.0f);
-		out.initialVelocity.y = GetRandomFloat(0.5f, 1.0f);
+		out.initialVelocity.y = GetRandomFloat(0.9f, 1.0f);
 		out.initialVelocity.z = GetRandomFloat(-1.0f, 1.0f);
 		out.initialVelocity *= speed;
 	}

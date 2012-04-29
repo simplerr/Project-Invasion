@@ -145,13 +145,13 @@ void Enemy::attacked(float damage)
 		// Set death animation and start the death timer.
 		setAnimation(1);
 		mDeathTimer = 0;
-
-		// Add blood effect.
-		BloodPSystem* bloodEffect = new BloodPSystem(getPosition(), "particle.fx", "ParticleTech", 
-		"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 200, 0.0002f);
-		bloodEffect->setLifetime(0.30f);
-		getWorld()->addObject(bloodEffect);
 	}
+
+	// Add blood effect.
+	BloodPSystem* bloodEffect = new BloodPSystem(getPosition(), "particle.fx", "ParticleTech", 
+	"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 200, 0.02f);
+	bloodEffect->setLifetime(0.30f);
+	getWorld()->addObject(bloodEffect);
 }
 
 D3DXVECTOR3 Enemy::calculateChasingDirection()

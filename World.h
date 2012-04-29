@@ -24,6 +24,8 @@ public:
 	void addLight(Light* light);
 	void addAmbientLight(D3DXCOLOR color);
 
+	void removeObject(Object3D* object);
+
 	void setGravity(float gravity);
 	float getGravity();
 

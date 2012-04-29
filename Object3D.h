@@ -49,6 +49,7 @@ public:
 	void setHeightOffset(float heightOffset);
 	void setWorld(World* world);
 	void setType(ObjectType type);
+	void setId(int id);
 	void kill();
 
 	Dimensions	getScale();
@@ -62,6 +63,7 @@ public:
 	bool		getOnGround();
 	bool		getAlive();
 	float		getHeightOffset();
+	int			getId();
 	vector<IDirect3DTexture9*>* getTextures();
 	World*		getWorld();
 protected:
@@ -81,4 +83,5 @@ protected:
 	bool				mOnGround;
 	bool				mAlive;
 	float				mHeightOffset;
+	int					mId;
 };

@@ -45,9 +45,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
 	InitAllocCheck(ACOutput_XML); // ACOutput_XML
 
 	// Enable run-time memory check for debug builds.
-	/*#if defined(DEBUG) | defined(_DEBUG)
+	#if defined(DEBUG) | defined(_DEBUG)
 		_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	#endif*/
+	#endif
 
 	Game game(hInstance, "DirectX_3D-1", 1200, 800, D3DDEVTYPE_HAL, D3DCREATE_HARDWARE_VERTEXPROCESSING);
 	gGame = &game;
@@ -111,7 +111,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 
 		Enemy* enemy = NULL;
 		if(rand() % 3 != 0)
-			enemy = new Enemy(toroData, pos);
+			enemy = new Enemy(monsterData, pos);
 		else 
 			enemy = new Enemy(monsterData, pos);
 

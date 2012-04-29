@@ -45,7 +45,6 @@ ParticleSystem::ParticleSystem(D3DXVECTOR3 position, string fxName, string techN
 
 ParticleSystem::~ParticleSystem()
 {
-	delete mEffect;
 	ReleaseCOM(mTex);
 	ReleaseCOM(mVB);
 }
