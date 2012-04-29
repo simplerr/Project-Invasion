@@ -215,8 +215,8 @@ Object3D* World::getIntersectedObject(D3DXVECTOR3 position, D3DXVECTOR3 directio
 	{
 		if(mObjectList[i]->getAlive() && mObjectList[i]->rayIntersectAABB(gCamera->getPosition(), gCamera->getDirection()))
 		{
-			mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, distance);
-			if(distance < closestDist) {
+			bool intersect = mObjectList[i]->rayIntersectMesh(gCamera->getPosition(), gCamera->getDirection(), faceIndex, distance);
+			if(intersect && distance < closestDist) {
 				closestObject = mObjectList[i];
 				closestDist = distance;
 			}
