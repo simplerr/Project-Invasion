@@ -36,7 +36,7 @@ void PlayState::init(Game* game)
 	mPlayer->init();
 
 	// Temp test mesh.
-	mCastle = new Mesh("data/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), PROP);
+	mCastle = new Mesh("data/models/castle/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), PROP);
 	mCastle->setScale(5.0f);
 	mWorld->addObject(mCastle);
 

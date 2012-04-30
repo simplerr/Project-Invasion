@@ -5,7 +5,7 @@
 #include "Player.h"
 
 Spawner::Spawner(D3DXVECTOR3 position)
-	: Mesh("data/castle.x", position, SPAWNER)
+	: Mesh("data/models/castle/castle.x", position, SPAWNER)
 {
 
 }

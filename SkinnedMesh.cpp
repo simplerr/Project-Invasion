@@ -16,6 +16,7 @@ SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, ObjectType type)
 	mCurrentTrack =  mCurrentAnimationSet = mCurrentTime = mNumBones = mNumTriangles = mNumVertices = 0;
 	mDeltaTime = 0;
 	mSpeedAdjust = 1.0f;
+	mFileName = filename;
 
 	// Setup the bone matrices, build the toRoot and the skinned mesh.
 	setupBoneMatrices((FrameEx*)mRoot);
@@ -327,9 +328,25 @@ void SkinnedMesh::loadTextures(D3DXFRAME* frame)
 {
 	// Recursively load all textures
 	LPD3DXMESHCONTAINER meshContainer = frame->pMeshContainer;
-	if(meshContainer && meshContainer->pMaterials) {
-		for(int i = 0; i < meshContainer->NumMaterials; i++)
-			mTextures.push_back(gGraphics->loadTexture(meshContainer->pMaterials[i].pTextureFilename));
+	if(meshContainer && meshContainer->pMaterials) 
+	{
+		for(int i = 0; i < meshContainer->NumMaterials; i++) {
+			// Set to the right folder. data/models/<filename>/
+			string texture = meshContainer->pMaterials[i].pTextureFilename;
+			int n = texture.find_last_of('/') == -1 ? 0 : texture.find_last_of('/')+1;
+			texture = texture.substr(n, texture.length());
+
+			string folder = mFileName;
+			if(folder.find('/') != -1) {
+				folder =  folder.substr(folder.find_last_of('/')+1, folder.find_last_of('.') - folder.find_last_of('/')-1);
+			}
+			else {
+				folder = folder.substr(0, folder.length()-2);
+			}
+
+			texture = "data/models/" + folder + '/' + texture;
+			mTextures.push_back(gGraphics->loadTexture(texture));
+		}
 	}
 
 	if(!frame->pFrameFirstChild && !frame->pFrameSibling)

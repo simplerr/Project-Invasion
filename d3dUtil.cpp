@@ -104,7 +104,9 @@ void LoadXFile(
 			{
 				// Yes, load the texture for the ith subset
 				IDirect3DTexture9* tex = 0;
-				std::string source = "data/";
+				std::string source = "data/models";
+				string folder = filename.substr(filename.find_last_of('/'), filename.length() - filename.find_last_of('/') - 2);
+				source += folder + '/';
 				source += d3dxmtrls[i].pTextureFilename;
 
 				tex = gGraphics->loadTexture(source);

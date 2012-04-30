@@ -39,7 +39,7 @@ Material alien_level4 {
  0.000000;0.000000;0.000000;;
 
  TextureFilename {
-  "F:/Users/Axel/Desktop/Bra modeller/player/zombie_monster/alien_level4.bmp";
+  "monster.bmp";
  }
 }
 

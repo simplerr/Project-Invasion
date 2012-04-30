@@ -67,6 +67,8 @@ protected:
 	float				mSpeedAdjust;
 	float				mDeltaTime;
 
+	string				mFileName;
+
 	// [HACK] !
 	ID3DXMesh*			mBaseMesh;
 
