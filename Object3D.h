@@ -15,7 +15,8 @@ enum ObjectType
 	PROP,
 	WEAPON,
 	TERRAIN,
-	PARTICLE_SYSTEM
+	PARTICLE_SYSTEM,
+	SPAWNER
 };
 
 //! Base class for all Object3Ds.
@@ -28,6 +29,7 @@ public:
 	virtual void update(float dt);
 	virtual void draw();
 	virtual void updateWorldMatrix();
+	virtual void init();	// Gets called after the world is set.
 
 	virtual void onLostDevice() {};
 	virtual void onResetDevice() {};

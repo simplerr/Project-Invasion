@@ -10,6 +10,7 @@
 #include "EnemyHandler.h"
 #include "Enemy.h"
 #include "Input.h"
+#include "Wave.h"
 
 PlayState PlayState::mPlayState;
 
@@ -30,7 +31,7 @@ void PlayState::init(Game* game)
 	mWorld->addAmbientLight(D3DCOLOR_ARGB(255, 110, 110, 110));
 
 	// Create a player and add it to the level.
-	mPlayer = new Player(D3DXVECTOR3(0, 2000, 0));
+	mPlayer = new Player(D3DXVECTOR3(0, 2000, 5000));
 	mWorld->addObject(mPlayer);
 	mPlayer->init();
 
@@ -48,30 +49,13 @@ void PlayState::init(Game* game)
 	// Seed the rand() function.
 	srand(time(0));
 
-	// Add test enemies.
-	EnemyData toroData = mWorld->getEnemyData("toro");
-	EnemyData monsterData = mWorld->getEnemyData("monster");
-	for(int i = 0; i < 30; i++)
-	{
-		D3DXVECTOR3 pos(0.0f, 2000.0f, 2000.0f);
-		pos.x += rand() % 2000 - 1000;
-		pos.z +=  rand() % 2000 - 1000;
-
-		Enemy* enemy = NULL;
-		if(rand() % 3 != 0)
-			enemy = new Enemy(monsterData, pos);
-		else 
-			enemy = new Enemy(monsterData, pos);
-
-		enemy->setTarget(mPlayer);
-		mWorld->addObject(enemy);
-	}
-
 	// Important to set the game for changeState() to work!
 	setGame(game);
 
 	// Set the graphics light list.
 	gGraphics->setLightList(mWorld->getLights());
+
+	mCurrenWave = new Wave(mWorld, mPlayer, "Wave1");
 }
 	
 void PlayState::cleanup()
@@ -84,6 +68,10 @@ void PlayState::update(double dt)
 {
 	// Update the world and everything it contains.
 	mWorld->update(dt);
+	mCurrenWave->update(dt);
+
+	if(mCurrenWave->getEnemiesLeft() == 0)
+		MessageBox(0, "Wave completed!", 0, 0);
 
 	// Spot light in the looking direction.
 	mLight->setPosition(gCamera->getPosition() + D3DXVECTOR3(0, 5, 0));
@@ -105,17 +93,23 @@ void PlayState::draw()
 	// Draw the world.
 	mWorld->draw();
 
+	char buffer[256];
+	sprintf(buffer, "Enemies left: %i", mCurrenWave->getEnemiesLeft());
+	gGraphics->drawText(buffer, 700, 300, GREEN);
+
 	// Draw the crosshair.
 	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32);
 }
 
 void PlayState::onLostDevice()
 {
+	// Pass on to the world.
 	mWorld->onLostDevice();
 }
 
 void PlayState::onResetDevice()
 {
+	// Pass on to the world.
 	mWorld->onLostDevice();
 }
 
@@ -139,6 +133,11 @@ void PlayState::limitCursor()
 		ClientToScreen(gGame->getMainWnd(), &cursorPos);
 		SetCursorPos(cursorPos.x, cursorPos.y);
 	}
+}
+
+Wave* PlayState::getCurrentWave()
+{
+	return mCurrenWave;
 }
 
 void PlayState::pause()

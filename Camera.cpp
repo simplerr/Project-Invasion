@@ -152,7 +152,17 @@ void Camera::setPosition(D3DXVECTOR3 position)
 	mPosition = position;
 	mTarget = mPosition + direction;
 }
-	
+
+void Camera::setDirection(D3DXVECTOR3 direction)
+{
+	mTarget = mPosition + direction;
+
+	// Calculate the new direction.
+	mPitch = asinf(direction.y);
+	float r = cosf(mPitch);
+	mYaw = asinf(direction.x / r);
+}
+
 void Camera::setTarget(D3DXVECTOR3 target)
 {
 	mTarget = target;

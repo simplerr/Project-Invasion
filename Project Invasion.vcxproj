@@ -125,11 +125,13 @@
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="Sky.h" />
+    <ClInclude Include="Spawner.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="tinyxml\tinystr.h" />
     <ClInclude Include="tinyxml\tinyxml.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Wave.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponHandler.h" />
     <ClInclude Include="World.h" />
@@ -160,12 +162,14 @@
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SkinnedMesh.cpp" />
     <ClCompile Include="Sky.cpp" />
+    <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="tinyxml\tinystr.cpp" />
     <ClCompile Include="tinyxml\tinyxml.cpp" />
     <ClCompile Include="tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="Vertex.cpp" />
+    <ClCompile Include="Wave.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponHandler.cpp" />
     <ClCompile Include="World.cpp" />
@@ -179,6 +183,7 @@
     <Xml Include="data\enemies.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="data\waves.xml" />
     <Xml Include="data\weapons.xml">
       <SubType>Designer</SubType>
     </Xml>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Waves>
+  <Wave>
+    <Name>Wave1</Name>
+    <Desc>This is the first level! Good luck and try to not die!</Desc>
+    <Enemies>100</Enemies>
+    <MonsterRate></MonsterRate>
+  </Wave>
+</Waves>

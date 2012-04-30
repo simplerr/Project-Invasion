@@ -14,6 +14,7 @@ SkinnedMesh::SkinnedMesh(string filename, D3DXVECTOR3 position, ObjectType type)
 
 	// Starting values.
 	mCurrentTrack =  mCurrentAnimationSet = mCurrentTime = mNumBones = mNumTriangles = mNumVertices = 0;
+	mDeltaTime = 0;
 	mSpeedAdjust = 1.0f;
 
 	// Setup the bone matrices, build the toRoot and the skinned mesh.

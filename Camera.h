@@ -29,6 +29,7 @@ public:
 	void setSpeed(float speed);
 	void setType(CameraType type);
 	void setHeightOffset(float heightOffset);
+	void setDirection(D3DXVECTOR3 direction);
 
 	D3DXMATRIX getViewMatrix();
 	D3DXMATRIX getProjectionMatrix();

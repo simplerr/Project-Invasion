@@ -77,6 +77,11 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	mCurrentState = NULL;
 	changeState(PlayState::Instance());
 	mState = 0;
+
+	LPD3DXFRAME root;
+	ID3DXAnimationController* animCtrl;
+	gMeshFactory->loadSkinnedMesh("data/toro.x", root, animCtrl);
+	gMeshFactory->loadSkinnedMesh("data/monster.x", root, animCtrl);
 }
 
 //! Destructor.

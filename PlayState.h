@@ -2,6 +2,8 @@
 
 #include "GameState.h"
 
+class Wave;
+
 class PlayState : public GameState
 {
 public:
@@ -20,6 +22,8 @@ public:
 
 	void limitCursor();
 
+	Wave* getCurrentWave();
+
 	static PlayState* Instance() {
 		return &mPlayState;
 	}
@@ -32,6 +36,7 @@ private:
 	World*		mWorld;
 	Light*		mLight;
 	Player*		mPlayer;
+	Wave*		mCurrenWave;
 	
 	Mesh*		mCastle;
 	bool		mRotate;

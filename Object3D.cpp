@@ -19,6 +19,11 @@ Object3D::~Object3D()
 	int a = 1;
 }
 
+void Object3D::init()
+{
+
+}
+
 void Object3D::update(float dt)
 {
 	

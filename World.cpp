@@ -10,6 +10,8 @@
 #include "Terrain.h"
 #include "Mesh.h"
 #include "EnemyHandler.h"
+#include "PlayState.h"
+#include "Wave.h"
 
 World::World()
 {
@@ -62,6 +64,10 @@ void World::update(float dt)
 		Object3D* object = mObjectList[i];
 		// Remove from the list if dead.
 		if(!object->getAlive()) {
+			// Inform the current wave about the dead enemy. [TODO] Check if we are in PlayState.
+			if(object->getType() == ENEMY)
+				PlayState::Instance()->getCurrentWave()->enemyKilled();
+
 			removeObject(object);
 			continue;
 		}
@@ -244,6 +250,7 @@ void World::addObject(Object3D* object)
 	static int id = 0;
 	object->setWorld(this);
 	object->setId(id);
+	object->init();
 	mObjectList.push_back(object);
 	id++;
 }

@@ -67,7 +67,7 @@ void Player::update(float dt)
 		setVelocity(D3DXVECTOR3(getVelocity().x, -7.0f, getVelocity().z));
 
 	// Set the camera position.
-	gCamera->setPosition(getPosition());// + D3DXVECTOR3(25, 100, 0) - gCamera->getDirection()*200);
+	gCamera->setPosition(getPosition());
 
 	setRotation(D3DXVECTOR3(0.0f, atan2f(gCamera->getDirection().x, gCamera->getDirection().z), 0));
 

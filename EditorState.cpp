@@ -35,8 +35,8 @@ void EditorState::init(Game* game)
 	gGraphics->setLightList(mWorld->getLights());
 
 	// Setup the camera.
-	gCamera->setPosition(D3DXVECTOR3(0, 2000, 0));
-	gCamera->setTarget(D3DXVECTOR3(0, 0, 0));
+	gCamera->setPosition(D3DXVECTOR3(5000, 8000, 0));
+	gCamera->setDirection(D3DXVECTOR3(0, -1, 0));
 }
 	
 void EditorState::cleanup()
@@ -61,15 +61,19 @@ void EditorState::draw()
 {
 	// Draw the world.
 	mWorld->draw();
+
+	gCamera->drawDebug();
 }
 
 void EditorState::onLostDevice()
 {
+	// Pass on to the world.
 	mWorld->onLostDevice();
 }
 
 void EditorState::onResetDevice()
 {
+	// Pass on to the world.
 	mWorld->onLostDevice();
 }
 
