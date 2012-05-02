@@ -430,6 +430,10 @@ void Graphics::drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, f
 
 void Graphics::drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height)
 {
+	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
+	HR(gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));
+	HR(gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA));
+
 	gd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
 	gd3dDevice->SetVertexDeclaration(VertexPNT::Decl);
 	gd3dDevice->SetStreamSource(0, mTexturedRectangleVB, 0, sizeof(VertexPNT));	

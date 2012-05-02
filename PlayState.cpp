@@ -11,6 +11,7 @@
 #include "Enemy.h"
 #include "Input.h"
 #include "Wave.h"
+#include "RenderTarget.h"
 
 PlayState PlayState::mPlayState;
 
@@ -56,6 +57,8 @@ void PlayState::init(Game* game)
 	gGraphics->setLightList(mWorld->getLights());
 
 	mCurrenWave = new Wave(mWorld, mPlayer, "Wave1");
+
+	mRenderTarget = new RenderTarget(256, 256);
 }
 	
 void PlayState::cleanup()
@@ -93,11 +96,14 @@ void PlayState::draw()
 	// Draw the world.
 	mWorld->draw();
 
+	mWorld->drawToMinimap(mRenderTarget);
+
 	char buffer[256];
 	sprintf(buffer, "Enemies left: %i", mCurrenWave->getEnemiesLeft());
 	gGraphics->drawText(buffer, 700, 300, GREEN);
 
 	// Draw the crosshair.
+	gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 256, 256);
 	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32);
 }
 
@@ -105,12 +111,14 @@ void PlayState::onLostDevice()
 {
 	// Pass on to the world.
 	mWorld->onLostDevice();
+	mRenderTarget->onLostDevice();
 }
 
 void PlayState::onResetDevice()
 {
 	// Pass on to the world.
 	mWorld->onLostDevice();
+	mRenderTarget->onResetDevice();
 }
 
 void PlayState::limitCursor()

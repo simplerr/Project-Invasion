@@ -24,6 +24,7 @@
 #include "GameState.h"
 #include "PlayState.h"
 #include "EditorState.h"
+#include "RenderTarget.h"
 #include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
 
 // Set the globals
@@ -134,6 +135,7 @@ void Game::draw()
 
 	// Debug (very slow).
 	mGfxStats->display();
+	gCamera->drawDebug();
 
 	// Temporary switching between states.
 	if(gInput->keyPressed(VK_F2)) {

@@ -12,6 +12,7 @@
 #include "EnemyHandler.h"
 #include "PlayState.h"
 #include "Wave.h"
+#include "RenderTarget.h"
 
 World::World()
 {
@@ -143,6 +144,51 @@ void World::draw()
 		D3DXMatrixIdentity(&m);
 		gGraphics->drawTexturedCube(NULL, mLightList[i]->getPosition(), Dimensions(3, 3,3), Material(), 0, true, m);
 	}*/
+}
+
+void World::drawToMinimap(RenderTarget* renderTarget)
+{
+	// Save the current render target to restore it later.
+	LPDIRECT3DSURFACE9 backBuffer;
+	gd3dDevice->GetRenderTarget(0, &backBuffer);
+	gd3dDevice->SetRenderTarget(0, renderTarget->getSurface());
+
+	HR(gd3dDevice->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, 0xffffff00, 1.0f, 0xffff));
+
+	// Set the cameras position to bird view.
+	D3DXVECTOR3 position = gCamera->getPosition();
+	float yaw = gCamera->getYaw();
+	float pitch = gCamera->getPitch();
+
+	gCamera->setPosition(position + D3DXVECTOR3(0, 5000, 0));
+	gCamera->setPitch(-D3DX_PI/2);
+	gCamera->rotate();
+	gCamera->updateView();
+
+	// Draw the terrain.
+	mTerrain->draw();
+
+	// Draw all the enemies with a red box and the player with a green.
+	for(int i = 0; i < mObjectList.size(); i++) {
+		if(!mObjectList[i]->getAlive())
+			continue;
+
+		D3DXCOLOR color = RED;
+		if(mObjectList[i]->getType() == PLAYER)
+			color = GREEN;
+
+		// [TODO] Draw a custom minimap icon.
+		gGraphics->drawBoundingBox(mObjectList[i]->getPosition() + D3DXVECTOR3(0, 100, 0), Dimensions(200, 1, 200), color, 1.0f);
+	}
+
+	// Restore the camera.
+	gCamera->setPosition(position);
+	gCamera->setYaw(yaw);
+	gCamera->setPitch(pitch);
+	gCamera->rotate();
+
+	// Change back to the backbuffer.
+	gd3dDevice->SetRenderTarget(0, backBuffer);
 }
 
 void World::editTerrain()

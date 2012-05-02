@@ -14,6 +14,7 @@ class MeshFactory;
 class ParticleSystem;
 class EnemyHandler;
 class GameState;
+class RenderTarget;
 
 class Game : public Runnable
 {

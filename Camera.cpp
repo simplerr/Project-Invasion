@@ -38,30 +38,12 @@ void Camera::update(Terrain* terrain, float dt)
 	// Rotate and move
 	//move();
 	rotate();
-
-	// Walk on the ground if FPS camera.
-	//if(mType == FPS)
-	//{
-	//	BOOL hit = false;
-	//	DWORD faceIndex, hitCount;
-	//	float u, v, dist;
-	//	LPD3DXBUFFER allHits;
-	//	ID3DXMesh* mesh = terrain->getMesh()->getMesh();
-
-	//	D3DXIntersect(mesh, &gCamera->getPosition(), &D3DXVECTOR3(0, -1, 0), &hit, &faceIndex, &u, &v, &dist, &allHits, &hitCount);
-	//	if(hit) 
-	//	{
-	//		height = dist;
-	//		D3DXVECTOR3 pos = getPosition();
-	//		pos.y = pos.y - dist + mHeightOffset;
-	//		setPosition(pos);
-	//	}
-
-	//	/*D3DXVECTOR3 direction = mTarget - mPosition;
-	//	mPosition.y = terrain->getHeight(getPosition().x, getPosition().z) + mHeightOffset;
-	//	mTarget = mPosition + direction;*/
-	//}
 	
+	updateView();
+}
+
+void Camera::updateView()
+{
 	// Update the right vector.
 	D3DXVec3Cross(&mRight, &mUp, &getDirection());
 	D3DXVec3Normalize(&mRight, &mRight);
@@ -137,8 +119,8 @@ void Camera::drawDebug()
 	gGraphics->drawText(buffer, 20, 280, BLUE);
 	sprintf(buffer, "Angle: %f", angle);
 	gGraphics->drawText(buffer, 20, 320, WHITE);
-	sprintf(buffer, "Yaw: %f", Y);
-	gGraphics->drawText(buffer, 20, 360, WHITE);
+	sprintf(buffer, "Yaw: %f Pitch: %f", mYaw, mPitch);
+	gGraphics->drawText(buffer, 20, 360, GREEN);
 }
 
 void Camera::setHeightOffset(float heightOffset)
@@ -213,4 +195,26 @@ D3DXVECTOR3 Camera::getDirection()
 	D3DXVECTOR3 direction;
 	D3DXVec3Normalize(&direction, &(mTarget - mPosition));
 	return direction;
+}
+
+void Camera::setYaw(float yaw)
+{
+	mYaw = yaw;
+	updateView();
+}
+	
+void Camera::setPitch(float pitch)
+{
+	mPitch = pitch;
+	updateView();
+}
+
+float Camera::getYaw()
+{
+	return mYaw;
+}
+
+float Camera::getPitch()
+{
+	return mPitch;
 }

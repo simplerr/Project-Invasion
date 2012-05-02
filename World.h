@@ -9,6 +9,7 @@ class Object3D;
 class Light;
 class Terrain;
 class Sky;
+class RenderTarget;
 
 class World
 {
@@ -18,6 +19,7 @@ public:
 
 	void update(float dt);
 	void draw();
+	void drawToMinimap(RenderTarget* renderTarget);
 
 	void editTerrain();
 

@@ -91,7 +91,7 @@ extern IDirect3DDevice9*		gd3dDevice;
 		HRESULT hr = x;                                \
 		if(FAILED(hr))                                 \
 		{											   \
-			MessageBox(0, "HR Erro! (means trouble)", 0, 0);		   \
+			MessageBox(0, "HR Error! (trouble)", 0, 0);		   \
 			DXTrace(__FILE__, __LINE__, hr, #x, TRUE); \
 		}                                              \
 	}

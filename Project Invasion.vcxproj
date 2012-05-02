@@ -122,6 +122,7 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="Sky.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SkinnedMesh.cpp" />
     <ClCompile Include="Sky.cpp" />

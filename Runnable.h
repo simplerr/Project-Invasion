@@ -47,6 +47,7 @@ public:
 	HINSTANCE				getAppInst();
 	HWND					getMainWnd();
 	D3DPRESENT_PARAMETERS	getPresParams();
+	LPDIRECT3DSURFACE9		getBackBuffer();
 	int						getScreenWidth();
 	int						getScreenHeight();
 
@@ -68,6 +69,7 @@ private:
 	HWND			mhMainWindow;
 	IDirect3D9*		md3dObject;
 	D3DPRESENT_PARAMETERS	md3dPP;
+	LPDIRECT3DSURFACE9 mBackbuffer;
 
 	// Members for the game loop
 	float	mFPS;

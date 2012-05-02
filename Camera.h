@@ -22,6 +22,7 @@ public:
 	void move();
 	void rotate();
 	void drawDebug();
+	void updateView();
 
 	void setPosition(D3DXVECTOR3 position);
 	void setTarget(D3DXVECTOR3 target);
@@ -30,6 +31,11 @@ public:
 	void setType(CameraType type);
 	void setHeightOffset(float heightOffset);
 	void setDirection(D3DXVECTOR3 direction);
+	void setYaw(float yaw);
+	void setPitch(float pitch);
+
+	float getYaw();
+	float getPitch();
 
 	D3DXMATRIX getViewMatrix();
 	D3DXMATRIX getProjectionMatrix();
