@@ -12,6 +12,8 @@
 #include "Input.h"
 #include "Wave.h"
 #include "RenderTarget.h"
+#include "LevelHandler.h"
+#include "Level.h"
 
 PlayState PlayState::mPlayState;
 
@@ -56,9 +58,14 @@ void PlayState::init(Game* game)
 	// Set the graphics light list.
 	gGraphics->setLightList(mWorld->getLights());
 
-	mCurrenWave = new Wave(mWorld, mPlayer, "Wave1");
-
 	mRenderTarget = new RenderTarget(256, 256);
+	mLevelHandler = new LevelHandler();
+	mLevelHandler->setWorld(mWorld);
+	mLevelHandler->setPlayer(mPlayer);
+	mLevelHandler->loadLevels();
+
+	mActiveLevel = mLevelHandler->getLevel(0);
+	mActiveLevel->init();
 }
 	
 void PlayState::cleanup()
@@ -71,9 +78,9 @@ void PlayState::update(double dt)
 {
 	// Update the world and everything it contains.
 	mWorld->update(dt);
-	mCurrenWave->update(dt);
+	mActiveLevel->update(dt);
 
-	if(mCurrenWave->getEnemiesLeft() == 0)
+	if(mActiveLevel->completedWave())
 		MessageBox(0, "Wave completed!", 0, 0);
 
 	// Spot light in the looking direction.
@@ -95,12 +102,8 @@ void PlayState::draw()
 {
 	// Draw the world.
 	mWorld->draw();
-
 	mWorld->drawToMinimap(mRenderTarget);
-
-	char buffer[256];
-	sprintf(buffer, "Enemies left: %i", mCurrenWave->getEnemiesLeft());
-	gGraphics->drawText(buffer, 700, 300, GREEN);
+	mActiveLevel->draw();
 
 	// Draw the crosshair.
 	gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 256, 256);
@@ -145,7 +148,7 @@ void PlayState::limitCursor()
 
 Wave* PlayState::getCurrentWave()
 {
-	return mCurrenWave;
+	return mActiveLevel->getCurrentWave();
 }
 
 void PlayState::pause()

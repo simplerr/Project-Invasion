@@ -168,6 +168,12 @@
     <ClInclude Include="RenderTarget.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="LevelHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -281,6 +287,12 @@
     <ClCompile Include="RenderTarget.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="LevelHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="effects.fx">
@@ -300,7 +312,7 @@
     <Xml Include="data\enemies.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="data\waves.xml">
+    <Xml Include="data\levels.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Levels>
+  <!-- The first level -->
+  <Level>
+    <Name>Level0</Name>
+    <Desc>This is the first level! Good luck and try to not die!</Desc>
+    <SpawnPosition x="0" y="2000" z="0"></SpawnPosition>
+    
+    <Waves>
+      <!-- The first wave -->
+      <Wave>
+        <Enemies>13</Enemies>
+        <InitialEnemies>5</InitialEnemies>
+        <SpawnRate>1.0f</SpawnRate>
+        <SpeedAdjust>1.0f</SpeedAdjust>
+        <DamageAdjust>1.0f</DamageAdjust>
+        <HealthAdjust>1.0f</HealthAdjust>
+        <Spawns>
+          <Spawn x="0" y="2000" z="0"></Spawn>
+          <Spawn x="0" y="2000" z="2000"></Spawn>
+          <Spawn x="0" y="2000" z="-2000"></Spawn>
+        </Spawns>
+      </Wave>
+
+      <!-- The second wave -->
+      <Wave>
+        <Enemies>40</Enemies>
+        <InitialEnemies>10</InitialEnemies>
+        <SpawnRate>0.8f</SpawnRate>
+        <SpeedAdjust>1.1f</SpeedAdjust>
+        <DamageAdjust>1.1f</DamageAdjust>
+        <HealthAdjust>1.1f</HealthAdjust>
+        <Spawns>
+          <Spawn x="2000" y="2000" z="0"></Spawn>
+          <Spawn x="0" y="2000" z="2000"></Spawn>
+          <Spawn x="0" y="2000" z="-2000"></Spawn>
+        </Spawns>
+      </Wave>
+    </Waves>
+  </Level>
+
+  <!-- The second level -->
+</Levels>

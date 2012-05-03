@@ -114,6 +114,8 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelHandler.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
@@ -153,6 +155,8 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelHandler.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
@@ -185,7 +189,7 @@
     <Xml Include="data\enemies.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="data\waves.xml" />
+    <Xml Include="data\levels.xml" />
     <Xml Include="data\weapons.xml">
       <SubType>Designer</SubType>
     </Xml>

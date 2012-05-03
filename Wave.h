@@ -11,22 +11,23 @@ class Spawner;
 class Wave
 {
 public:
-	Wave(World* world, Player* player, string name);
+	Wave(World* world, Player* player);
 	~Wave();
 
 	void update(float dt);
+	void init();
 	void spawnEnemies(int num);
 	void enemyKilled();
 
+	void setData(vector<Spawner*> spawnList, int enemies, int initialEnemies, float spawnRate, float speedAdjust, float damageAdjust, float healthAdjust);
 	void setWorld(World* world);
 	void setPlayer(Player* player);
 	int getEnemiesLeft();
+	int getInitialEnemies();
 private:
 	vector<Spawner*> mSpawnList;
 	World*	mWorld;
 	Player* mPlayer;
-	string	mName;
-	string	mDescription;
 	int		mTotalEnemies;
 	int		mEnemiesLeft;
 	int		mInitialEnemies;

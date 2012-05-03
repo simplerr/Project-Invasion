@@ -1,7 +1,3 @@
-//=============================================================================
-// sprinkler.fx by Frank Luna (C) 2004 All Rights Reserved.
-//=============================================================================
-
 uniform extern float4x4 gWVP;
 uniform extern texture  gTex;
 uniform extern float3   gEyePosL;

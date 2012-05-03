@@ -135,7 +135,7 @@ void Game::draw()
 
 	// Debug (very slow).
 	mGfxStats->display();
-	gCamera->drawDebug();
+	//gCamera->drawDebug();
 
 	// Temporary switching between states.
 	if(gInput->keyPressed(VK_F2)) {

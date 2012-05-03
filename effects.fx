@@ -1,9 +1,3 @@
-//=============================================================================
-// dirLightTex.fx by Frank Luna (C) 2004 All Rights Reserved.
-//
-// Uses a directional light plus texturing.
-//=============================================================================
-
 struct Material
 {
 	float4 ambient;

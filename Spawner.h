@@ -15,6 +15,8 @@ public:
 	void draw();
 	void spawnObject();
 
+	void setAdjusts(float speed, float damage, float health);
+
 	void setPlayer(Player* player);
 private:
 	Player* mPlayer;

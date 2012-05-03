@@ -2,8 +2,10 @@
 
 #include "GameState.h"
 
-class Wave;
+class Level;
 class RenderTarget;
+class LevelHandler;
+class Wave;
 
 class PlayState : public GameState
 {
@@ -35,10 +37,11 @@ private:
 
 	IDirect3DTexture9* mTexture;
 	RenderTarget* mRenderTarget;
+	LevelHandler* mLevelHandler;
+	Level*		mActiveLevel;
 	World*		mWorld;
 	Light*		mLight;
 	Player*		mPlayer;
-	Wave*		mCurrenWave;
 	Mesh*		mCastle;
 	bool		mRotate;
 };	// Class

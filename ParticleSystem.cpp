@@ -1,7 +1,3 @@
-//=============================================================================
-// ParticleSystem.cpp by Frank Luna (C) 2004 All Rights Reserved.
-//=============================================================================
-
 #include <cassert>
 #include "ParticleSystem.h"
 #include "Camera.h"

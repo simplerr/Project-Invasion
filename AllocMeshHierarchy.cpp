@@ -1,7 +1,3 @@
-//=============================================================================
-// AllocMeshHierarchy.cpp by Frank Luna (C) 2005 All Rights Reserved.
-//=============================================================================
-
 #include "AllocMeshHierarchy.h"
 #include "SkinnedMesh.h"
 

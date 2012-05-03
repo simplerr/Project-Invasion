@@ -1,7 +1,3 @@
-//=============================================================================
-// sky.fx by Frank Luna (C) 2004 All Rights Reserved.
-//=============================================================================
-
 uniform extern float4x4 gWVP;
 uniform extern texture  gEnvMap;
 
@@ -14,7 +10,6 @@ sampler EnvMapS = sampler_state
     AddressU  = WRAP;
     AddressV  = WRAP;
 };
-
 
 void SkyVS(float3 posL : POSITION0, 
            out float4 oPosH : POSITION0, 
