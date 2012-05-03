@@ -138,8 +138,6 @@ bool Runnable::initDiRectX()
 	    &md3dPP,				// present parameters
 	    &gd3dDevice));			// return created device to the global
 
-	gd3dDevice->GetRenderTarget(0, &mBackbuffer);
-
 	return true;
 }
 
@@ -460,9 +458,4 @@ void Runnable::drawAll()
 
 	// Present the backbuffer
 	HR(gd3dDevice->Present(0, 0, 0, 0));
-}
-
-LPDIRECT3DSURFACE9 Runnable::getBackBuffer()
-{
-	return mBackbuffer;
 }

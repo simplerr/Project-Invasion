@@ -189,6 +189,7 @@ void World::drawToMinimap(RenderTarget* renderTarget)
 
 	// Change back to the backbuffer.
 	gd3dDevice->SetRenderTarget(0, backBuffer);
+	ReleaseCOM(backBuffer);
 }
 
 void World::editTerrain()
