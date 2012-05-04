@@ -25,7 +25,7 @@
 #include "PlayState.h"
 #include "EditorState.h"
 #include "RenderTarget.h"
-#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
+//#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
 
 // Set the globals
 Runnable*			gGame			= 0;
@@ -44,7 +44,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 //! The program starts here.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
 {
-	InitAllocCheck(ACOutput_XML); // ACOutput_XML
+	//InitAllocCheck(ACOutput_XML); // ACOutput_XML
 
 	// Enable run-time memory check for debug builds.
 	#if defined(DEBUG) | defined(_DEBUG)
@@ -99,7 +99,7 @@ Game::~Game()
 	delete mGfxStats;
 	ReleaseCOM(gd3dDevice);
 
-	DeInitAllocCheck();
+	//DeInitAllocCheck();
 
 	// Clean up all vertex declerations.
 	DestroyAllVertexDeclarations();

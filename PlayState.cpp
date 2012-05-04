@@ -102,11 +102,11 @@ void PlayState::draw()
 {
 	// Draw the world.
 	mWorld->draw();
-	mWorld->drawToMinimap(mRenderTarget);
-	mActiveLevel->draw();
+	//mWorld->drawToMinimap(mRenderTarget);
+	//mActiveLevel->draw();
 
 	// Draw the crosshair.
-	gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 256, 256);
+	//gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 256, 256);
 	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32);
 }
 

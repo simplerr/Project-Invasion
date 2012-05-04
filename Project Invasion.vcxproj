@@ -96,7 +96,6 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AllocMeshHierarchy.h" />
     <ClInclude Include="EditorState.h" />
@@ -140,7 +139,6 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Memory_and_Exception_Trace\Stackwalker.cpp" />
     <ClCompile Include="AllocMeshHierarchy.cpp" />
     <ClCompile Include="BufferFactory.cpp" />
     <ClCompile Include="Camera.cpp" />

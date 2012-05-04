@@ -41,7 +41,6 @@ public:
 	void onLostDevice();
 	void onResetDevice();
 
-	// TODO: Add private
 private:
 	vector<Object3D*>		mObjectList;
 	vector<Light*>			mLightList;

@@ -9,10 +9,10 @@
     <Waves>
       <!-- The first wave -->
       <Wave>
-        <Enemies>13</Enemies>
-        <InitialEnemies>5</InitialEnemies>
+        <Enemies>20</Enemies>
+        <InitialEnemies>10</InitialEnemies>
         <SpawnRate>1.0f</SpawnRate>
-        <SpeedAdjust>1.0f</SpeedAdjust>
+        <SpeedAdjust>10.0f</SpeedAdjust>
         <DamageAdjust>1.0f</DamageAdjust>
         <HealthAdjust>1.0f</HealthAdjust>
         <Spawns>

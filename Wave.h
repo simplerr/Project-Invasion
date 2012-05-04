@@ -34,4 +34,7 @@ private:
 	int		mSpawnedEnemies;
 	float	mSpawnRate;
 	float	mSpawnDelta;
+	float	mSpeedAdjust;
+	float	mDamageAdjust;
+	float	mHealthAdjust;
 };
