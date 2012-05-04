@@ -66,6 +66,7 @@ void PlayState::init(Game* game)
 
 	mActiveLevel = mLevelHandler->getLevel(0);
 	mActiveLevel->init();
+	mActiveLevel->setWorld(mWorld);
 }
 	
 void PlayState::cleanup()
@@ -102,8 +103,8 @@ void PlayState::draw()
 {
 	// Draw the world.
 	mWorld->draw();
+	mActiveLevel->draw();
 	//mWorld->drawToMinimap(mRenderTarget);
-	//mActiveLevel->draw();
 
 	// Draw the crosshair.
 	//gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 256, 256);

@@ -6,6 +6,15 @@
 #include "d3dUtil.h"
 using namespace std;
 
+class World;
+
+enum LevelState
+{
+	LEVEL_STARTED,
+	WAVE_COMPLETED,
+	PLAYING
+};
+
 class Level
 {
 public:
@@ -20,10 +29,15 @@ public:
 	void setWaves(vector<Wave*> waveList);
 	bool completedWave();
 	Wave* getCurrentWave();
+
+	void setWorld(World* world);
 private:
 	vector<Wave*> mWaveList;
 	string mName;
 	string mDescription;
 	D3DXVECTOR3 mPosition;
+	LevelState mState;
+	World* mWorld;
+	float mTimeElapsed;
 	int mCurrentWave;
 };

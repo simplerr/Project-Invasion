@@ -22,6 +22,7 @@ public:
 	void drawToMinimap(RenderTarget* renderTarget);
 
 	void editTerrain();
+	void reset();
 
 	void addObject(Object3D* object);
 	void addLight(Light* light);

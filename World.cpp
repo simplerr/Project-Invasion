@@ -192,6 +192,12 @@ void World::drawToMinimap(RenderTarget* renderTarget)
 	ReleaseCOM(backBuffer);
 }
 
+void World::reset()
+{
+	for(int i = 1; i < mObjectList.size(); i++)
+		removeObject(mObjectList[i]);
+}
+
 void World::editTerrain()
 {
 	BOOL hit = false;

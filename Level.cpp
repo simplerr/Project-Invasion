@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include "Level.h"
+#include "World.h"
 
 Level::Level(string name, string description, D3DXVECTOR3 position)
 {
@@ -18,16 +19,43 @@ void Level::init()
 {
 	// Init the current wave.
 	mWaveList[mCurrentWave]->init();
+	mTimeElapsed = 0.0f;
+	mState = LEVEL_STARTED;
 }
 
 void Level::update(float dt)
 {
+	mTimeElapsed += dt;
+
 	// Update the current wave.
 	mWaveList[mCurrentWave]->update(dt);
+
+	// Wave completed.
+	if(mWaveList[mCurrentWave]->getEnemiesLeft() <= 0) {
+		mState = WAVE_COMPLETED;
+		mCurrentWave++;
+		mWaveList[mCurrentWave]->init();
+		mTimeElapsed = 0.0f;
+		mWorld->reset();
+	}
 }
 
 void Level::draw()
 {
+	if(mTimeElapsed < 3.0f && mState == LEVEL_STARTED)
+		gGraphics->drawText(mDescription, 400, 400, GREEN);
+	else if(mState == LEVEL_STARTED){
+		mTimeElapsed = 0.0f;
+		mState = PLAYING;
+	}
+
+	if(mTimeElapsed < 3.0f && mState == WAVE_COMPLETED)
+		gGraphics->drawText("Wave completed! Prepare for the next one!", 400, 400, GREEN);
+	else if(mState == WAVE_COMPLETED) {
+		mTimeElapsed = 0.0f;
+		mState = PLAYING;
+	}
+
 	char buffer[256];
 	sprintf(buffer, "Enemies left: %i", mWaveList[mCurrentWave]->getEnemiesLeft());
 	gGraphics->drawText(buffer, 700, 300, GREEN);
@@ -54,4 +82,9 @@ bool Level::completedWave()
 Wave* Level::getCurrentWave()
 {
 	return mWaveList[mCurrentWave];
+}
+
+void Level::setWorld(World* world)
+{
+	mWorld = world;
 }
