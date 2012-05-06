@@ -31,12 +31,15 @@ void LevelHandler::loadLevels()
 		string name = levelElement->FirstChild("Name")->ToElement()->GetText();
 		string description = levelElement->FirstChild("Desc")->ToElement()->GetText();
 
-		// Load the spawn position.
-		D3DXVECTOR3 spawnPosition;
+		// Load the difficulty adjusts.
+		TiXmlElement* difficultyElement = levelElement->FirstChildElement("DifficultyAdjusts");
+		float speedAdjust = atof(difficultyElement->Attribute("speed"));
+		float healthAdjust = atof(difficultyElement->Attribute("health"));
+		float damageAdjust = atof(difficultyElement->Attribute("damage"));
+
+		// Load the players spawn position.
 		TiXmlElement* spawnPosElement = levelElement->FirstChild("SpawnPosition")->ToElement();
-		spawnPosition.x = atof(spawnPosElement->Attribute("x"));
-		spawnPosition.y = atof(spawnPosElement->Attribute("y"));
-		spawnPosition.z = atof(spawnPosElement->Attribute("z"));
+		D3DXVECTOR3 spawnPosition(atof(spawnPosElement->Attribute("x")), atof(spawnPosElement->Attribute("y")), atof(spawnPosElement->Attribute("z")));
 
 		// Load all the waves.
 		vector<Wave*> waveList;
@@ -46,58 +49,39 @@ void LevelHandler::loadLevels()
 			Wave* wave = NULL;
 
 			// Read the wave attributes.
-			int enemies = atoi(waveElement->FirstChild("Enemies")->ToElement()->GetText());
-			int initialEnemies = atoi(waveElement->FirstChild("InitialEnemies")->ToElement()->GetText());
-			float spawnRate = atof(waveElement->FirstChild("SpawnRate")->ToElement()->GetText());
-			float speedAdjust = atof(waveElement->FirstChild("SpeedAdjust")->ToElement()->GetText());
-			float damageAdjust = atof(waveElement->FirstChild("DamageAdjust")->ToElement()->GetText());
-			float healthAdjust = atof(waveElement->FirstChild("HealthAdjust")->ToElement()->GetText());
-
-			// Load all the spawns.
-			vector<Spawner*> spawnList;
-			TiXmlElement* spawns = waveElement->FirstChildElement("Spawns");
-			for(TiXmlElement* spawnElement = spawns->FirstChildElement("Spawn"); spawnElement != NULL; spawnElement = spawnElement->NextSiblingElement("Spawn"))
-			{
-				D3DXVECTOR3 position;
-
-				position.x = atof(spawnElement->Attribute("x"));
-				position.y = atof(spawnElement->Attribute("y"));
-				position.z = atof(spawnElement->Attribute("z"));
-
-				spawnList.push_back(new Spawner(position));
-			}
+			int enemies = atoi(waveElement->Attribute("enemies"));
+			int initialEnemies = atoi(waveElement->Attribute("initialEnemies"));
+			float spawnRate = atof(waveElement->Attribute("spawnRate"));
 
 			// Create the wave and add it to the list.
-			wave = new Wave(mWorld, mPlayer);
-			wave->setData(spawnList, enemies, initialEnemies, spawnRate, speedAdjust, damageAdjust, healthAdjust);
+			wave = new Wave(enemies, initialEnemies, spawnRate);
 			waveList.push_back(wave);
 		}
 
+		// Load all the spawns.
+		vector<Spawner*> spawnList;
+		TiXmlElement* spawns = levelElement->FirstChildElement("Spawns");
+		for(TiXmlElement* spawnElement = spawns->FirstChildElement("Spawn"); spawnElement != NULL; spawnElement = spawnElement->NextSiblingElement("Spawn"))
+		{
+			D3DXVECTOR3 position;
+
+			position.x = atof(spawnElement->Attribute("x"));
+			position.y = atof(spawnElement->Attribute("y"));
+			position.z = atof(spawnElement->Attribute("z"));
+
+			spawnList.push_back(new Spawner(position));
+		}
+
 		// Set the levels wave list.
-		level = new Level(name, description, spawnPosition);
+		level = new Level(name, description, spawnPosition, spawnList);
+		level->setDifficultyAdjusts(speedAdjust, healthAdjust, damageAdjust);
 		level->setWaves(waveList);
 		mLevelList.push_back(level);
 	}
 }
 
-vector<Wave*> LevelHandler::loadWaves(TiXmlElement* level)
-{
-	vector<Wave*> waveList;
-
-	return waveList;
-}
 
 Level* LevelHandler::getLevel(int num)
 {
 	return mLevelList[num];
-}
-
-void LevelHandler::setWorld(World* world)
-{
-	mWorld = world;
-}
-	
-void LevelHandler::setPlayer(Player* player)
-{
-	mPlayer = player;
 }

@@ -8,6 +8,8 @@
 using namespace std;
 
 class World;
+class Spawner;
+class Player;
 
 enum LevelState
 {
@@ -20,31 +22,37 @@ enum LevelState
 class Level
 {
 public:
-	Level(string name, string description, D3DXVECTOR3 position);
+	Level(string name, string description, D3DXVECTOR3 position, vector<Spawner*> spawnList);
 	~Level();
 
 	void update(float dt);
 	void draw();
-	void init();
+	void init(World* world, Player* player);
 
 	void launchNextWave();
+	void spawnEnemies(int enemies);
 	void setCurrentWave(int currentWave);
 	void setWaves(vector<Wave*> waveList);
 	void setState(LevelState state, float time = 0.0f);
+	void setDifficultyAdjusts(float speed, float health, float damage);
 	bool completedWave();
 	Wave* getCurrentWave();
 
 	LevelState getState();
-
-	void setWorld(World* world);
 private:
-	vector<Wave*> mWaveList;
+	vector<Wave*>	 mWaveList;
+	vector<Spawner*> mSpawnList;
+	World* mWorld;
 	string mName;
 	string mDescription;
-	D3DXVECTOR3 mPosition;
+	D3DXVECTOR3 mPlayerSpawn;
 	LevelState mState;
-	World* mWorld;
 	StatusText* mStatusText;
-	float mTimer;
+	float	mTimer;
+	float	mSpawnDelta;
+	float	mSpeedAdjust;
+	float	mHealthAdjust;
+	float	mDamageAdjust;
 	int mCurrentWave;
+	int mSpawnedEnemies;
 };

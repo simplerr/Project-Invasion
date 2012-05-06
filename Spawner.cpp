@@ -54,7 +54,7 @@ void Spawner::setPlayer(Player* player)
 	mPlayer = player;
 }
 
-void Spawner::setAdjusts(float speed, float damage, float health)
+void Spawner::setAdjusts(float speed, float health, float damage)
 {
 	// Add multipliers.
 	mMonsterData.speed *= speed;
