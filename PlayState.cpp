@@ -81,8 +81,9 @@ void PlayState::update(double dt)
 	mWorld->update(dt);
 	mActiveLevel->update(dt);
 
-	if(mActiveLevel->completedWave())
-		MessageBox(0, "Wave completed!", 0, 0);
+	if(mActiveLevel->completedWave()) {
+		// Change state etc...
+	}
 
 	// Spot light in the looking direction.
 	mLight->setPosition(gCamera->getPosition() + D3DXVECTOR3(0, 5, 0));

@@ -4,6 +4,7 @@
 #include <string>
 #include "Wave.h"
 #include "d3dUtil.h"
+#include "StatusText.h"
 using namespace std;
 
 class World;
@@ -12,6 +13,7 @@ enum LevelState
 {
 	LEVEL_STARTED,
 	WAVE_COMPLETED,
+	LEVEL_COMPLETED,
 	PLAYING
 };
 
@@ -25,10 +27,14 @@ public:
 	void draw();
 	void init();
 
+	void launchNextWave();
 	void setCurrentWave(int currentWave);
 	void setWaves(vector<Wave*> waveList);
+	void setState(LevelState state, float time = 0.0f);
 	bool completedWave();
 	Wave* getCurrentWave();
+
+	LevelState getState();
 
 	void setWorld(World* world);
 private:
@@ -38,6 +44,7 @@ private:
 	D3DXVECTOR3 mPosition;
 	LevelState mState;
 	World* mWorld;
-	float mTimeElapsed;
+	StatusText* mStatusText;
+	float mTimer;
 	int mCurrentWave;
 };

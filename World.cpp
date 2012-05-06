@@ -134,10 +134,6 @@ void World::draw()
 		mObjectList[i]->draw();
 	}
 
-	char buffer[256];
-	sprintf(buffer, "objects: %i", mObjectList.size());
-	gGraphics->drawText(buffer, 500, 300, RED);
-
 	//gGraphics->drawRay(gCamera->getPosition(), gCamera->getDirection(), 200.0f, 20.0f);
 	/*for(int i = 0; i < mLightList.size(); i++) {
 		D3DXMATRIX m;
@@ -194,8 +190,17 @@ void World::drawToMinimap(RenderTarget* renderTarget)
 
 void World::reset()
 {
-	for(int i = 1; i < mObjectList.size(); i++)
-		removeObject(mObjectList[i]);
+	// Loop through all objects and find out which one to delete.
+	// [NOTE] Skip the player (i = 1).
+	int i = 1;
+	std::vector<Object3D*>::iterator iter =  mObjectList.begin();
+	iter++;
+	while(iter != mObjectList.end() && i < mObjectList.size())
+	{
+		delete mObjectList[i];		
+		mObjectList[i] = NULL;
+		iter = mObjectList.erase(iter);	
+	}
 }
 
 void World::editTerrain()
