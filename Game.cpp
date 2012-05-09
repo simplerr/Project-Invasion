@@ -25,6 +25,7 @@
 #include "PlayState.h"
 #include "EditorState.h"
 #include "RenderTarget.h"
+#include  "SelectLevel.h"
 //#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
 
 // Set the globals
@@ -68,6 +69,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	InitAllVertexDeclarations();
 	
 	gGraphics = new Graphics();
+	gGraphics->init();
 	gCamera = new Camera();
 	gMeshFactory = new MeshFactory();
 	gEffectManager = new EffectManager();
@@ -82,7 +84,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 
 	// Set the current state.
 	mCurrentState = NULL;
-	changeState(PlayState::Instance());
+	changeState(SelectLevel::Instance());
 	mState = 0;
 }
 

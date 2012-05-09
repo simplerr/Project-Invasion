@@ -122,7 +122,11 @@ bool Input::keyReleased(int key)
 */
 Vector Input::mousePosition()
 {
-	return mMousePosition;
+	//return mMousePosition;
+	POINT pos;
+	GetCursorPos(&pos);
+	ScreenToClient(gGame->getMainWnd(), &pos);
+	return Vector(pos.x, pos.y);
 }
 
 //! Set the mouse position.

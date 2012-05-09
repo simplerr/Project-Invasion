@@ -11,6 +11,7 @@
 #include "SkinnedMesh.h"
 #include "Mesh.h"
 #include "Terrain.h"
+#include "Rect.h"
 
 Graphics::Graphics()
 {
@@ -27,7 +28,7 @@ Graphics::Graphics()
 	UINT numElems = 0;
 	VertexPNT::Decl->GetDeclaration(elems, &numElems);
 	D3DXCreateMesh(2, 4, D3DXMESH_MANAGED, elems, gd3dDevice, &mRayMesh);
-
+	
 	onResetDevice();
 }
 	
@@ -41,6 +42,12 @@ Graphics::~Graphics()
 		ReleaseCOM(iter->second);
 
 	delete mBufferFactory;
+	delete mCustomFont;
+}
+
+void Graphics::init()
+{
+	mCustomFont = new Font();
 }
 
 void Graphics::onLostDevice()
@@ -477,10 +484,151 @@ void Graphics::drawScreenTexture(IDirect3DTexture9* texture, float x, float y, i
 	gd3dDevice->SetRenderState(D3DRS_LIGHTING, true);
 }
 
+void Graphics::drawScreenTexture(IDirect3DTexture9* texture, Rect rect)
+{
+	float x = rect.left + (rect.right - rect.left)/2;
+	float y = rect.top + (rect.bottom - rect.top)/2;
+	float width = rect.right - rect.left;
+	float height = rect.bottom - rect.top;
+
+	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
+	HR(gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));
+	HR(gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA));
+
+	gd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
+	gd3dDevice->SetVertexDeclaration(VertexPNT::Decl);
+	gd3dDevice->SetStreamSource(0, mTexturedRectangleVB, 0, sizeof(VertexPNT));	
+
+	VertexPNT *vertices = 0;
+	mTexturedRectangleVB->Lock(0, 0, (void**)&vertices, 0);
+
+	vertices[0].pos.x = x - width/2;
+	vertices[0].pos.y = y - height/2;
+	vertices[0].pos.z = 0.0f;
+	vertices[0].tex0.x = 0.0f;
+	vertices[0].tex0.y = 0.0f;
+
+	vertices[1].pos.x = x + width/2;
+	vertices[1].pos.y = y - height/2;
+	vertices[1].pos.z = 0.0f;
+	vertices[1].tex0.x = 1.0f;
+	vertices[1].tex0.y = 0.0f;
+
+	vertices[2].pos.x = x + width/2;
+	vertices[2].pos.y = y + height/2;
+	vertices[2].pos.z = 0.0f;
+	vertices[2].tex0.x = 1.0f;
+	vertices[2].tex0.y = 1.0f;
+
+	vertices[3].pos.x = x - width/2;
+	vertices[3].pos.y = y + height/2;
+	vertices[3].pos.z = 0.0f;
+	vertices[3].tex0.x = 0.0f;
+	vertices[3].tex0.y = 1.0f;
+
+	// Unlock the vertex buffer.
+	mTexturedRectangleVB->Unlock();
+
+	// Set texture.
+	gd3dDevice->SetTexture(0, texture);
+
+	// Draw image.
+	gd3dDevice->DrawPrimitive(D3DPT_TRIANGLEFAN, 0, 2);
+	gd3dDevice->SetTexture(0, NULL);
+	gd3dDevice->SetRenderState(D3DRS_LIGHTING, true);
+}
+
+void Graphics::drawTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect* srcRect, bool flipped)
+{
+	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
+	HR(gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));
+	HR(gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA));
+
+	gd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
+
+	// Rect size as it weill be drawn on screen
+	Rect drawRect;
+	drawRect.left = x - width/2;
+	drawRect.right = x + width/2;
+	drawRect.top = y - height/2;
+	drawRect.bottom = y + height/2;
+
+	// Normalize to image coordinates
+	if(srcRect != NULL)	{
+		D3DXVECTOR3 center;
+		D3DSURFACE_DESC desc;
+		texture->GetLevelDesc(NULL, &desc);
+		srcRect->left /= desc.Width;
+		srcRect->right /= desc.Width;
+		srcRect->top /= desc.Height;
+		srcRect->bottom /= desc.Height;
+	}
+	else	{
+		srcRect = new Rect();
+		srcRect->left = 0;
+		srcRect->right = 1;
+		srcRect->top = 0;
+		srcRect->bottom = 1;
+	}
+
+	// Flip texture?
+	if(flipped)	{
+		int tmp = srcRect->left;
+		srcRect->left = srcRect->right;
+		srcRect->right = tmp;
+	}
+
+	gd3dDevice->SetVertexDeclaration(VertexPNT::Decl);
+	gd3dDevice->SetStreamSource(0, mTexturedRectangleVB, 0, sizeof(VertexPNT));	
+
+	VertexPNT *vertices = 0;
+	mTexturedRectangleVB->Lock(0, 0, (void**)&vertices, 0);
+
+	vertices[0].pos.x = (float) drawRect.left;
+	vertices[0].pos.y = (float) drawRect.top;
+	vertices[0].pos.z = 0;
+	vertices[0].tex0.x = srcRect->left;
+	vertices[0].tex0.y = srcRect->top;
+
+	vertices[1].pos.x = (float) drawRect.right;
+	vertices[1].pos.y = (float) drawRect.top;
+	vertices[1].pos.z = 0;
+	vertices[1].tex0.x = srcRect->right;
+	vertices[1].tex0.y = srcRect->top;
+
+	vertices[2].pos.x = (float) drawRect.right;
+	vertices[2].pos.y = (float) drawRect.bottom;
+	vertices[2].pos.z = 0;
+	vertices[2].tex0.x = srcRect->right;
+	vertices[2].tex0.y = srcRect->bottom;
+
+	vertices[3].pos.x = (float) drawRect.left;
+	vertices[3].pos.y = (float) drawRect.bottom;
+	vertices[3].pos.z = 0;
+	vertices[3].tex0.x = srcRect->left;
+	vertices[3].tex0.y = srcRect->bottom;
+
+	// Unlock the vertex buffer
+	mTexturedRectangleVB->Unlock();
+
+	// Set texture
+	gd3dDevice->SetTexture (0, texture);
+
+	// Draw content in buffer
+	gd3dDevice->DrawPrimitive(D3DPT_TRIANGLEFAN, 0, 2);
+	gd3dDevice->SetTexture (0, NULL);
+}
+
 void Graphics::drawText(string text, int x, int y, D3DCOLOR textColor)
 {
 	RECT pos = {x, y, 0, 0};
 	HR(mFont->DrawText(0, text.c_str(), -1, &pos, DT_NOCLIP, textColor));
+}
+
+void Graphics::drawFont(string text, int x, int y, int size, D3DXCOLOR color)
+{
+
+	mCustomFont->draw(text, x, y, size, color);
 }
 
 void Graphics::drawTest(ID3DXMesh* mesh, IDirect3DTexture9* texture, D3DXVECTOR3 position, D3DXVECTOR3 rotation)

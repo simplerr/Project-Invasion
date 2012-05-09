@@ -4,6 +4,7 @@
 #include <vector>
 #include "d3dUtil.h"
 #include "Material.h"
+#include "Font.h"
 using namespace std;
 
 class BufferFactory;
@@ -15,6 +16,7 @@ class Material;
 class Light;
 struct Material;
 struct Dimensions;
+struct Rect;
 
 class Graphics
 {
@@ -25,6 +27,7 @@ public:
 	void initBuffers();
 	void initEffect();
 	void initFonts();
+	void init();
 
 	IDirect3DTexture9* loadTexture(string filename, DWORD colorKey = 0);
 
@@ -40,13 +43,15 @@ public:
 	void drawMesh(Mesh* mesh);
 	void drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, float width);
 	void drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height);
+	void drawScreenTexture(IDirect3DTexture9* texture, Rect rect);
+	void drawTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect *srcRect = NULL, bool flipped = false);
+
+	void drawFont(string text, int x, int y, int size = 8, D3DXCOLOR color = BLACK);
+	void drawText(string text, int x, int y, DWORD color = 0xff000000);
+	void drawTest(ID3DXMesh* mesh, IDirect3DTexture9* texture, D3DXVECTOR3 position, D3DXVECTOR3 rotation);
 
 	void onLostDevice();
 	void onResetDevice();
-
-	// OLD AND UGLY
-	void drawText(string text, int x, int y, DWORD color = 0xff000000);
-	void drawTest(ID3DXMesh* mesh, IDirect3DTexture9* texture, D3DXVECTOR3 position, D3DXVECTOR3 rotation);
 
 	void setLightList(vector<Light*>* lightList);
 public:
@@ -99,6 +104,7 @@ public:
 
 	ID3DXFont* mFont;
 	ID3DXMesh* mRayMesh;
+	Font* mCustomFont;
 
 	vector<Light*>* mLightList;
 };
