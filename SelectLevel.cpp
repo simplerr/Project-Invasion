@@ -29,9 +29,17 @@ void SelectLevel::init(Game* game)
 
 	for(int i = 0; i < mLevelHandler->getNumLevels(); i++) {
 		string name = mLevelHandler->getLevel(i)->getName();
-		LevelItem* item = new LevelItem(name, "data/level.png", "data/level_hoover.png");
+		LevelItem* item = new LevelItem(name, "data/level.png", "data/level_hoover.png", "data/level_inactive.png");
 		item->waves = mLevelHandler->getLevel(i)->getNumWaves();
 		item->completedWaves = mLevelHandler->getLevel(i)->getCompletedWaves();
+
+		// Not the first level.
+		if(i != 0) {
+			Level* lastLevel = mLevelHandler->getLevel(i-1);
+			if(lastLevel->getCompletedWaves() < lastLevel->getNumWaves())
+				item->state = INACTIVE;
+		}
+
 		mMenu->addMenuItem(item);
 	}
 
@@ -94,8 +102,8 @@ void SelectLevel::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 }
 
-LevelItem::LevelItem(string name, string standardTextureSource, string onSelectTextureSource)
-	: MenuItem(name, standardTextureSource, onSelectTextureSource)
+LevelItem::LevelItem(string name, string standardTextureSource, string onSelectTextureSource, string inactiveTextureSource)
+	: MenuItem(name, standardTextureSource, onSelectTextureSource, inactiveTextureSource)
 {
 	numLevel = 1;
 	waves = 1;

@@ -2,7 +2,7 @@
 #include "Graphics.h"
 #include "Vector.h"
 
-MenuItem::MenuItem(string name, string standardTextureSource, string onSelectTextureSource)
+MenuItem::MenuItem(string name, string standardTextureSource, string onSelectTextureSource, string inactiveTextureSource)
 {
 	this->itemName = name;
 	this->state = STANDARD;
@@ -12,6 +12,11 @@ MenuItem::MenuItem(string name, string standardTextureSource, string onSelectTex
 		this->onSelectTexture = gGraphics->loadTexture(standardTextureSource);
 	else
 		this->onSelectTexture = gGraphics->loadTexture(onSelectTextureSource);
+
+	if(inactiveTextureSource == "#none")
+		this->inactiveTexture = gGraphics->loadTexture(standardTextureSource);
+	else
+		this->inactiveTexture = gGraphics->loadTexture(inactiveTextureSource);
 
 	this->pressable = true;
 }
@@ -25,8 +30,10 @@ void MenuItem::draw()
 {
 	if(state == STANDARD)
 		gGraphics->drawScreenTexture(standardTexture, rect);
-	else if(state = SELECTED)
+	else if(state == SELECTED)
 		gGraphics->drawScreenTexture(onSelectTexture, rect);
+	else if(state == INACTIVE)
+		gGraphics->drawScreenTexture(inactiveTexture, rect);
 }
 
 void MenuItem::setId(int id)
@@ -88,6 +95,10 @@ void Menu::update(Vector mousePos)
 	{
 		for(int i = 0; i < mItemList.size(); i++)
 		{	
+			// Skip inactive elements.
+			if(mItemList[i]->state == INACTIVE)
+				continue;
+
 			MenuItem* item = mItemList[i];
 			// mouse is inside
 			if(mousePos.x < item->rect.right && mousePos.x > item->rect.left && mousePos.y < item->rect.bottom && mousePos.y > item->rect.top)
@@ -120,6 +131,10 @@ void Menu::update(Vector mousePos)
 
 		for(int i = 0; i < mItemList.size(); i++)
 		{	
+			// Skip inactive elements.
+			if(mItemList[i]->state == INACTIVE)
+				continue;
+
 			MenuItem* item = mItemList[i];
 			if(item->id == mIdCounter){				
 				item->state = SELECTED;

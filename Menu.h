@@ -13,14 +13,14 @@ using namespace std;
 
 class Vector;
 
-enum ButtonState {STANDARD, PRESSED, SELECTED};
+enum ButtonState {STANDARD, PRESSED, SELECTED, INACTIVE};
 enum NavigationType {MOUSE, ARROWKEYS};
 enum MenuType {HOR, VER};
 
 class MenuItem
 {
 public:
-	MenuItem(string name, string standardTextureSource, string onSelectTextureSource = "#none");
+	MenuItem(string name, string standardTextureSource, string onSelectTextureSource = "#none", string inactiveTextureSource ="#none");
 	virtual ~MenuItem();
 
 	virtual void draw();
@@ -28,6 +28,7 @@ public:
 
 	IDirect3DTexture9* standardTexture;
 	IDirect3DTexture9* onSelectTexture;
+	IDirect3DTexture9* inactiveTexture;
 	ButtonState state;
 	string itemName;
 	Rect rect;

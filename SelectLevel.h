@@ -7,7 +7,7 @@
 class LevelItem : public MenuItem
 {
 public:
-	LevelItem(string name, string standardTextureSource, string onSelectTextureSource = "#none");
+	LevelItem(string name, string standardTextureSource, string onSelectTextureSource = "#none", string inactiveTextureSource = "#none");
 	~LevelItem();
 
 	void draw();
