@@ -22,7 +22,6 @@ Font::Font()
 
 Font::~Font()
 {
-	ReleaseCOM(mTexture);
 	ReleaseCOM(mEffect);
 }
 

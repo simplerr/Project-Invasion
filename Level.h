@@ -35,10 +35,14 @@ public:
 	void setWaves(vector<Wave*> waveList);
 	void setState(LevelState state, float time = 0.0f);
 	void setDifficultyAdjusts(float speed, float health, float damage);
+	void setCompletedWaves(int wavesCompleted);
 	bool completedWave();
-	Wave* getCurrentWave();
 
+	Wave* getCurrentWave();
 	LevelState getState();
+	string getName();
+	int getNumWaves();
+	int getCompletedWaves();
 private:
 	vector<Wave*>	 mWaveList;
 	vector<Spawner*> mSpawnList;
@@ -55,4 +59,5 @@ private:
 	float	mDamageAdjust;
 	int mCurrentWave;
 	int mSpawnedEnemies;
+	int mCompletedWaves;
 };

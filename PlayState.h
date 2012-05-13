@@ -25,6 +25,7 @@ public:
 
 	void limitCursor();
 
+	void setLevel(string name);
 	Wave* getCurrentWave();
 
 	static PlayState* Instance() {

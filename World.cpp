@@ -39,6 +39,9 @@ World::~World()
 
 	for(int i = 0; i < mLightList.size(); i++)
 		delete mLightList[i];
+
+	mObjectList.clear();
+	mLightList.clear();
 }
 
 void World::onLostDevice()

@@ -11,6 +11,7 @@
 #include "Enemy.h"
 #include "Input.h"
 #include "Camera.h"
+#include "PlayState.h"
 
 SelectLevel SelectLevel::mSelectLevel;
 
@@ -21,13 +22,29 @@ void SelectLevel::init(Game* game)
 
 	mMenu = new Menu("SelectLevelMenu", NavigationType::MOUSE, HOR); 
 	mMenu->setSize(600, 400, 256, 512);
-	mMenu->addMenuItem(new LevelItem("level1", "data/level1.png", "data/level1_hoover.png"));
-	mMenu->buildMenu(512, 512);
+
+	mLevelHandler = new LevelHandler();
+
+	mLevelHandler->loadLevels();
+
+	for(int i = 0; i < mLevelHandler->getNumLevels(); i++) {
+		string name = mLevelHandler->getLevel(i)->getName();
+		LevelItem* item = new LevelItem(name, "data/level.png", "data/level_hoover.png");
+		item->waves = mLevelHandler->getLevel(i)->getNumWaves();
+		item->completedWaves = mLevelHandler->getLevel(i)->getCompletedWaves();
+		mMenu->addMenuItem(item);
+	}
+
+	mMenu->buildMenu(256, 256);
+	mMenu->connect(&SelectLevel::menuMessage, this);
+
+	ShowCursor(true);
 }
 	
 void SelectLevel::cleanup()
 {
 	delete mMenu;
+	delete mLevelHandler;
 }
 
 void SelectLevel::update(double dt)
@@ -64,6 +81,14 @@ void SelectLevel::resume()
 
 }
 
+bool SelectLevel::menuMessage(string message)
+{
+	changeState(PlayState::Instance());
+	PlayState::Instance()->setLevel(message);
+
+	return false;
+}
+
 void SelectLevel::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 
@@ -74,7 +99,7 @@ LevelItem::LevelItem(string name, string standardTextureSource, string onSelectT
 {
 	numLevel = 1;
 	waves = 1;
-	completedWaves = 1;
+	completedWaves = 0;
 }
 	
 LevelItem::~LevelItem()
@@ -88,8 +113,5 @@ void LevelItem::draw()
 
 	char buffer[256];
 	sprintf(buffer, "completed: %i/%i", completedWaves, waves);
-	gGraphics->drawText(buffer, rect.left + 50, rect.top + 20);
-
-	sprintf(buffer, "hej", numLevel);
-	gGraphics->drawFont(buffer, rect.left + 100, rect.top + 100, 64, BLACK);
+	gGraphics->drawText(buffer, rect.left + 120, rect.top + 200);
 }

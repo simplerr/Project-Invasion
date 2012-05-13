@@ -41,8 +41,8 @@ public:
 	Menu(string name, NavigationType navigation, MenuType type = HOR, int breakCount = 4, bool useFonts = false, int itemAmount = 2, int spacing = 30);
 	~Menu();
 
-	void draw(void);
 	void update(Vector mousePos);
+	void draw(void);
 
 	void addMenuItem(MenuItem* newItem);
 	void buildMenu(int itemWidth = 100, int itemHeight = 50);

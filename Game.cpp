@@ -82,6 +82,8 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	gMeshFactory->loadSkinnedMesh("data/models/toro/toro.x", root, animCtrl);
 	gMeshFactory->loadSkinnedMesh("data/models/monster/monster.x", root, animCtrl);
 
+	ShowCursor(false);
+
 	// Set the current state.
 	mCurrentState = NULL;
 	changeState(SelectLevel::Instance());

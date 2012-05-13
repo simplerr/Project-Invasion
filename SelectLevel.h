@@ -2,6 +2,7 @@
 
 #include "GameState.h"
 #include "Menu.h"
+#include "LevelHandler.h"
 
 class LevelItem : public MenuItem
 {
@@ -28,6 +29,7 @@ public:
 	void update(double dt);
 	void draw();
 	void msgProc(UINT msg, WPARAM wParam, LPARAM lParam);
+	bool menuMessage(string message);
 
 	void onLostDevice();
 	void onResetDevice();
@@ -39,5 +41,6 @@ protected:
 	SelectLevel() {};
 private:
 	static SelectLevel mSelectLevel;
+	LevelHandler* mLevelHandler;
 	Menu* mMenu;
 };	// Class

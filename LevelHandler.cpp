@@ -1,26 +1,36 @@
-#include "tinyxml\tinystr.h";
-#include "tinyxml\tinyxml.h"
 #include "LevelHandler.h"
 #include "Spawner.h"
 
-LevelHandler::LevelHandler()
+LevelHandler::LevelHandler() : mDocument("data\\levels.xml")
 {
 
 }
 	
 LevelHandler::~LevelHandler()
 {
+	// Update the CompletedWaves attribute.
+	TiXmlElement* root = mDocument.FirstChildElement();
 
+	// Load all levels from the file
+	int i = 0;
+	for(TiXmlElement* levelElement = root->FirstChildElement("Level"); levelElement != NULL; levelElement = levelElement->NextSiblingElement("Level"), i++)
+	{
+		char buffer[256];
+		TiXmlElement* waves = levelElement->FirstChildElement("Waves");
+		int j = mLevelList[i]->getCompletedWaves();
+		waves->SetAttribute("completed", mLevelList[i]->getCompletedWaves());
+	}
+
+	mDocument.SaveFile("data\\levels.xml");
 }
 
 void LevelHandler::loadLevels()
 {
 	// Load all different items
-	TiXmlDocument doc("data\\levels.xml");
-	doc.LoadFile();
+	mDocument.LoadFile();
 
 	// Get the root element
-	TiXmlElement* root = doc.FirstChildElement();
+	TiXmlElement* root = mDocument.FirstChildElement();
 
 	// Load all levels from the file
 	for(TiXmlElement* levelElement = root->FirstChildElement("Level"); levelElement != NULL; levelElement = levelElement->NextSiblingElement("Level"))
@@ -44,6 +54,10 @@ void LevelHandler::loadLevels()
 		// Load all the waves.
 		vector<Wave*> waveList;
 		TiXmlElement* waves = levelElement->FirstChildElement("Waves");
+
+		// Completed waves.
+		int completedWaves = atoi(waves->Attribute("completed"));
+
 		for(TiXmlElement* waveElement = waves->FirstChildElement("Wave"); waveElement != NULL; waveElement = waveElement->NextSiblingElement("Wave"))
 		{
 			Wave* wave = NULL;
@@ -75,13 +89,28 @@ void LevelHandler::loadLevels()
 		// Set the levels wave list.
 		level = new Level(name, description, spawnPosition, spawnList);
 		level->setDifficultyAdjusts(speedAdjust, healthAdjust, damageAdjust);
+		level->setCompletedWaves(completedWaves);
 		level->setWaves(waveList);
 		mLevelList.push_back(level);
 	}
 }
 
-
 Level* LevelHandler::getLevel(int num)
 {
 	return mLevelList[num];
+}
+
+Level* LevelHandler::getLevel(string name)
+{
+	for(int i = 0; i < mLevelList.size(); i++) {
+		if(mLevelList[i]->getName() == name)
+			return mLevelList[i];
+	}
+
+	return NULL;
+}
+
+int LevelHandler::getNumLevels()
+{
+	return mLevelList.size();
 }

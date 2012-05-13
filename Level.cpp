@@ -44,10 +44,15 @@ void Level::update(float dt)
 	mStatusText->update(dt);
 
 	// Handle the state.
-	if(mState == WAVE_COMPLETED)
+	if(mState == WAVE_COMPLETED || mState == LEVEL_COMPLETED)
 	{
-		if(mTimer <= 0.0f) 
+		if(mCurrentWave >= mCompletedWaves)
+			mCompletedWaves = mState == LEVEL_COMPLETED ? mWaveList.size() : mCurrentWave;
+		if(mTimer <= 0.0f && mState == WAVE_COMPLETED) {
+			if(mCurrentWave == -1)
+				mCurrentWave++;
 			launchNextWave();
+		}
 	}
 	else if(mState == PLAYING)
 	{
@@ -63,12 +68,13 @@ void Level::update(float dt)
 			// More waves left.
 			if(mCurrentWave <= mWaveList.size() - 2) {
 				setState(WAVE_COMPLETED, 4.0f);
+				mCurrentWave++;
 				mStatusText->setText("Wave completed! Prepare for the next one!", GREEN, 2.0f);
 			}
 			// Last wave.
 			else if(mCurrentWave > mWaveList.size() - 2) {
 				setState(LEVEL_COMPLETED, 2.0f);
-				mStatusText->setText("Level completed!", GREEN, 2.0f);
+				mStatusText->setText("Level completed!", GREEN, 2.0f);				
 			}
 		}
 	}
@@ -87,13 +93,16 @@ void Level::draw()
 		sprintf(buffer, "Time untill next wave: %.2f", mTimer);
 		gGraphics->drawText(buffer, 800, 200, RED);
 	}
+
+	int completed = mState == LEVEL_COMPLETED ? mWaveList.size() : mCurrentWave;
+	sprintf(buffer, "Waves completed: %i/%i", max(0, completed), mWaveList.size());
+	gGraphics->drawText(buffer, 800, 300, RED);
 }
 
 void Level::launchNextWave()
 {
 	mStatusText->setText("Wave incoming!", RED, 2.0f);
 	mState = PLAYING;
-	mCurrentWave++;
 	mSpawnedEnemies = mSpawnDelta = 0;
 
 	// Set the spawn difficulty adjusts.
@@ -137,6 +146,11 @@ void Level::setCurrentWave(int currentWave)
 	mCurrentWave = currentWave;
 }
 
+void Level::setCompletedWaves(int wavesCompleted)
+{
+	mCompletedWaves = wavesCompleted;
+}
+
 void Level::setDifficultyAdjusts(float speed, float health, float damage)
 {
 	mSpeedAdjust = speed;
@@ -157,7 +171,22 @@ Wave* Level::getCurrentWave()
 	return mWaveList[mCurrentWave];
 }
 
+string Level::getName()
+{
+	return mName;
+}
+
 LevelState Level::getState()
 {
 	return mState;
+}
+
+int Level::getNumWaves()
+{
+	return mWaveList.size();
+}
+
+int Level::getCompletedWaves()
+{
+	return mCompletedWaves;
 }

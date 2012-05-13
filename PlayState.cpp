@@ -14,6 +14,7 @@
 #include "RenderTarget.h"
 #include "LevelHandler.h"
 #include "Level.h"
+#include "SelectLevel.h"
 
 PlayState PlayState::mPlayState;
 
@@ -53,7 +54,7 @@ void PlayState::init(Game* game)
 	srand(time(0));
 
 	// Important to set the game for changeState() to work!
-	setGame(game);
+	setGame(game);	
 
 	// Set the graphics light list.
 	gGraphics->setLightList(mWorld->getLights());
@@ -61,15 +62,13 @@ void PlayState::init(Game* game)
 	mRenderTarget = new RenderTarget(256, 256);
 	mLevelHandler = new LevelHandler();
 	mLevelHandler->loadLevels();
-
-	mActiveLevel = mLevelHandler->getLevel(0);
-	mActiveLevel->init(mWorld, mPlayer);
 }
 	
 void PlayState::cleanup()
 {
 	// Cleanup all the game objects.
 	delete mWorld;
+	delete mLevelHandler;
 }
 
 void PlayState::update(double dt)
@@ -79,7 +78,7 @@ void PlayState::update(double dt)
 	mActiveLevel->update(dt);
 
 	if(mActiveLevel->completedWave()) {
-		// Change state etc...
+
 	}
 
 	// Spot light in the looking direction.
@@ -107,6 +106,10 @@ void PlayState::draw()
 	// Draw the crosshair.
 	gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 256, 256);
 	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32);
+
+	// Change state on ESCAPE.
+	if(gInput->keyPressed(VK_ESCAPE))
+		changeState(SelectLevel::Instance());
 }
 
 void PlayState::onLostDevice()
@@ -143,6 +146,12 @@ void PlayState::limitCursor()
 		ClientToScreen(gGame->getMainWnd(), &cursorPos);
 		SetCursorPos(cursorPos.x, cursorPos.y);
 	}
+}
+
+void PlayState::setLevel(string name)
+{
+	mActiveLevel = mLevelHandler->getLevel(name);
+	mActiveLevel->init(mWorld, mPlayer);
 }
 
 Wave* PlayState::getCurrentWave()

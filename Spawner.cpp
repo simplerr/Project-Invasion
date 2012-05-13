@@ -12,7 +12,7 @@ Spawner::Spawner(D3DXVECTOR3 position)
 	
 Spawner::~Spawner()
 {
-
+	int a = 1;
 }
 
 void Spawner::init()

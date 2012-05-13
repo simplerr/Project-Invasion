@@ -4,7 +4,7 @@
 
 MenuItem::MenuItem(string name, string standardTextureSource, string onSelectTextureSource)
 {
-	this->itemName = itemName;
+	this->itemName = name;
 	this->state = STANDARD;
 	this->standardTexture = gGraphics->loadTexture(standardTextureSource);
 
@@ -49,8 +49,7 @@ Menu::~Menu()
 {
 	for(int i = 0; i < mItemList.size(); i++) 
 	{
-		ReleaseCOM(mItemList[i]->standardTexture);
-		ReleaseCOM(mItemList[i]->onSelectTexture);
+		delete mItemList[i];
 	}
 }
 
@@ -80,8 +79,6 @@ void Menu::draw(void)
 	for(int i = 0; i < mItemList.size(); i++)
 	{	
 		mItemList[i]->draw();
-		//if(mUseFonts)
-		//	gGraphics->drawText((char*)item->itemName.c_str(), item->rect.left + 5, item->rect.top + (item->rect.bottom - item->rect.top)/2-10);
 	}	
 }
 
