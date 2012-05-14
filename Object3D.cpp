@@ -11,6 +11,7 @@ Object3D::Object3D(D3DXVECTOR3 position, ObjectType type)
 	setOnGround(false);
 	setHeightOffset(30.0f);
 	setType(type);
+	setFriction(1.0f);
 	mMaterial.specularPower = 128;
 }
 	
@@ -95,6 +96,11 @@ void Object3D::setRotation(D3DXVECTOR3 rotation)
 void Object3D::setOnGround(bool onGround)
 {
 	mOnGround = onGround;
+}
+
+void Object3D::setFriction(float friction)
+{
+	mFriction = friction;
 }
 
 void Object3D::setHeightOffset(float heightOffset)
@@ -182,7 +188,7 @@ World* Object3D::getWorld()
 	return mWorld;
 }
 
-ObjectType  Object3D::getType()
+ObjectType Object3D::getType()
 {
 	return mType;
 }
@@ -190,4 +196,9 @@ ObjectType  Object3D::getType()
 int Object3D::getId()
 {
 	return mId;
+}
+
+float Object3D::getFriction()
+{
+	return mFriction;
 }

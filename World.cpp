@@ -21,7 +21,7 @@ World::World()
 
 	// Create the skybox.
 	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
-	setGravity(-0.023f);
+	setGravity(-0.063f);
 
 	// Create the enemy handler that loads enemy data from .XML files.
 	mEnemyHandler = new EnemyHandler();
@@ -104,7 +104,7 @@ void World::update(float dt)
 		if(object->getOnGround())
 		{
 			float friction = 0.12f;
-			D3DXVECTOR3 velocity = object->getVelocity() * -friction;
+			D3DXVECTOR3 velocity = object->getVelocity() * -friction * object->getFriction();
 			object->accelerate(velocity.x, 0.0f, velocity.z);
 		}
 

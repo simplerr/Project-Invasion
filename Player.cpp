@@ -4,17 +4,22 @@
 #include "Camera.h"
 #include "Weapon.h"
 #include "WeaponHandler.h"
+#include "SkillHandler.h"
+#include "Skill.h"
+#include "Leap.h"
 
 Player::Player(D3DXVECTOR3 position) 
 	: SkinnedMesh("data/models/smith/smith.x", position, PLAYER)
 {
 	mWeaponHandler = new WeaponHandler();
+	mSkillHandler = new SkillHandler();
 
 	mElapsed	= 0.0f;
 	mJumping	= false;
 	mWalkAccel	= 0.1;
 	mMaxSpeed	= 1.1f;
 	mHealth = 60.0f;
+	mArmor = 0.0f;
 
 	setAnimation(2, 0.1f);
 	setSpeedAdjust(3.2f);
@@ -26,6 +31,7 @@ Player::~Player()
 {
 	delete mWeapon;
 	delete mWeaponHandler;
+	delete mSkillHandler;
 }
 
 void Player::init()
@@ -35,10 +41,18 @@ void Player::init()
 	mWeapon = new Weapon(data, getPosition());
 	mWeapon->setAnimation(5);
 	mWeapon->setWorld(getWorld());
+
+	mTestSkill = new Leap(getWorld(), this, mSkillHandler);
 }
 
 void Player::update(float dt)
 {
+	mTestSkill->increment(dt);
+
+	// Skill testing.
+	if(gInput->keyPressed('1'))
+		mTestSkill->ability();
+
 	// Walking or running.
 	if(getVelocity().x != 0 || getVelocity().y != 0 && getOnGround()) {
 		float speed = sqrt(	getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z);
@@ -63,8 +77,8 @@ void Player::update(float dt)
 		setAnimation(2, 0.5f);
 
 	// Limit the fall speed.
-	if(getVelocity().y < -7.0f)
-		setVelocity(D3DXVECTOR3(getVelocity().x, -7.0f, getVelocity().z));
+	if(getVelocity().y < -14.0f)
+		setVelocity(D3DXVECTOR3(getVelocity().x, -14.0f, getVelocity().z));
 
 	// Set the camera position.
 	gCamera->setPosition(getPosition());
@@ -176,4 +190,9 @@ void Player::drawDebug()
 		gGraphics->drawText("On ground!", 500, 400, GREEN);
 	else
 		gGraphics->drawText("In air!", 500, 400, GREEN);
+}
+
+void Player::setArmor(float armor)
+{
+	mArmor = armor;
 }

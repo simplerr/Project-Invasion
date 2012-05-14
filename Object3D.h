@@ -48,6 +48,7 @@ public:
 	void setMaterial(Material material);
 	void setScale(Dimensions dimensions);
 	void setOnGround(bool onGround);
+	void setFriction(float friction);
 	void setHeightOffset(float heightOffset);
 	void setWorld(World* world);
 	void setType(ObjectType type);
@@ -64,6 +65,7 @@ public:
 	AABB		getAABB();
 	bool		getOnGround();
 	bool		getAlive();
+	float		getFriction();
 	float		getHeightOffset();
 	int			getId();
 	vector<IDirect3DTexture9*>* getTextures();
@@ -85,5 +87,6 @@ protected:
 	bool				mOnGround;
 	bool				mAlive;
 	float				mHeightOffset;
+	float				mFriction;
 	int					mId;
 };

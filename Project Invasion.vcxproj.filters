@@ -52,6 +52,12 @@
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{ff32518b-df9d-4708-827b-2b691ace4020}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Skills">
+      <UniqueIdentifier>{e036e1d4-4626-4b29-9a77-7e7dd56d606e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills">
+      <UniqueIdentifier>{6022a0d9-6977-49cd-b54a-5ff206ead3e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h">
@@ -94,9 +100,6 @@
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="Object3D.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="SkinnedMesh.h">
@@ -192,6 +195,18 @@
     <ClInclude Include="Font.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillHandler.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Leap.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -228,9 +243,6 @@
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="SkinnedMesh.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="Object3D.cpp">
@@ -320,6 +332,18 @@
     <ClCompile Include="Font.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillHandler.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Leap.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="effects.fx">
@@ -343,6 +367,9 @@
       <Filter>Resource Files</Filter>
     </Xml>
     <Xml Include="data\levels.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="data\skills.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

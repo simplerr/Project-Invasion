@@ -115,6 +115,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Leap.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelHandler.h" />
     <ClInclude Include="Light.h" />
@@ -130,6 +131,8 @@
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SelectLevel.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillHandler.h" />
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Spawner.h" />
@@ -160,6 +163,7 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Leap.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelHandler.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -173,6 +177,8 @@
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SelectLevel.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillHandler.cpp" />
     <ClCompile Include="SkinnedMesh.cpp" />
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="Spawner.cpp" />
@@ -201,6 +207,7 @@
     <Xml Include="data\levels.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="data\skills.xml" />
     <Xml Include="data\weapons.xml">
       <SubType>Designer</SubType>
     </Xml>

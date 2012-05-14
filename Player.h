@@ -4,6 +4,8 @@
 
 class WeaponHandler;
 class Weapon;
+class Skill;
+class SkillHandler;
 
 class Player : public SkinnedMesh
 {
@@ -17,13 +19,18 @@ public:
 	void attacked(float damage);
 	void pollInput();
 	void drawDebug();
+
+	void setArmor(float armor);
 private:
 	WeaponHandler* mWeaponHandler;
+	SkillHandler* mSkillHandler;
 	Weapon* mWeapon;
+	Skill*	mTestSkill;
 	float	mElapsed;
 	bool	mJumping;
 	bool	mBoost;
 	float	mWalkAccel;
 	float	mMaxSpeed;
 	float	mHealth;
+	float	mArmor;
 };
