@@ -7,7 +7,7 @@ Skill::Skill(string name, World* world, Player* player, SkillHandler* skillHandl
 	mData = skillHandler->getData(name);
 	mWorld = world;
 	mPlayer = player;
-	mDelta = 0.0f;
+	mCooldownDelta = 0.0f;
 }
 	
 Skill::~Skill()
@@ -17,15 +17,15 @@ Skill::~Skill()
 
 void Skill::increment(float dt)
 {
-	mDelta += dt;
+	mCooldownDelta += dt;
 	update(dt);
 }
 	
 void Skill::ability()
 {
-	if(mDelta >= mData.cooldown) {
+	if(mCooldownDelta >= mData.cooldown) {
 		useAbility();
-		mDelta = 0.0f;
+		mCooldownDelta = 0.0f;
 	}
 }
 
@@ -46,5 +46,5 @@ SkillData Skill::getData()
 
 float Skill::getCooldownLeft()
 {
-	return mData.cooldown - mDelta;
+	return mData.cooldown - mCooldownDelta;
 }

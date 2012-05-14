@@ -25,5 +25,5 @@ protected:
 	Player* mPlayer;
 	World*	mWorld;
 	SkillData mData;
-	float mDelta;
+	float mCooldownDelta;
 };

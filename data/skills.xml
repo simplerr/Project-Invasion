@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Skills>
   <Skill name="Leap" range="700.0f" damage="25" cooldown="1.0f" energy="25" icon="data/leap.png"/>
+  <Skill name="IronArmor" cooldown="1.0f" energy="25" icon="data/iron_armor.png"/>
 </Skills>
 

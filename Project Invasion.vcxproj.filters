@@ -207,6 +207,9 @@
     <ClInclude Include="Leap.h">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
+    <ClInclude Include="IronArmor.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -342,6 +345,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Leap.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="IronArmor.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>

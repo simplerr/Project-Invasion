@@ -115,6 +115,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="IronArmor.h" />
     <ClInclude Include="Leap.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelHandler.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="IronArmor.cpp" />
     <ClCompile Include="Leap.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelHandler.cpp" />

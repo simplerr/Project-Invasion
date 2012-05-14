@@ -7,6 +7,7 @@
 #include "SkillHandler.h"
 #include "Skill.h"
 #include "Leap.h"
+#include "IronArmor.h"
 
 Player::Player(D3DXVECTOR3 position) 
 	: SkinnedMesh("data/models/smith/smith.x", position, PLAYER)
@@ -42,7 +43,7 @@ void Player::init()
 	mWeapon->setAnimation(5);
 	mWeapon->setWorld(getWorld());
 
-	mTestSkill = new Leap(getWorld(), this, mSkillHandler);
+	mTestSkill = new IronArmor(getWorld(), this, mSkillHandler);
 }
 
 void Player::update(float dt)
@@ -106,12 +107,15 @@ void Player::draw()
 
 	sprintf(buffer, "Health: %f/%f", mHealth, 100.0f);
 	gGraphics->drawText(buffer, 50, 300, mHealth <= 0 ? RED: GREEN);
+
+	sprintf(buffer, "Armor: %.2f", mArmor);
+	gGraphics->drawText(buffer, 50, 350, RED);
 	//drawDebug();
 }
 
 void Player::attacked(float damage)
 {
-	mHealth -= damage;
+	mHealth -= max(0, damage - mArmor);
 }
 
 void Player::pollInput()
