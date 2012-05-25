@@ -210,6 +210,9 @@
     <ClInclude Include="IronArmor.h">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
+    <ClInclude Include="FrostNova.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -348,6 +351,9 @@
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
     <ClCompile Include="IronArmor.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="FrostNova.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>

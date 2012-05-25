@@ -10,6 +10,7 @@ class Light;
 class Terrain;
 class Sky;
 class RenderTarget;
+enum ObjectType;
 
 class World
 {
@@ -29,6 +30,8 @@ public:
 	void addAmbientLight(D3DXCOLOR color);
 
 	void removeObject(Object3D* object);
+
+	void getObjectsInRadius(vector<Object3D*>& objects, D3DXVECTOR3 position, float radius, ObjectType type);
 
 	void setGravity(float gravity);
 	float getGravity();

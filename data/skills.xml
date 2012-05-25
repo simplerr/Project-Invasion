@@ -2,5 +2,6 @@
 <Skills>
   <Skill name="Leap" range="700.0f" damage="25" cooldown="1.0f" energy="25" icon="data/leap.png"/>
   <Skill name="IronArmor" cooldown="1.0f" energy="25" icon="data/iron_armor.png"/>
+  <Skill name="FrostNova" cooldown="1.0f" energy="25" icon="data/frost_nova.png"/>
 </Skills>
 

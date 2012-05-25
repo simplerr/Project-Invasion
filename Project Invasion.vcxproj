@@ -101,6 +101,7 @@
     <ClInclude Include="AllocMeshHierarchy.h" />
     <ClInclude Include="EditorState.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="FrostNova.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="BloodPSystem.h" />
     <ClInclude Include="BufferFactory.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyHandler.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FrostNova.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GfxStats.cpp" />
     <ClCompile Include="Graphics.cpp" />

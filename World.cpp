@@ -145,6 +145,21 @@ void World::draw()
 	}*/
 }
 
+void World::getObjectsInRadius(vector<Object3D*>& objects, D3DXVECTOR3 position, float radius, ObjectType type)
+{
+	for(int i = 0; i < mObjectList.size(); i++)
+	{
+		if(mObjectList[i]->getType() != type)
+			continue;
+
+		D3DXVECTOR3 diff = mObjectList[i]->getPosition() - position;
+		float dist = sqrt(diff.x*diff.x + diff.z*diff.z);
+
+		if(dist <= radius)
+			objects.push_back(mObjectList[i]);
+	}
+}
+
 void World::drawToMinimap(RenderTarget* renderTarget)
 {
 	// Save the current render target to restore it later.
