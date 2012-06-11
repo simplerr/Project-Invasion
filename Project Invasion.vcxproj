@@ -100,6 +100,7 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="AllocMeshHierarchy.h" />
+    <ClInclude Include="Bar.h" />
     <ClInclude Include="EditorState.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FrostNova.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GfxStats.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Gui.h" />
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IronArmor.h" />
@@ -152,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllocMeshHierarchy.cpp" />
+    <ClCompile Include="Bar.cpp" />
     <ClCompile Include="BufferFactory.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="d3dUtil.cpp" />
@@ -165,6 +168,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GfxStats.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Gui.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="IronArmor.cpp" />

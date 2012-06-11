@@ -213,6 +213,12 @@
     <ClInclude Include="FrostNova.h">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
+    <ClInclude Include="Bar.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -355,6 +361,12 @@
     </ClCompile>
     <ClCompile Include="FrostNova.cpp">
       <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="Bar.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

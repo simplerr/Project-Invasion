@@ -15,6 +15,7 @@
 #include "LevelHandler.h"
 #include "Level.h"
 #include "SelectLevel.h"
+#include "Gui.h"
 
 PlayState PlayState::mPlayState;
 
@@ -62,6 +63,8 @@ void PlayState::init(Game* game)
 	mRenderTarget = new RenderTarget(256, 256);
 	mLevelHandler = new LevelHandler();
 	mLevelHandler->loadLevels();
+
+	mGui = new Gui(mPlayer);
 }
 	
 void PlayState::cleanup()
@@ -69,6 +72,7 @@ void PlayState::cleanup()
 	// Cleanup all the game objects.
 	delete mWorld;
 	delete mLevelHandler;
+	delete mGui;
 }
 
 void PlayState::update(double dt)
@@ -94,6 +98,9 @@ void PlayState::update(double dt)
 
 	// Limit the cursor movement (only inside the window).
 	limitCursor();
+
+	// Update the Gui.
+	mGui->update(dt);
 }
 	
 void PlayState::draw()
@@ -110,6 +117,9 @@ void PlayState::draw()
 	// Change state on ESCAPE.
 	if(gInput->keyPressed(VK_ESCAPE))
 		changeState(SelectLevel::Instance());
+
+	// Draw the Gui.
+	mGui->draw();
 }
 
 void PlayState::onLostDevice()

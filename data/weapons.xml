@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Weapons>
-  <Weapon name="mp5" filename="data/models/mp5/mp5.x" damage="50.0f" range="1000" rateOfFire="0.1" clipSize="300"></Weapon>
+  <Weapon name="mp5" filename="data/models/mp5/mp5.x" damage="50.0f" range="1000" rateOfFire="0.1" clipSize="100"></Weapon>
 </Weapons>

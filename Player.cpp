@@ -102,14 +102,8 @@ void Player::draw()
 	mWeapon->draw();
 
 	char buffer[256];
-	sprintf(buffer, "Ammo: %i/%i", mWeapon->getAmmo(), mWeapon->getClipSize());
-	gGraphics->drawText(buffer, 50, 200, GREEN);
-
-	sprintf(buffer, "Health: %f/%f", mHealth, 100.0f);
-	gGraphics->drawText(buffer, 50, 300, mHealth <= 0 ? RED: GREEN);
-
 	sprintf(buffer, "Armor: %.2f", mArmor);
-	gGraphics->drawText(buffer, 50, 350, RED);
+	gGraphics->drawText(buffer, 950, 700, RED);
 	//drawDebug();
 }
 
@@ -199,4 +193,14 @@ void Player::drawDebug()
 void Player::setArmor(float armor)
 {
 	mArmor = armor;
+}
+
+int Player::getAmmo()
+{
+	return mWeapon->getAmmo();
+}
+
+int Player::getHealth()
+{
+	return mHealth;
 }

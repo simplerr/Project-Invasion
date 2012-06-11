@@ -19,6 +19,8 @@ public:
 	void attacked(float damage);
 	void pollInput();
 	void drawDebug();
+	int getAmmo();
+	int getHealth();
 
 	void setArmor(float armor);
 private:

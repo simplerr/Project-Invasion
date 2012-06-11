@@ -6,6 +6,7 @@ class Level;
 class RenderTarget;
 class LevelHandler;
 class Wave;
+class Gui;
 
 class PlayState : public GameState
 {
@@ -44,5 +45,6 @@ private:
 	Light*		mLight;
 	Player*		mPlayer;
 	Mesh*		mCastle;
+	Gui*		mGui;
 	bool		mRotate;
 };	// Class
