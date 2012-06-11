@@ -41,7 +41,7 @@ void Weapon::draw()
 
 	char buffer[256];
 	sprintf(buffer, "counter: %i", counter);
-	gGraphics->drawText(buffer, 40, 400, GREEN);
+	gGraphics->drawText(buffer, 40, 400, GREEN, 18);
 }
 
 void Weapon::triggerDown()

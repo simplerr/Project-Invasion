@@ -47,7 +47,7 @@ public:
 	void drawTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect *srcRect = NULL, bool flipped = false);
 
 	void drawFont(string text, int x, int y, int size = 8, D3DXCOLOR color = BLACK);
-	void drawText(string text, int x, int y, DWORD color = 0xff000000);
+	void drawText(string text, int x, int y, DWORD color = 0xff000000, int size = 18);
 	void drawTest(ID3DXMesh* mesh, IDirect3DTexture9* texture, D3DXVECTOR3 position, D3DXVECTOR3 rotation);
 
 	void onLostDevice();
@@ -102,6 +102,7 @@ public:
 	IDirect3DTexture9* mBlendMap;
 	IDirect3DTexture9* mWhiteTexture;
 
+	map<int, ID3DXFont*> mFontList;
 	ID3DXFont* mFont;
 	ID3DXMesh* mRayMesh;
 	Font* mCustomFont;

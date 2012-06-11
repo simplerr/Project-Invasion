@@ -53,13 +53,17 @@ void Graphics::init()
 void Graphics::onLostDevice()
 {
 	mFX->OnLostDevice();
-	mFont->OnLostDevice();
+
+	for(auto iter = mFontList.begin(); iter != mFontList.end(); iter++)
+		(*iter).second->OnLostDevice();
 }
 	
 void Graphics::onResetDevice()
 {
 	mFX->OnResetDevice();
-	mFont->OnResetDevice();
+
+	for(auto iter = mFontList.begin(); iter != mFontList.end(); iter++)
+		(*iter).second->OnResetDevice();
 
 	// Ortho projection when not using shader pipeline.
 	D3DXMATRIX m;
@@ -70,11 +74,6 @@ void Graphics::onResetDevice()
 
     D3DXMatrixOrthoOffCenterRH (&m, 0, 1200, 800, 0, 0, 1);
     gd3dDevice->SetTransform(D3DTS_PROJECTION, &m);
-
-	// Use texture alpha channel.
-	gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 
 IDirect3DTexture9* Graphics::loadTexture(string filename, DWORD colorKey)
@@ -154,8 +153,8 @@ void Graphics::initBuffers()
 void Graphics::initFonts()
 {
 	D3DXFONT_DESC fontDesc;
-	fontDesc.Height          = 18;
-    fontDesc.Width           = 8;
+	fontDesc.Height          = 28;
+    fontDesc.Width           = 14;
     fontDesc.Weight          = 0;
     fontDesc.MipLevels       = 1;
     fontDesc.Italic          = false;
@@ -540,7 +539,7 @@ void Graphics::drawScreenTexture(IDirect3DTexture9* texture, Rect rect)
 
 void Graphics::drawTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect* srcRect, bool flipped)
 {
-	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
+	//HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
 	HR(gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));
 	HR(gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA));
 
@@ -619,15 +618,33 @@ void Graphics::drawTextureAtlas(IDirect3DTexture9* texture, float x, float y, in
 	gd3dDevice->SetTexture (0, NULL);
 }
 
-void Graphics::drawText(string text, int x, int y, D3DCOLOR textColor)
+void Graphics::drawText(string text, int x, int y, D3DCOLOR textColor, int size)
 {
 	RECT pos = {x, y, 0, 0};
-	HR(mFont->DrawText(0, text.c_str(), -1, &pos, DT_NOCLIP, textColor));
+	if(mFontList.find(size) != mFontList.end())
+		mFontList[size]->DrawText(0, text.c_str(), -1, &pos, DT_NOCLIP, textColor);
+	else {
+		ID3DXFont* font;
+		D3DXFONT_DESC fontDesc;
+		fontDesc.Height          = size;
+		fontDesc.Width           = size/2;
+		fontDesc.Weight          = 0;
+		fontDesc.MipLevels       = 1;
+		fontDesc.Italic          = false;
+		fontDesc.CharSet         = DEFAULT_CHARSET;
+		fontDesc.OutputPrecision = OUT_DEFAULT_PRECIS;
+		fontDesc.Quality         = 10;
+		fontDesc.PitchAndFamily  = DEFAULT_PITCH | FF_DONTCARE;
+			_tcscpy(fontDesc.FaceName, _T("Bitstream Vera Sans Mono"));
+
+		HR(D3DXCreateFontIndirect(gd3dDevice, &fontDesc, &font));
+		mFontList[size] = font;
+		//mFontList[size]->DrawText(0, text.c_str(), -1, &pos, DT_NOCLIP, textColor);
+	}
 }
 
 void Graphics::drawFont(string text, int x, int y, int size, D3DXCOLOR color)
 {
-
 	mCustomFont->draw(text, x, y, size, color);
 }
 

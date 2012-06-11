@@ -134,6 +134,8 @@ void Game::update(float dt)
 //! Draws everything.
 void Game::draw()
 {
+	gGraphics->drawFont("test!", 400, 200, 32, D3DCOLOR_ARGB(255, 230, 174, 6));
+
 	// Draw the current state.
 	mCurrentState->draw();
 
