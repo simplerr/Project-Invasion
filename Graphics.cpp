@@ -223,7 +223,7 @@ void Graphics::setEffectParameters(D3DXMATRIX world)
 	HR(mFX->SetRawValue(mhObjectMaterial, (void*)&Material(), 0, sizeof(Material)));
 }
 
-void Graphics::drawTexturedCube(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, Material material, float rotation, bool solid, D3DXMATRIX m)
+void Graphics::drawScreenTexturedCube(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, Material material, float rotation, bool solid, D3DXMATRIX m)
 {
 	// Set effect data
 	HR(mFX->SetTechnique(mhTexTech));
@@ -537,7 +537,7 @@ void Graphics::drawScreenTexture(IDirect3DTexture9* texture, Rect rect)
 	gd3dDevice->SetRenderState(D3DRS_LIGHTING, true);
 }
 
-void Graphics::drawTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect* srcRect, bool flipped)
+void Graphics::drawScreenTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect* srcRect, bool flipped)
 {
 	//HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
 	HR(gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));

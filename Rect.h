@@ -10,6 +10,14 @@ struct Rect
 		this->bottom = bottom;
 	}
 
+	float getWidth() {
+		return right - left;
+	}
+
+	float getHeight() {
+		return bottom - top;
+	}
+
 	float left;
 	float right;
 	float top;

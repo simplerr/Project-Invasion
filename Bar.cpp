@@ -35,7 +35,7 @@ void Bar::draw()
 
 	// Draw the bar textures.
 	gGraphics->drawScreenTexture(mBorderTexture, mPosition.x - 18, mPosition.y, mWidth + 22, mHeight);
-	gGraphics->drawTextureAtlas(mBarTexture, mPosition.x - (float)(mWidth-20)/2 + (float)(mWidth-20)*filled/2, mPosition.y, (mWidth-20)*filled, mHeight-10, &sourceRect);
+	gGraphics->drawScreenTextureAtlas(mBarTexture, mPosition.x - (float)(mWidth-20)/2 + (float)(mWidth-20)*filled/2, mPosition.y, (mWidth-20)*filled, mHeight-10, &sourceRect);
 	gGraphics->drawScreenTexture(mIconTexture, mPosition.x - 115, mPosition.y, 20, 20);
 
 	// Draw text.

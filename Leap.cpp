@@ -15,6 +15,8 @@ Leap::~Leap()
 
 void Leap::update(float dt)
 {
+	increment(dt);
+
 	if(mLeapedDist != -1)
 	{
 		D3DXVECTOR3 diff = mPlayer->getPosition() - mStartPos;

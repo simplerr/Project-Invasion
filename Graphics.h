@@ -37,14 +37,14 @@ public:
 	void drawBoundingBox(Object3D* object, D3DXCOLOR color, float opacity = 0.5f);
 	void drawBoundingBox(D3DXVECTOR3 position, Dimensions dimensions, D3DXCOLOR color = WHITE, float opacity = 0.5f);
 
-	void drawTexturedCube(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, Material material = Material(), float rotation = 0.0f, bool solid = true, D3DXMATRIX m = D3DXMATRIX());
+	void drawScreenTexturedCube(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, Material material = Material(), float rotation = 0.0f, bool solid = true, D3DXMATRIX m = D3DXMATRIX());
 	void drawSkinnedMesh(SkinnedMesh* skinnedMesh);
 	void drawTerrain(Terrain* terrain);
 	void drawMesh(Mesh* mesh);
 	void drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, float width);
 	void drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height);
 	void drawScreenTexture(IDirect3DTexture9* texture, Rect rect);
-	void drawTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect *srcRect = NULL, bool flipped = false);
+	void drawScreenTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect *srcRect = NULL, bool flipped = false);
 
 	void drawFont(string text, int x, int y, int size = 8, D3DXCOLOR color = BLACK);
 	void drawText(string text, int x, int y, DWORD color = 0xff000000, int size = 18);

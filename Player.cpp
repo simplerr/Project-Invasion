@@ -19,7 +19,8 @@ Player::Player(D3DXVECTOR3 position)
 	mJumping	= false;
 	mWalkAccel	= 0.1;
 	mMaxSpeed	= 1.1f;
-	mHealth = 60.0f;
+	mHealth = 100.0f;
+	mEnergy = 100.0f;
 	mArmor = 0.0f;
 
 	setAnimation(2, 0.1f);
@@ -48,8 +49,6 @@ void Player::init()
 
 void Player::update(float dt)
 {
-	mTestSkill->increment(dt);
-
 	// Skill testing.
 	if(gInput->keyPressed('1'))
 		mTestSkill->ability();
@@ -93,7 +92,6 @@ void Player::update(float dt)
 void Player::draw()
 {
 	//SkinnedMesh::draw();
-
 	D3DXVECTOR3 knifePos = gCamera->getPosition();
 	knifePos += gCamera->getDirection() * 15.0f;
 
@@ -101,15 +99,19 @@ void Player::draw()
 	mWeapon->setRotation(gCamera->getDirection());
 	mWeapon->draw();
 
-	char buffer[256];
-	sprintf(buffer, "Armor: %.2f", mArmor);
-	gGraphics->drawText(buffer, 950, 700, RED);
 	//drawDebug();
+}
+
+void Player::reset()
+{
+	mEnergy = 100.0f;
+	mHealth = 100.0f;
 }
 
 void Player::attacked(float damage)
 {
-	mHealth -= max(0, damage - mArmor);
+	mHealth -= max(damage - mArmor, 0);
+	mHealth = max(0, mHealth);
 }
 
 void Player::pollInput()
@@ -203,4 +205,16 @@ int Player::getAmmo()
 int Player::getHealth()
 {
 	return mHealth;
+}
+
+int Player::getEnergy()
+{
+	return mEnergy;
+}
+
+void Player::useEnergy(int usedEnergy)
+{
+	mEnergy -=  usedEnergy;
+
+	mEnergy = max(mEnergy, 0);
 }

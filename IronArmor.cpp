@@ -15,6 +15,8 @@ IronArmor::~IronArmor()
 
 void IronArmor::update(float dt)
 {
+	increment(dt);
+
 	if(mDelta != -1) {
 		mDelta += dt;
 

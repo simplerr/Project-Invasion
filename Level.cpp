@@ -23,6 +23,8 @@ Level::~Level()
 
 void Level::init(World* world, Player* player)
 {
+	mPlayer = player;
+
 	// Setup the spawns.
 	for(int i = 0; i < mSpawnList.size(); i++) {
 		mSpawnList[i]->setPlayer(player);
@@ -112,6 +114,8 @@ void Level::launchNextWave()
 
 	// Spawn the initial enemies in the wave.
 	spawnEnemies(mWaveList[mCurrentWave]->getInitialEnemies());
+
+	mPlayer->reset();
 }
 
 void Level::spawnEnemies(int enemies)

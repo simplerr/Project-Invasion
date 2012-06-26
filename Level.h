@@ -47,6 +47,7 @@ private:
 	vector<Wave*>	 mWaveList;
 	vector<Spawner*> mSpawnList;
 	World* mWorld;
+	Player* mPlayer;
 	string mName;
 	string mDescription;
 	D3DXVECTOR3 mPlayerSpawn;

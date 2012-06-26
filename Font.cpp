@@ -52,12 +52,12 @@ void Font::draw(string text, int x, int y, int size, DWORD color)
 
 			if(pos <= 25)	{
 				Rect sourceRect((float)pos * 8 + 1, (float)pos * 8 + 8, (float)0, (float)7);
-				gGraphics->drawTextureAtlas(mTexture, x + (size + 2) * i, y, size, size, &sourceRect);
+				gGraphics->drawScreenTextureAtlas(mTexture, x + (size + 2) * i, y, size, size, &sourceRect);
 			}
 			else if(pos > 25)	{
 				pos -= 27;
 				Rect sourceRect((float)pos * 8 + 1, (float)pos * 8 + 8, (float)8, (float)15);
-				gGraphics->drawTextureAtlas(mTexture, x + (size + 2) *i, y, size, size, &sourceRect);
+				gGraphics->drawScreenTextureAtlas(mTexture, x + (size + 2) *i, y, size, size, &sourceRect);
 			}
 		}
 

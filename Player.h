@@ -16,11 +16,15 @@ public:
 	void update(float dt);
 	void draw();
 	void init();
+	void reset();
 	void attacked(float damage);
 	void pollInput();
 	void drawDebug();
 	int getAmmo();
 	int getHealth();
+	int getEnergy();
+
+	void useEnergy(int usedEnergy);
 
 	void setArmor(float armor);
 private:
@@ -35,4 +39,5 @@ private:
 	float	mMaxSpeed;
 	float	mHealth;
 	float	mArmor;
+	float	mEnergy;
 };

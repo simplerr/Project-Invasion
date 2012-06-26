@@ -15,7 +15,7 @@ FrostNova::~FrostNova()
 
 void FrostNova::update(float dt)
 {
-
+	increment(dt);
 }
 	
 void FrostNova::useAbility()

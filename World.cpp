@@ -141,7 +141,7 @@ void World::draw()
 	/*for(int i = 0; i < mLightList.size(); i++) {
 		D3DXMATRIX m;
 		D3DXMatrixIdentity(&m);
-		gGraphics->drawTexturedCube(NULL, mLightList[i]->getPosition(), Dimensions(3, 3,3), Material(), 0, true, m);
+		gGraphics->drawScreenTexturedCube(NULL, mLightList[i]->getPosition(), Dimensions(3, 3,3), Material(), 0, true, m);
 	}*/
 }
 

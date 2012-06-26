@@ -1,15 +1,17 @@
 #pragma once
 #include "SkillHandler.h"
+#include "SlotItem.h"
 
 class World;
 class Player;
 
-class Skill
+class Skill : public SlotItem
 {
 public:
 	Skill(string name, World* world, Player* player, SkillHandler* skillHandler);
 	virtual ~Skill();
 
+	void draw(Rect rect);
 	void increment(float dt);
 	void ability();
 
@@ -17,10 +19,10 @@ public:
 	float		getCooldownLeft();
 
 private:
-	virtual void update(float dt);
 	virtual void useAbility();
 
 protected:
+	IDirect3DTexture9* mDarkTexture;
 	SkillHandler* mSkillHandler;
 	Player* mPlayer;
 	World*	mWorld;

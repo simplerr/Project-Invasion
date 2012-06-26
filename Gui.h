@@ -2,6 +2,8 @@
 
 class Bar;
 class Player;
+class SkillBar;
+class SkillHandler;
 
 class Gui
 {
@@ -14,7 +16,10 @@ public:
 
 	void setPlayer(Player* player);
 private:
-	Player* mPlayer;
-	Bar* mHealthBar;
-	Bar* mAmmoBar;
+	Player*		mPlayer;
+	SkillHandler* mSkillHandler;
+	SkillBar*	mSkillBar;
+	Bar*		mHealthBar;
+	Bar*		mAmmoBar;
+	Bar*		mEneryBar;
 };

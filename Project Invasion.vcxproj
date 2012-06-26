@@ -137,9 +137,12 @@
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SelectLevel.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="Container.h" />
+    <ClInclude Include="SkillBar.h" />
     <ClInclude Include="SkillHandler.h" />
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="Sky.h" />
+    <ClInclude Include="SlotItem.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="StatusText.h" />
     <ClInclude Include="Terrain.h" />
@@ -157,6 +160,7 @@
     <ClCompile Include="Bar.cpp" />
     <ClCompile Include="BufferFactory.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Container.cpp" />
     <ClCompile Include="d3dUtil.cpp" />
     <ClCompile Include="EditorState.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -187,9 +191,11 @@
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SelectLevel.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillBar.cpp" />
     <ClCompile Include="SkillHandler.cpp" />
     <ClCompile Include="SkinnedMesh.cpp" />
     <ClCompile Include="Sky.cpp" />
+    <ClCompile Include="SlotItem.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="StatusText.cpp" />
     <ClCompile Include="Terrain.cpp" />
