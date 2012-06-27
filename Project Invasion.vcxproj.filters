@@ -64,6 +64,12 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{4fdfae43-dee6-48f0-9af8-8133b73762de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\World\Powerups">
+      <UniqueIdentifier>{5b530ea8-0f8d-47a7-aa5e-99cc59f47eda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Powerups">
+      <UniqueIdentifier>{4772d2ef-fabe-4dea-85fa-2c73a5b66434}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h">
@@ -234,6 +240,15 @@
     <ClInclude Include="SkillBar.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="PowerupSpawner.h">
+      <Filter>Header Files\World\Powerups</Filter>
+    </ClInclude>
+    <ClInclude Include="Powerup.h">
+      <Filter>Header Files\World\Powerups</Filter>
+    </ClInclude>
+    <ClInclude Include="EnergyPowerup.h">
+      <Filter>Header Files\World\Powerups</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -391,6 +406,15 @@
     </ClCompile>
     <ClCompile Include="SlotItem.cpp">
       <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerupSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Powerup.cpp">
+      <Filter>Source Files\World\Powerups</Filter>
+    </ClCompile>
+    <ClCompile Include="EnergyPowerup.cpp">
+      <Filter>Source Files\World\Powerups</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

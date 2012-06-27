@@ -197,6 +197,12 @@ void Player::setArmor(float armor)
 	mArmor = armor;
 }
 
+void Player::setEnergy(float energy)
+{
+	mEnergy = energy;
+	mEnergy = min(mEnergy, 100);
+}
+
 int Player::getAmmo()
 {
 	return mWeapon->getAmmo();

@@ -27,6 +27,7 @@ public:
 	void useEnergy(int usedEnergy);
 
 	void setArmor(float armor);
+	void setEnergy(float energy);
 private:
 	WeaponHandler* mWeaponHandler;
 	SkillHandler* mSkillHandler;

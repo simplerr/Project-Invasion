@@ -16,7 +16,9 @@ enum ObjectType
 	WEAPON,
 	TERRAIN,
 	PARTICLE_SYSTEM,
-	SPAWNER
+	SPAWNER,
+	POWERUP,
+	ENERGY_POWERUP
 };
 
 //! Base class for all Object3Ds.

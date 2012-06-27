@@ -10,6 +10,7 @@ using namespace std;
 class World;
 class Spawner;
 class Player;
+class PowerupSpawner;
 
 enum LevelState
 {
@@ -46,6 +47,7 @@ public:
 private:
 	vector<Wave*>	 mWaveList;
 	vector<Spawner*> mSpawnList;
+	PowerupSpawner* mPowerupSpawner;
 	World* mWorld;
 	Player* mPlayer;
 	string mName;

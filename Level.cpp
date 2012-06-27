@@ -3,6 +3,7 @@
 #include "World.h"
 #include "Spawner.h"
 #include "Player.h"
+#include "PowerupSpawner.h"
 
 Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Spawner*> spawnList)
 {
@@ -18,7 +19,7 @@ Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Sp
 	
 Level::~Level()
 {
-
+	delete mPowerupSpawner;
 }
 
 void Level::init(World* world, Player* player)
@@ -37,10 +38,16 @@ void Level::init(World* world, Player* player)
 	mStatusText->setText(mDescription, GREEN, 3.0f);
 
 	mWorld = world;
+
+	// Setup the powerup spawner.
+	mPowerupSpawner = new PowerupSpawner(0, 0, 1000);
+	mPowerupSpawner->setWorld(mWorld);
 }
 
 void Level::update(float dt)
 {
+	mPowerupSpawner->update(dt);
+
 	mSpawnDelta += dt;
 	mTimer -= dt;
 	mStatusText->update(dt);
@@ -84,6 +91,8 @@ void Level::update(float dt)
 
 void Level::draw()
 {
+	mPowerupSpawner->draw();
+
 	mStatusText->draw();
 
 	static char buffer[256];

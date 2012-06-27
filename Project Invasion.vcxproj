@@ -102,6 +102,7 @@
     <ClInclude Include="AllocMeshHierarchy.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="EditorState.h" />
+    <ClInclude Include="EnergyPowerup.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FrostNova.h" />
     <ClInclude Include="GameState.h" />
@@ -132,6 +133,8 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="Powerup.h" />
+    <ClInclude Include="PowerupSpawner.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Runnable.h" />
@@ -167,6 +170,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyHandler.cpp" />
+    <ClCompile Include="EnergyPowerup.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FrostNova.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -187,6 +191,8 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="Powerup.cpp" />
+    <ClCompile Include="PowerupSpawner.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SelectLevel.cpp" />

@@ -13,6 +13,8 @@
 #include "PlayState.h"
 #include "Wave.h"
 #include "RenderTarget.h"
+#include "Player.h"
+#include "Powerup.h"
 
 World::World()
 {
@@ -62,6 +64,8 @@ void World::onResetDevice()
 
 void World::update(float dt)
 {
+	Player* player = NULL;
+
 	// Update all the objects.
 	for(int i = 0; i < mObjectList.size(); i++)
 	{
@@ -112,10 +116,30 @@ void World::update(float dt)
 		// [NOTE] Only update the objects position here! Change the speed on other places instead!
 		D3DXVECTOR3 speed = object->getVelocity();
 		object->move(speed.x, speed.y, speed.z);
+
+		if(object->getType() == PLAYER)
+			player = dynamic_cast<Player*>(object);
 	}
 
 	// Update the camera.
 	gCamera->update(mTerrain, dt);
+
+	// [HACK]
+	// Test if player is in range of a powerup.
+	if(player != NULL) 
+	{
+		for(int i = 0; i < mObjectList.size(); i++) {
+			if(mObjectList[i]->getType() == ENERGY_POWERUP) {
+				D3DXVECTOR3 dist = mObjectList[i]->getPosition() - player->getPosition();
+				dist.y = 0.0f;
+				float d = sqrt(dist.x*dist.x + dist.z*dist.z);
+				if(d < 400) // PICKUP_RADIUS
+					(dynamic_cast<Powerup*>(mObjectList[i]))->pickup(player);
+			}
+			else
+				continue;
+		}
+	}
 
 	// Terrain editing.
 	// [NOTE] Disabled.
@@ -143,6 +167,10 @@ void World::draw()
 		D3DXMatrixIdentity(&m);
 		gGraphics->drawScreenTexturedCube(NULL, mLightList[i]->getPosition(), Dimensions(3, 3,3), Material(), 0, true, m);
 	}*/
+
+	char buffer[256];
+	sprintf(buffer, "SS: %i", mObjectList.size());
+	gGraphics->drawText(buffer, 200, 500);
 }
 
 void World::getObjectsInRadius(vector<Object3D*>& objects, D3DXVECTOR3 position, float radius, ObjectType type)
