@@ -28,6 +28,5 @@ private:
 	float mReloadTime;
 	float mReloadElapsed;
 	int	mAmmo;
-	int counter;
 	bool mRealoading;
 };

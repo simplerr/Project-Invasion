@@ -12,7 +12,6 @@ Weapon::Weapon(WeaponData data, D3DXVECTOR3 position)
 	mReloadElapsed = 0.0f;
 	mRealoading = false;
 	mDeltaTime = 0.0f;
-	counter = 0;
 }
 
 Weapon::~Weapon()
@@ -38,10 +37,6 @@ void Weapon::update(float dt)
 void Weapon::draw()
 {
 	SkinnedMesh::draw();
-
-	char buffer[256];
-	sprintf(buffer, "counter: %i", counter);
-	gGraphics->drawText(buffer, 40, 400, GREEN, 18);
 }
 
 void Weapon::triggerDown()
@@ -60,7 +55,6 @@ void Weapon::triggerDown()
 		// [TODO] Check if enemy.
 		if(intersected != NULL) {
 			intersected->attacked(mData.damage);
-			counter++;
 		}
 
 		mDeltaTime = 0.0f;

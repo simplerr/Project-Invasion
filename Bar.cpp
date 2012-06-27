@@ -10,7 +10,7 @@ Bar::Bar(string barTexture, string iconTexture, float max)
 	mMax = max;
 	mCurrent = max;
 	mWidth = 210;
-	mHeight = 38;
+	mHeight = 28;
 }
 	
 Bar::~Bar()
@@ -34,14 +34,14 @@ void Bar::draw()
 	sourceRect.bottom = 1.0f;
 
 	// Draw the bar textures.
-	gGraphics->drawScreenTexture(mBorderTexture, mPosition.x - 18, mPosition.y, mWidth + 22, mHeight);
-	gGraphics->drawScreenTextureAtlas(mBarTexture, mPosition.x - (float)(mWidth-20)/2 + (float)(mWidth-20)*filled/2, mPosition.y, (mWidth-20)*filled, mHeight-10, &sourceRect);
+	//gGraphics->drawScreenTexture(mBorderTexture, mPosition.x - 18, mPosition.y, mWidth + 22, mHeight);
+	gGraphics->drawScreenTextureAtlas(mBarTexture, mPosition.x - (float)(mWidth-20)/2 + (float)(mWidth-20)*filled/2, mPosition.y, (mWidth-20)*filled, mHeight, &sourceRect);
 	gGraphics->drawScreenTexture(mIconTexture, mPosition.x - 115, mPosition.y, 20, 20);
 
 	// Draw text.
 	char buffer[256];
 	sprintf(buffer, "%.0f/%.0f", mCurrent, mMax);
-	gGraphics->drawText(buffer, mPosition.x-64, mPosition.y-39, BLACK, 18);
+	gGraphics->drawText(buffer, mPosition.x-54, mPosition.y-41, BLACK, 18);
 }
 	
 void Bar::setPosition(float x, float y)

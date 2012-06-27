@@ -1,5 +1,7 @@
 #pragma once
 
+#include "d3dUtil.h"
+
 class Bar;
 class Player;
 class SkillBar;
@@ -19,6 +21,7 @@ private:
 	Player*		mPlayer;
 	SkillHandler* mSkillHandler;
 	SkillBar*	mSkillBar;
+	IDirect3DTexture9* mAmmoIcon;
 	Bar*		mHealthBar;
 	Bar*		mAmmoBar;
 	Bar*		mEneryBar;

@@ -18,15 +18,15 @@ Gui::Gui(Player* player)
 
 	// Health bar.
 	mHealthBar = new Bar("data\\bar.bmp", "data\\heart_icon.png", 100);
-	mHealthBar->setPosition(1075, 650);
-
-	// Ammo bar.
-	mAmmoBar = new Bar("data\\bar.bmp", "data\\ammo_icon.png", 100);
-	mAmmoBar->setPosition(1075, 750);
+	mHealthBar->setPosition(1075, 680);
 
 	// Energy bar.
 	mEneryBar = new Bar("data\\bar.bmp", "data\\energy_icon.png", 100);
-	mEneryBar->setPosition(1075, 700);
+	mEneryBar->setPosition(1075, 720);
+
+	// Ammo bar.
+	mAmmoBar = new Bar("data\\bar.bmp", "data\\ammo_icon.png", 100);
+	mAmmoBar->setPosition(1075, 760);
 }
 	
 Gui::~Gui()
