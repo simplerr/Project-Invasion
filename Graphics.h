@@ -35,15 +35,15 @@ public:
 	void setEffectData(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, Material material, float rotation = 0.0f, D3DXMATRIX m = D3DXMATRIX(), bool useM = false);
 
 	void drawBoundingBox(Object3D* object, D3DXCOLOR color, float opacity = 0.5f);
-	void drawBoundingBox(D3DXVECTOR3 position, Dimensions dimensions, D3DXCOLOR color = WHITE, float opacity = 0.5f);
+	void drawBoundingBox(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, D3DXCOLOR color = WHITE, float opacity = 0.5f);
 
 	void drawScreenTexturedCube(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, Material material = Material(), float rotation = 0.0f, bool solid = true, D3DXMATRIX m = D3DXMATRIX());
 	void drawSkinnedMesh(SkinnedMesh* skinnedMesh);
 	void drawTerrain(Terrain* terrain);
 	void drawMesh(Mesh* mesh);
 	void drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, float width);
-	void drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height);
-	void drawScreenTexture(IDirect3DTexture9* texture, Rect rect);
+	void drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height, bool smothing = true);
+	void drawScreenTexture(IDirect3DTexture9* texture, Rect rect, bool smothing = true);
 	void drawScreenTextureAtlas(IDirect3DTexture9* texture, float x, float y, int width, int height, Rect *srcRect = NULL, bool flipped = false);
 
 	void drawFont(string text, int x, int y, int size = 8, D3DXCOLOR color = BLACK);

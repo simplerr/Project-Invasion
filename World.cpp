@@ -133,7 +133,7 @@ void World::update(float dt)
 				D3DXVECTOR3 dist = mObjectList[i]->getPosition() - player->getPosition();
 				dist.y = 0.0f;
 				float d = sqrt(dist.x*dist.x + dist.z*dist.z);
-				if(d < 400) // PICKUP_RADIUS
+				if(d < 70) // PICKUP_RADIUS
 					(dynamic_cast<Powerup*>(mObjectList[i]))->pickup(player);
 			}
 			else
@@ -167,10 +167,6 @@ void World::draw()
 		D3DXMatrixIdentity(&m);
 		gGraphics->drawScreenTexturedCube(NULL, mLightList[i]->getPosition(), Dimensions(3, 3,3), Material(), 0, true, m);
 	}*/
-
-	char buffer[256];
-	sprintf(buffer, "SS: %i", mObjectList.size());
-	gGraphics->drawText(buffer, 200, 500);
 }
 
 void World::getObjectsInRadius(vector<Object3D*>& objects, D3DXVECTOR3 position, float radius, ObjectType type)
@@ -212,15 +208,11 @@ void World::drawToMinimap(RenderTarget* renderTarget)
 
 	// Draw all the enemies with a red box and the player with a green.
 	for(int i = 0; i < mObjectList.size(); i++) {
-		if(!mObjectList[i]->getAlive())
+		if(!mObjectList[i]->getAlive() || mObjectList[i]->getType() == PARTICLE_SYSTEM || mObjectList[i]->getType() == SPAWNER)
 			continue;
 
-		D3DXCOLOR color = RED;
-		if(mObjectList[i]->getType() == PLAYER)
-			color = GREEN;
-
-		// [TODO] Draw a custom minimap icon.
-		gGraphics->drawBoundingBox(mObjectList[i]->getPosition() + D3DXVECTOR3(0, 100, 0), Dimensions(200, 1, 200), color, 1.0f);
+		// Draw minimap icon.
+		gGraphics->drawBoundingBox(mObjectList[i]->getMinimapTexture(), mObjectList[i]->getPosition() + D3DXVECTOR3(0, 1500, 0), Dimensions(200, 1, 200), WHITE, 1.0f);
 	}
 
 	// Restore the camera.

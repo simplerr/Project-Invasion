@@ -6,9 +6,10 @@ PowerupSpawner::PowerupSpawner(float x, float z, float size)
 {
 	mCenter = D3DXVECTOR3(x, 0, z);
 	mSize = size;
-	mSpawnInterval = 1.0f;
-	mMaxPowerups = 10;
+	mSpawnInterval = 5.0f;
+	mMaxPowerups = 2;
 	mNumSpawned = 0;
+	mDelta = 0.0f;
 }
 
 PowerupSpawner::~PowerupSpawner()
@@ -18,14 +19,15 @@ PowerupSpawner::~PowerupSpawner()
 
 void PowerupSpawner::update(float dt)
 {
-	static float delta = 0;
-	delta += dt;
+	mDelta += dt;
 
-	if(delta >= mSpawnInterval && mNumSpawned < mMaxPowerups) {
+	if(mDelta >= mSpawnInterval && mNumSpawned < mMaxPowerups) {
 		spawnPowerup();
-		delta = 0;
 		mNumSpawned++;
+		mDelta = 0;
 	}
+	else if(mNumSpawned >= mMaxPowerups && mDelta <= mSpawnInterval)
+		mDelta = 0;
 }
 	
 void PowerupSpawner::draw()

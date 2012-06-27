@@ -5,6 +5,7 @@
 #include "SkillHandler.h"
 #include "Leap.h"
 #include "IronArmor.h"
+#include "Graphics.h"
 
 Gui::Gui(Player* player)
 {
@@ -18,15 +19,17 @@ Gui::Gui(Player* player)
 
 	// Health bar.
 	mHealthBar = new Bar("data\\bar.bmp", "data\\heart_icon.png", 100);
-	mHealthBar->setPosition(1075, 680);
+	mHealthBar->setPosition(1075, 670);
 
 	// Energy bar.
 	mEneryBar = new Bar("data\\bar.bmp", "data\\energy_icon.png", 100);
-	mEneryBar->setPosition(1075, 720);
+	mEneryBar->setPosition(1075, 710);
 
 	// Ammo bar.
 	mAmmoBar = new Bar("data\\bar.bmp", "data\\ammo_icon.png", 100);
-	mAmmoBar->setPosition(1075, 760);
+	mAmmoBar->setPosition(1075, 750);
+
+	mUiBorder = gGraphics->loadTexture("data/ui_border.png");
 }
 	
 Gui::~Gui()
@@ -46,10 +49,14 @@ void Gui::update(float dt)
 	
 void Gui::draw()
 {
+	gGraphics->drawScreenTexture(mUiBorder, 1058, 710, 285, 180);
+
 	mSkillBar->draw();
 	mHealthBar->draw();
 	mAmmoBar->draw();
 	mEneryBar->draw();
+
+	gGraphics->drawScreenTexture(mUiBorder, 128, 672, 256, 256);
 }
 
 void Gui::setPlayer(Player* player)

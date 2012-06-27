@@ -28,7 +28,7 @@ void Spawner::update(float dt)
 	
 void Spawner::draw()
 {
-	Mesh::draw();
+	
 }
 
 void Spawner::spawnObject()

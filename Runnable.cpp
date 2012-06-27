@@ -428,7 +428,6 @@ void Runnable::setRenderStates()
 	HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR));
 	HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR));
 
-	gd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

@@ -72,8 +72,11 @@ public:
 	int			getId();
 	vector<IDirect3DTexture9*>* getTextures();
 	World*		getWorld();
+	void setMinimapTexture(string source);
+	IDirect3DTexture9* getMinimapTexture();
 protected:
 	vector<IDirect3DTexture9*>	mTextures;
+	IDirect3DTexture9*	mMinimapIcon;
 	World*				mWorld;
 	D3DXMATRIX			mWorldMatrix;
 	D3DXMATRIX			mInvWorldMatrix;

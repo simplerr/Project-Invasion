@@ -27,6 +27,8 @@ Player::Player(D3DXVECTOR3 position)
 	setSpeedAdjust(3.2f);
 	setHeightOffset(100.0f);
 	mBoost = false;
+
+	setMinimapTexture("data/player_icon.png");
 }
 
 Player::~Player()

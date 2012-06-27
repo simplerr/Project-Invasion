@@ -16,6 +16,7 @@ Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
 	mAttackTimer = 0.0f;
 	mPatrolTimer = 0.0f;
 	setSpeedAdjust(min(data.speed, 3));
+	setMinimapTexture("data/enemy_icon.png");
 }
 
 Enemy::~Enemy()

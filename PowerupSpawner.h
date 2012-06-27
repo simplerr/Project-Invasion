@@ -19,6 +19,7 @@ public:
 private:
 	World* mWorld;
 	D3DXVECTOR3 mCenter;
+	float mDelta;
 	int mSize;
 	int mSpawnInterval;
 	int mMaxPowerups;

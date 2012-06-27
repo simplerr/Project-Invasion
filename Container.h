@@ -8,9 +8,8 @@ using namespace std;
 //! Represents a slot in any container
 struct Slot
 {
-	Slot(int x, int y, SlotId id) {
+	Slot(int x, int y, int size, SlotId id) {
 		slotId = id;
-		int size = 50;
 		taken = false;
 		rect.left = x - size/2;
 		rect.right = x + size/2;
@@ -28,6 +27,7 @@ struct Slot
 class Container
 {
 public:
+	// [NOTE] width and height has no effect.
 	Container(int x, int y, int width, int height);
 	virtual ~Container();
 
@@ -41,7 +41,7 @@ public:
 	virtual void releasedMovingItem(SlotItem* item) {};
 
 	//virtual void addItem(string itemName);
-	void addSlot(int x, int y, SlotId id);
+	void addSlot(int x, int y, int size, SlotId id);
 	//void removeItem(SlotItem item);
 	void swapItems(Slot* slot1, Slot* slot2);
 

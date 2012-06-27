@@ -284,13 +284,17 @@ void Graphics::drawBoundingBox(Object3D* object, D3DXCOLOR color, float opacity)
 	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false));
 }
 
-void Graphics::drawBoundingBox(D3DXVECTOR3 position, Dimensions dimensions, D3DXCOLOR color, float opacity)
+void Graphics::drawBoundingBox(IDirect3DTexture9* texture, D3DXVECTOR3 position, Dimensions dimensions, D3DXCOLOR color, float opacity)
 {
 	// Set effect data
 	HR(mFX->SetTechnique(mhTexTech));
 	Material material(color, 8.0f);
 	material.diffuse.a = opacity;
-	setEffectData(mWhiteTexture, position, dimensions, material);
+
+	if(texture == NULL)
+		setEffectData(mWhiteTexture, position, dimensions, material);
+	else
+		setEffectData(texture, position, dimensions, material);
 
 	// Set stream source and vertex declarations
 	HR(gd3dDevice->SetVertexDeclaration(VertexPNT::Decl));
@@ -434,8 +438,21 @@ void Graphics::drawRay(D3DXVECTOR3 start, D3DXVECTOR3 direction, float length, f
 	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false));
 }
 
-void Graphics::drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height)
+void Graphics::drawScreenTexture(IDirect3DTexture9* texture, float x, float y, int width, int height, bool smothing)
 {
+	if(smothing) 
+	{
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR));
+	}
+	else
+	{
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE));
+	}
+
 	HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
 	HR(gd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));
 	HR(gd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA));
@@ -483,8 +500,21 @@ void Graphics::drawScreenTexture(IDirect3DTexture9* texture, float x, float y, i
 	gd3dDevice->SetRenderState(D3DRS_LIGHTING, true);
 }
 
-void Graphics::drawScreenTexture(IDirect3DTexture9* texture, Rect rect)
+void Graphics::drawScreenTexture(IDirect3DTexture9* texture, Rect rect, bool smothing)
 {
+	if(smothing) 
+	{
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR));
+	}
+	else
+	{
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE));
+		HR(gd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE));
+	}
+
 	float x = rect.left + (rect.right - rect.left)/2;
 	float y = rect.top + (rect.bottom - rect.top)/2;
 	float width = rect.right - rect.left;

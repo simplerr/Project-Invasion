@@ -111,8 +111,7 @@ void PlayState::draw()
 	mWorld->drawToMinimap(mRenderTarget);
 
 	// Draw the crosshair.
-	gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 256, 256);
-	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32);
+	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32, false);
 
 	// Change state on ESCAPE.
 	if(gInput->keyPressed(VK_ESCAPE))
@@ -120,6 +119,9 @@ void PlayState::draw()
 
 	// Draw the Gui.
 	mGui->draw();
+
+	// Minimap.
+	gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 230, 230);
 }
 
 void PlayState::onLostDevice()

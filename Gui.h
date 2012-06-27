@@ -22,6 +22,7 @@ private:
 	SkillHandler* mSkillHandler;
 	SkillBar*	mSkillBar;
 	IDirect3DTexture9* mAmmoIcon;
+	IDirect3DTexture9* mUiBorder;
 	Bar*		mHealthBar;
 	Bar*		mAmmoBar;
 	Bar*		mEneryBar;

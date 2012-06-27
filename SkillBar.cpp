@@ -7,14 +7,15 @@
 #include "World.h"
 #include "SkillHandler.h"
 
-SkillBar::SkillBar(Player* player, World* world, SkillHandler* skillHandler) : Container(450, 750, 600, 90)
+SkillBar::SkillBar(Player* player, World* world, SkillHandler* skillHandler) : Container(425, 750, 700, 110)
 {
 	// Set the player
 	mPlayer = player;
 
 	// Add the slots.
+	int SIZE = 65;
 	for(int i = 0; i < 6; i++) 
-		addSlot(getPosition().x + i*50, getPosition().y, SKILL);
+		addSlot(getPosition().x + i*SIZE, getPosition().y, SIZE, SKILL);
 
 	// Set visible
 	show();

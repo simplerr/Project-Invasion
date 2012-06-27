@@ -12,6 +12,7 @@ Object3D::Object3D(D3DXVECTOR3 position, ObjectType type)
 	setHeightOffset(30.0f);
 	setType(type);
 	setFriction(1.0f);
+	setMinimapTexture("data/white.bmp");
 	mMaterial.specularPower = 128;
 }
 	
@@ -201,4 +202,14 @@ int Object3D::getId()
 float Object3D::getFriction()
 {
 	return mFriction;
+}
+
+void Object3D::setMinimapTexture(string source)
+{
+	mMinimapIcon = gGraphics->loadTexture(source);
+}
+	
+IDirect3DTexture9* Object3D::getMinimapTexture()
+{
+	return mMinimapIcon;
 }
