@@ -115,6 +115,11 @@ int Weapon::getAmmo()
 	return mAmmo;
 }
 
+void Weapon::setAmmo(int ammo)
+{
+	mAmmo = ammo;
+}
+
 void Weapon::setData(WeaponData data)
 {
 	mData = data;

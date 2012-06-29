@@ -1,10 +1,10 @@
 #pragma once
-#include "Mesh.h"
+#include "Object3D.h"
 #include "EnemyHandler.h"
 
 class Player;
 
-class Spawner : public Mesh
+class Spawner : public Object3D
 {
 public:
 	Spawner(D3DXVECTOR3 position);

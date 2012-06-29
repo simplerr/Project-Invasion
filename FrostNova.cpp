@@ -2,8 +2,8 @@
 #include "World.h"
 #include "Player.h"
 
-FrostNova::FrostNova(World* world, Player* player, SkillHandler* skillHandler)
-	: Skill("FrostNova", world, player, skillHandler)
+FrostNova::FrostNova(World* world, Player* player)
+	: Skill("FrostNova", world, player)
 {
 
 }

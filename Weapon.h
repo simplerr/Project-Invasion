@@ -20,6 +20,7 @@ public:
 	virtual void triggerReleased();
 
 	void setData(WeaponData data);
+	void setAmmo(int ammo);
 private:
 	void updateWorldMatrix();
 private:

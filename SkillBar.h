@@ -10,7 +10,7 @@ class World;
 class SkillBar : public Container
 {
 public:
-	SkillBar(Player* player, World* world, SkillHandler* skillHandler);
+	SkillBar(Player* player, World* world);
 	~SkillBar();
 
 	void update(float dt);

@@ -19,7 +19,6 @@ public:
 	void setPlayer(Player* player);
 private:
 	Player*		mPlayer;
-	SkillHandler* mSkillHandler;
 	SkillBar*	mSkillBar;
 	IDirect3DTexture9* mAmmoIcon;
 	IDirect3DTexture9* mUiBorder;

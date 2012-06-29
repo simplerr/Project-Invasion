@@ -1,9 +1,9 @@
 #include "LevelHandler.h"
 #include "Spawner.h"
 
-LevelHandler::LevelHandler() : mDocument("data\\levels.xml")
+LevelHandler::LevelHandler() : mDocument("data/levels.xml")
 {
-
+	
 }
 	
 LevelHandler::~LevelHandler()
@@ -21,11 +21,20 @@ LevelHandler::~LevelHandler()
 		waves->SetAttribute("completed", mLevelList[i]->getCompletedWaves());
 	}
 
+	for(int i = 0; i < mLevelList.size(); i++)
+		delete mLevelList[i];
+
 	mDocument.SaveFile("data\\levels.xml");
 }
 
 void LevelHandler::loadLevels()
 {
+	// Cleanup.
+	for(int i = 0; i < mLevelList.size(); i++)
+		delete mLevelList[i];
+
+	mLevelList.clear();
+
 	// Load all different items
 	mDocument.LoadFile();
 
@@ -113,4 +122,10 @@ Level* LevelHandler::getLevel(string name)
 int LevelHandler::getNumLevels()
 {
 	return mLevelList.size();
+}
+
+void LevelHandler::deleteSpawners()
+{
+	for(int i = 0; i < mLevelList.size(); i++)
+		mLevelList[i]->deleteSpawners();
 }

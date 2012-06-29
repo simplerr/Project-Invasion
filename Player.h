@@ -29,10 +29,7 @@ public:
 	void setArmor(float armor);
 	void setEnergy(float energy);
 private:
-	WeaponHandler* mWeaponHandler;
-	SkillHandler* mSkillHandler;
 	Weapon* mWeapon;
-	Skill*	mTestSkill;
 	float	mElapsed;
 	bool	mJumping;
 	bool	mBoost;

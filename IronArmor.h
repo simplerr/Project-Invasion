@@ -5,7 +5,7 @@
 class IronArmor : public Skill
 {
 public:
-	IronArmor(World* world, Player* player, SkillHandler* skillHandler);
+	IronArmor(World* world, Player* player);
 	~IronArmor();
 
 private:

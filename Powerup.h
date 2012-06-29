@@ -11,7 +11,7 @@ public:
 	~Powerup();
 
 	void update(float dt);
-	void draw();
+	virtual void draw();
 	virtual void pickup(Player* player);
 
 	void setSpawner(PowerupSpawner* spawner);

@@ -3,11 +3,11 @@
 #include "World.h"
 #include "Graphics.h"
 
-Skill::Skill(string name, World* world, Player* player, SkillHandler* skillHandler)
+Skill::Skill(string name, World* world, Player* player)
 {
 	mDarkTexture = gGraphics->loadTexture("data\\dark.png");
 
-	mData = skillHandler->getData(name);
+	mData = gSkillHandler->getData(name);
 	mWorld = world;
 	mPlayer = player;
 	mCooldownDelta = mData.cooldown;

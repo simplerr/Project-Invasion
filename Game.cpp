@@ -1,10 +1,11 @@
-//#include <crtdbg.h>
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include <time.h>
 #include <fstream>
 #include <time.h>
 #include <string>
-#include <stdlib.h>
-#include <crtdbg.h>
 #include "Game.h"
 #include "Input.h"
 #include "Vertex.h"
@@ -26,6 +27,12 @@
 #include "EditorState.h"
 #include "RenderTarget.h"
 #include  "SelectLevel.h"
+#include "LevelHandler.h"
+#include "EnemyHandler.h"
+#include "WeaponHandler.h"
+#include "SkillHandler.h"
+#include "vld.h"
+
 //#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
 
 // Set the globals
@@ -36,6 +43,10 @@ Graphics*			gGraphics		= 0;
 Camera*				gCamera			= 0;
 MeshFactory*		gMeshFactory	= 0;
 EffectManager*		gEffectManager	= 0;
+LevelHandler*		gLevelHandler	= 0;
+EnemyHandler*		gEnemyHandler	= 0;
+WeaponHandler*		gWeaponHandler	= 0;
+SkillHandler*		gSkillHandler	= 0;
 
 // Use Windows 7 looking controls.
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
@@ -68,11 +79,16 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 {
 	InitAllVertexDeclarations();
 	
-	gGraphics = new Graphics();
+	gGraphics		= new Graphics();
+	gCamera			= new Camera();
+	gMeshFactory	= new MeshFactory();
+	gEffectManager	= new EffectManager();
+	gLevelHandler	= new LevelHandler();
+	gWeaponHandler	= new WeaponHandler();
+	gSkillHandler	= new SkillHandler();
+	gEnemyHandler	= new EnemyHandler();
+	gLevelHandler->loadLevels();
 	gGraphics->init();
-	gCamera = new Camera();
-	gMeshFactory = new MeshFactory();
-	gEffectManager = new EffectManager();
 	
 	mGfxStats = new GfxStats();
 
@@ -100,6 +116,10 @@ Game::~Game()
 	delete gCamera;
 	delete gGraphics;
 	delete gEffectManager;
+	delete gLevelHandler;
+	delete gEnemyHandler;
+	delete gWeaponHandler;
+	delete gSkillHandler;
 	delete mGfxStats;
 	ReleaseCOM(gd3dDevice);
 

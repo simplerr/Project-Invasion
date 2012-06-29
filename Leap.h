@@ -5,7 +5,7 @@
 class Leap : public Skill
 {
 public:
-	Leap(World* world, Player* player, SkillHandler* skillHandler);
+	Leap(World* world, Player* player);
 	~Leap();
 
 private:

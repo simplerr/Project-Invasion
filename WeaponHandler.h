@@ -24,3 +24,5 @@ public:
 private:
 	map<string, WeaponData> mDataMap;
 };
+
+extern WeaponHandler* gWeaponHandler;

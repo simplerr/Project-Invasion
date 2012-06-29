@@ -12,9 +12,6 @@
 Player::Player(D3DXVECTOR3 position) 
 	: SkinnedMesh("data/models/smith/smith.x", position, PLAYER)
 {
-	mWeaponHandler = new WeaponHandler();
-	mSkillHandler = new SkillHandler();
-
 	mElapsed	= 0.0f;
 	mJumping	= false;
 	mWalkAccel	= 0.1;
@@ -34,27 +31,19 @@ Player::Player(D3DXVECTOR3 position)
 Player::~Player()
 {
 	delete mWeapon;
-	delete mWeaponHandler;
-	delete mSkillHandler;
 }
 
 void Player::init()
 {
 	// mWorld is set when here.
-	WeaponData data = mWeaponHandler->getData("mp5");
+	WeaponData data = gWeaponHandler->getData("mp5");
 	mWeapon = new Weapon(data, getPosition());
 	mWeapon->setAnimation(5);
 	mWeapon->setWorld(getWorld());
-
-	mTestSkill = new IronArmor(getWorld(), this, mSkillHandler);
 }
 
 void Player::update(float dt)
 {
-	// Skill testing.
-	if(gInput->keyPressed('1'))
-		mTestSkill->ability();
-
 	// Walking or running.
 	if(getVelocity().x != 0 || getVelocity().y != 0 && getOnGround()) {
 		float speed = sqrt(	getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z);
@@ -79,8 +68,8 @@ void Player::update(float dt)
 		setAnimation(2, 0.5f);
 
 	// Limit the fall speed.
-	if(getVelocity().y < -14.0f)
-		setVelocity(D3DXVECTOR3(getVelocity().x, -14.0f, getVelocity().z));
+	if(getVelocity().y < -34.0f)
+		setVelocity(D3DXVECTOR3(getVelocity().x, -34.0f, getVelocity().z));
 
 	// Set the camera position.
 	gCamera->setPosition(getPosition());
@@ -108,6 +97,7 @@ void Player::reset()
 {
 	mEnergy = 100.0f;
 	mHealth = 100.0f;
+	mWeapon->setAmmo(100);
 }
 
 void Player::attacked(float damage)

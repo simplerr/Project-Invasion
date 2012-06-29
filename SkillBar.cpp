@@ -7,7 +7,7 @@
 #include "World.h"
 #include "SkillHandler.h"
 
-SkillBar::SkillBar(Player* player, World* world, SkillHandler* skillHandler) : Container(425, 750, 700, 110)
+SkillBar::SkillBar(Player* player, World* world) : Container(425, 750, 700, 110)
 {
 	// Set the player
 	mPlayer = player;

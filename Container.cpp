@@ -31,8 +31,11 @@ Container::Container(int x, int y , int width, int height)
 
 Container::~Container()
 {
-	// Cleanup
-	ReleaseCOM(mSkillSlot);
+	for(int i = 0; i < mSlotList.size(); i++) 
+	{
+		if(mSlotList[i].taken)
+			delete mSlotList[i].item;
+	}
 }
 
 void Container::update(float dt)

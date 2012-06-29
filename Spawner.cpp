@@ -5,20 +5,20 @@
 #include "Player.h"
 
 Spawner::Spawner(D3DXVECTOR3 position)
-	: Mesh("data/models/castle/castle.x", position, SPAWNER)
+	: Object3D(position, SPAWNER)
 {
 
 }
 	
 Spawner::~Spawner()
 {
-	int a = 1;
+	int asd = 1;
 }
 
 void Spawner::init()
 {
-	mToroData = getWorld()->getEnemyData("toro");
-	mMonsterData = getWorld()->getEnemyData("monster");
+	mToroData = gEnemyHandler->getData("toro");
+	mMonsterData = gEnemyHandler->getData("monster");
 }
 
 void Spawner::update(float dt)

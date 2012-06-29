@@ -2,8 +2,8 @@
 #include "Player.h"
 #include "Camera.h"
 
-IronArmor::IronArmor(World* world, Player* player, SkillHandler* skillHandler)
-	: Skill("IronArmor", world, player, skillHandler)
+IronArmor::IronArmor(World* world, Player* player)
+	: Skill("IronArmor", world, player)
 {
 	mDelta = -1;
 }

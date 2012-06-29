@@ -25,3 +25,5 @@ public:
 private:
 	map<string, EnemyData> mDataMap;
 };
+
+extern EnemyHandler* gEnemyHandler;

@@ -39,12 +39,10 @@ private:
 
 	IDirect3DTexture9* mTexture;
 	RenderTarget* mRenderTarget;
-	LevelHandler* mLevelHandler;
 	Level*		mActiveLevel;
 	World*		mWorld;
 	Light*		mLight;
 	Player*		mPlayer;
-	Mesh*		mCastle;
 	Gui*		mGui;
 	bool		mRotate;
 };	// Class

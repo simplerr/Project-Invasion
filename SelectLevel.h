@@ -41,6 +41,5 @@ protected:
 	SelectLevel() {};
 private:
 	static SelectLevel mSelectLevel;
-	LevelHandler* mLevelHandler;
 	Menu* mMenu;
 };	// Class

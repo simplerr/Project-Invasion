@@ -8,7 +8,7 @@ class Player;
 class Skill : public SlotItem
 {
 public:
-	Skill(string name, World* world, Player* player, SkillHandler* skillHandler);
+	Skill(string name, World* world, Player* player);
 	virtual ~Skill();
 
 	void draw(Rect rect);
@@ -23,7 +23,6 @@ private:
 
 protected:
 	IDirect3DTexture9* mDarkTexture;
-	SkillHandler* mSkillHandler;
 	Player* mPlayer;
 	World*	mWorld;
 	SkillData mData;

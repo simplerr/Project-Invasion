@@ -23,19 +23,20 @@ void SelectLevel::init(Game* game)
 	mMenu = new Menu("SelectLevelMenu", NavigationType::MOUSE, HOR); 
 	mMenu->setSize(600, 400, 256, 512);
 
-	mLevelHandler = new LevelHandler();
+	// [NOTE] It's actually World that should deletes the spawners, but since theres no World in the menu we have to do it manually.
+	// Very poorly structured...
+	gLevelHandler->deleteSpawners();
+	gLevelHandler->loadLevels();
 
-	mLevelHandler->loadLevels();
-
-	for(int i = 0; i < mLevelHandler->getNumLevels(); i++) {
-		string name = mLevelHandler->getLevel(i)->getName();
+	for(int i = 0; i < gLevelHandler->getNumLevels(); i++) {
+		string name = gLevelHandler->getLevel(i)->getName();
 		LevelItem* item = new LevelItem(name, "data/level.png", "data/level_hoover.png", "data/level_inactive.png");
-		item->waves = mLevelHandler->getLevel(i)->getNumWaves();
-		item->completedWaves = mLevelHandler->getLevel(i)->getCompletedWaves();
+		item->waves = gLevelHandler->getLevel(i)->getNumWaves();
+		item->completedWaves = gLevelHandler->getLevel(i)->getCompletedWaves();
 
 		// Not the first level.
 		if(i != 0) {
-			Level* lastLevel = mLevelHandler->getLevel(i-1);
+			Level* lastLevel = gLevelHandler->getLevel(i-1);
 			if(lastLevel->getCompletedWaves() < lastLevel->getNumWaves())
 				item->state = INACTIVE;
 		}
@@ -52,7 +53,7 @@ void SelectLevel::init(Game* game)
 void SelectLevel::cleanup()
 {
 	delete mMenu;
-	delete mLevelHandler;
+	gLevelHandler->deleteSpawners();
 }
 
 void SelectLevel::update(double dt)

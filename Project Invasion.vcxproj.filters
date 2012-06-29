@@ -438,10 +438,10 @@
     <Xml Include="data\enemies.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="data\levels.xml">
+    <Xml Include="data\skills.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="data\skills.xml">
+    <Xml Include="data\levels.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

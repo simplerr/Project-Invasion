@@ -7,6 +7,7 @@
 #include "StatusText.h"
 using namespace std;
 
+class LevelHandler;
 class World;
 class Spawner;
 class Player;
@@ -38,6 +39,7 @@ public:
 	void setDifficultyAdjusts(float speed, float health, float damage);
 	void setCompletedWaves(int wavesCompleted);
 	bool completedWave();
+	void deleteSpawners();
 
 	Wave* getCurrentWave();
 	LevelState getState();

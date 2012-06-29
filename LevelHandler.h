@@ -16,6 +16,7 @@ public:
 	~LevelHandler();
 
 	void loadLevels();
+	void deleteSpawners();
 
 	Level* getLevel(int num);
 	Level* getLevel(string name);
@@ -24,3 +25,5 @@ private:
 	vector<Level*> mLevelList;
 	TiXmlDocument mDocument;
 };
+
+extern LevelHandler* gLevelHandler;

@@ -38,18 +38,12 @@ void PlayState::init(Game* game)
 	// Create a player and add it to the level.
 	mPlayer = new Player(D3DXVECTOR3(0, 2000, 5000));
 	mWorld->addObject(mPlayer);
-	mPlayer->init();
-
-	// Temp test mesh.
-	mCastle = new Mesh("data/models/castle/castle.x", D3DXVECTOR3(900.0f, 100.0f, 0.0f), PROP);
-	mCastle->setScale(5.0f);
-	//mWorld->addObject(mCastle);
 
 	// Load the crosshair texture.
 	mTexture = gGraphics->loadTexture("data/aim.png");
 
 	// Hide the cursor.
-	ShowCursor(false);
+	//ShowCursor(false);
 
 	// Seed the rand() function.
 	srand(time(0));
@@ -61,8 +55,7 @@ void PlayState::init(Game* game)
 	gGraphics->setLightList(mWorld->getLights());
 
 	mRenderTarget = new RenderTarget(256, 256);
-	mLevelHandler = new LevelHandler();
-	mLevelHandler->loadLevels();
+	gLevelHandler->loadLevels();
 
 	mGui = new Gui(mPlayer);
 }
@@ -71,8 +64,9 @@ void PlayState::cleanup()
 {
 	// Cleanup all the game objects.
 	delete mWorld;
-	delete mLevelHandler;
 	delete mGui;
+	delete mRenderTarget;
+	gLevelHandler->deleteSpawners();
 }
 
 void PlayState::update(double dt)
@@ -81,9 +75,26 @@ void PlayState::update(double dt)
 	mWorld->update(dt);
 	mActiveLevel->update(dt);
 
-	if(mActiveLevel->completedWave()) {
+	// Update the Gui.
+	mGui->update(dt);
 
+	if(mActiveLevel->getState() == LEVEL_COMPLETED || 1 ) {
+		if(gInput->keyPressed(VK_RETURN)) {
+			string name = mActiveLevel->getName();
+			int levelNum = atoi(name.c_str());
+			if(levelNum < gLevelHandler->getNumLevels()) {
+				char buffer[10];
+				//setLevel(itoa(levelNum+1, buffer, 10));
+			}
+			else
+				changeState(SelectLevel::Instance());
+
+			// [TODO] M For menu, R for retry etc...
+		}
 	}
+
+	if(gInput->keyPressed(VK_RETURN))
+		changeState(SelectLevel::Instance());
 
 	// Spot light in the looking direction.
 	mLight->setPosition(gCamera->getPosition() + D3DXVECTOR3(0, 5, 0));
@@ -97,10 +108,7 @@ void PlayState::update(double dt)
 		gCamera->setType(NOCLIP);
 
 	// Limit the cursor movement (only inside the window).
-	limitCursor();
-
-	// Update the Gui.
-	mGui->update(dt);
+	//limitCursor();
 }
 	
 void PlayState::draw()
@@ -162,8 +170,14 @@ void PlayState::limitCursor()
 
 void PlayState::setLevel(string name)
 {
-	mActiveLevel = mLevelHandler->getLevel(name);
+	// Get the new level, reset and init the new one.
+	mActiveLevel = gLevelHandler->getLevel(name);
+	mWorld->reset();
 	mActiveLevel->init(mWorld, mPlayer);
+
+	// Randomize player location.
+	mPlayer->setPosition(D3DXVECTOR3((rand() % 2500) - 2500, 5000, (rand() % 2500) - 2500));
+	mPlayer->reset();
 }
 
 Wave* PlayState::getCurrentWave()

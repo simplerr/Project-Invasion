@@ -23,10 +23,7 @@ World::World()
 
 	// Create the skybox.
 	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
-	setGravity(-0.063f);
-
-	// Create the enemy handler that loads enemy data from .XML files.
-	mEnemyHandler = new EnemyHandler();
+	setGravity(-0.13f);
 }
 	
 World::~World()
@@ -34,16 +31,20 @@ World::~World()
 	// Cleanup.
 	delete mTerrain;
 	delete mSky;
-	delete mEnemyHandler;
 
-	for(int i = 0; i < mObjectList.size(); i++)
-		delete mObjectList[i];
+	for(int i = 0; i < mObjectList.size(); i++) {
+		if(mObjectList[i]->getType() != SPAWNER) {
+			delete mObjectList[i];
+			mObjectList[i] = NULL;
+		}
+	}
 
-	for(int i = 0; i < mLightList.size(); i++)
-		delete mLightList[i];
+	// [NOTE] Fix this!!
+	//for(int i = 0; i < mLightList.size(); i++)
+	//	delete mLightList[i];
 
 	mObjectList.clear();
-	mLightList.clear();
+	//mLightList.clear();
 }
 
 void World::onLostDevice()
@@ -408,9 +409,4 @@ void World::setGravity(float gravity)
 float World::getGravity()
 {
 	return mGravity;
-}
-
-EnemyData World::getEnemyData(string name)
-{
-	return mEnemyHandler->getData(name);
 }

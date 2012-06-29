@@ -8,7 +8,7 @@ class Enemy;
 class FrostNova : public Skill
 {
 public:
-	FrostNova(World* world, Player* player, SkillHandler* skillHandler);
+	FrostNova(World* world, Player* player);
 	~FrostNova();
 
 private:

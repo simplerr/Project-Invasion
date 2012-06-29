@@ -35,7 +35,6 @@ public:
 
 	void setGravity(float gravity);
 	float getGravity();
-	EnemyData getEnemyData(string name);
 
 	vector<Light*>* getLights();
 
@@ -48,7 +47,6 @@ public:
 private:
 	vector<Object3D*>		mObjectList;
 	vector<Light*>			mLightList;
-	EnemyHandler*			mEnemyHandler;
 	Terrain*				mTerrain;
 	Sky*					mSky;
 	float					mGravity;

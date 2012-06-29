@@ -4,6 +4,8 @@
 #include "Spawner.h"
 #include "Player.h"
 #include "PowerupSpawner.h"
+#include "Input.h"
+#include "LevelHandler.h"
 
 Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Spawner*> spawnList)
 {
@@ -15,11 +17,20 @@ Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Sp
 	mSpawnDelta = mTimer = 0.0f;
 	mSpawnedEnemies = 0;
 	mStatusText = new StatusText("nothing", 400, 400, 0.0f);
+	mPowerupSpawner = NULL;
 }
 	
 Level::~Level()
 {
-	delete mPowerupSpawner;
+	for(int i = 0; i < mWaveList.size(); i++)
+		delete mWaveList[i];
+
+	mWaveList.clear();
+
+	if(mPowerupSpawner != NULL)
+		delete mPowerupSpawner;
+
+	delete mStatusText;
 }
 
 void Level::init(World* world, Player* player)
@@ -82,8 +93,12 @@ void Level::update(float dt)
 			}
 			// Last wave.
 			else if(mCurrentWave > mWaveList.size() - 2) {
-				setState(LEVEL_COMPLETED, 2.0f);
-				mStatusText->setText("Level completed!", GREEN, 2.0f);				
+				setState(LEVEL_COMPLETED, 2000.0f);
+
+				if(atoi(getName().c_str()) < gLevelHandler->getNumLevels())
+					mStatusText->setText("Level completed! Press <enter> to start the next level!", GREEN, 2000.0f);				
+				else
+					mStatusText->setText("You've completed all levels! Press <enter> to go the the menu!", GREEN, 2000.0f);				
 			}
 		}
 	}
@@ -202,4 +217,14 @@ int Level::getNumWaves()
 int Level::getCompletedWaves()
 {
 	return mCompletedWaves;
+}
+
+void Level::deleteSpawners()
+{
+	for(int i = 0; i < mSpawnList.size(); i++) {
+		delete mSpawnList[i];
+		mSpawnList[i] = NULL;
+	}
+
+	mSpawnList.clear();
 }

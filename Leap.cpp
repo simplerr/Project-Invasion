@@ -2,8 +2,8 @@
 #include "Player.h"
 #include "Camera.h"
 
-Leap::Leap(World* world, Player* player, SkillHandler* skillHandler)
-	: Skill("Leap", world, player, skillHandler)
+Leap::Leap(World* world, Player* player)
+	: Skill("Leap", world, player)
 {
 	mLeapedDist = -1;
 }

@@ -24,3 +24,5 @@ public:
 private:
 	map<string, SkillData> mDataMap;
 };
+
+extern SkillHandler* gSkillHandler;

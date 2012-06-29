@@ -10,12 +10,11 @@
 Gui::Gui(Player* player)
 {
 	mPlayer = player;
-	mSkillHandler = new SkillHandler();
 
 	// Skill bar.
-	mSkillBar = new SkillBar(player, player->getWorld(), mSkillHandler);
-	mSkillBar->addSkill(new Leap(player->getWorld(), player, mSkillHandler));
-	mSkillBar->addSkill(new IronArmor(player->getWorld(), player, mSkillHandler));
+	mSkillBar = new SkillBar(player, player->getWorld());
+	mSkillBar->addSkill(new Leap(player->getWorld(), player));
+	mSkillBar->addSkill(new IronArmor(player->getWorld(), player));
 
 	// Health bar.
 	mHealthBar = new Bar("data\\bar.bmp", "data\\heart_icon.png", 100);
@@ -36,7 +35,8 @@ Gui::~Gui()
 {
 	delete mSkillBar;
 	delete mEneryBar;
-	delete mSkillHandler;
+	delete mHealthBar;
+	delete mAmmoBar;
 }
 	
 void Gui::update(float dt)
