@@ -33,7 +33,7 @@ Camera::~Camera()
 
 }
 
-void Camera::update(Terrain* terrain, float dt)
+void Camera::update(float dt)
 {
 	// Rotate and move
 	//move();

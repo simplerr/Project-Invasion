@@ -18,7 +18,7 @@ public:
 	Camera();
 	~Camera();
 
-	void update(Terrain* terrain, float dt);
+	void update(float dt);
 	void move();
 	void rotate();
 	void drawDebug();

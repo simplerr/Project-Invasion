@@ -1,11 +1,14 @@
 #pragma once
 
 #include "d3dUtil.h"
+#include <string>
+using namespace std;
 
 class Bar;
 class Player;
 class SkillBar;
 class SkillHandler;
+class Menu;
 
 class Gui
 {
@@ -15,8 +18,10 @@ public:
 
 	void update(float dt);
 	void draw();
+	void toggleMenu();
 
 	void setPlayer(Player* player);
+	bool menuMessage(string message);
 private:
 	Player*		mPlayer;
 	SkillBar*	mSkillBar;
@@ -25,4 +30,5 @@ private:
 	Bar*		mHealthBar;
 	Bar*		mAmmoBar;
 	Bar*		mEneryBar;
+	Menu*		mMenu;
 };

@@ -43,7 +43,7 @@ void PlayState::init(Game* game)
 	mTexture = gGraphics->loadTexture("data/aim.png");
 
 	// Hide the cursor.
-	//ShowCursor(false);
+	ShowCursor(false);
 
 	// Seed the rand() function.
 	srand(time(0));
@@ -58,6 +58,8 @@ void PlayState::init(Game* game)
 	gLevelHandler->loadLevels();
 
 	mGui = new Gui(mPlayer);
+
+	mPaused = false;
 }
 	
 void PlayState::cleanup()
@@ -71,18 +73,33 @@ void PlayState::cleanup()
 
 void PlayState::update(double dt)
 {
-	// Update the world and everything it contains.
-	mWorld->update(dt);
-	mActiveLevel->update(dt);
+	// Toggle the menu.
+	if(gInput->keyPressed(VK_ESCAPE)) {
+		mGui->toggleMenu();
+		mPaused = !mPaused;
+
+		if(mPaused) 
+			ShowCursor(true);
+		else
+			ShowCursor(false);
+	}
 
 	// Update the Gui.
 	mGui->update(dt);
+
+	// Don't update anything if paused.
+	if(mPaused)
+		return;
+
+	// Update the world and everything it contains.
+	mWorld->update(dt);
+	mActiveLevel->update(dt);
 
 	if(mActiveLevel->getState() == LEVEL_COMPLETED || 1 ) {
 		if(gInput->keyPressed(VK_RETURN)) {
 			string name = mActiveLevel->getName();
 			int levelNum = atoi(name.c_str());
-			if(levelNum < gLevelHandler->getNumLevels()) {
+			if(levelNum < gLevelHandler->getNumLevels() && 0) {
 				char buffer[10];
 				//setLevel(itoa(levelNum+1, buffer, 10));
 			}
@@ -92,9 +109,6 @@ void PlayState::update(double dt)
 			// [TODO] M For menu, R for retry etc...
 		}
 	}
-
-	if(gInput->keyPressed(VK_RETURN))
-		changeState(SelectLevel::Instance());
 
 	// Spot light in the looking direction.
 	mLight->setPosition(gCamera->getPosition() + D3DXVECTOR3(0, 5, 0));
@@ -108,7 +122,7 @@ void PlayState::update(double dt)
 		gCamera->setType(NOCLIP);
 
 	// Limit the cursor movement (only inside the window).
-	//limitCursor();
+	limitCursor();
 }
 	
 void PlayState::draw()
@@ -120,10 +134,6 @@ void PlayState::draw()
 
 	// Draw the crosshair.
 	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32, false);
-
-	// Change state on ESCAPE.
-	if(gInput->keyPressed(VK_ESCAPE))
-		changeState(SelectLevel::Instance());
 
 	// Draw the Gui.
 	mGui->draw();
@@ -171,6 +181,7 @@ void PlayState::limitCursor()
 void PlayState::setLevel(string name)
 {
 	// Get the new level, reset and init the new one.
+	gLevelHandler->loadLevels();
 	mActiveLevel = gLevelHandler->getLevel(name);
 	mWorld->reset();
 	mActiveLevel->init(mWorld, mPlayer);
@@ -180,9 +191,19 @@ void PlayState::setLevel(string name)
 	mPlayer->reset();
 }
 
+void PlayState::restartLevel()
+{
+	setLevel(mActiveLevel->getName());
+}
+
 Wave* PlayState::getCurrentWave()
 {
 	return mActiveLevel->getCurrentWave();
+}
+
+void PlayState::setPaused(bool paused)
+{
+	mPaused = paused;
 }
 
 void PlayState::pause()
@@ -199,3 +220,4 @@ void PlayState::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 
 }
+

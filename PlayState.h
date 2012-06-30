@@ -27,6 +27,8 @@ public:
 	void limitCursor();
 
 	void setLevel(string name);
+	void restartLevel();
+	void setPaused(bool paused);
 	Wave* getCurrentWave();
 
 	static PlayState* Instance() {
@@ -45,4 +47,5 @@ private:
 	Player*		mPlayer;
 	Gui*		mGui;
 	bool		mRotate;
+	bool		mPaused;
 };	// Class

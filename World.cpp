@@ -122,9 +122,6 @@ void World::update(float dt)
 			player = dynamic_cast<Player*>(object);
 	}
 
-	// Update the camera.
-	gCamera->update(mTerrain, dt);
-
 	// [HACK]
 	// Test if player is in range of a powerup.
 	if(player != NULL) 
@@ -236,9 +233,13 @@ void World::reset()
 	iter++;
 	while(iter != mObjectList.end() && i < mObjectList.size())
 	{
-		delete mObjectList[i];		
-		mObjectList[i] = NULL;
-		iter = mObjectList.erase(iter);	
+		if(mObjectList[i]->getType() != SPAWNER) {
+			delete mObjectList[i];		
+			mObjectList[i] = NULL;
+			iter = mObjectList.erase(iter);	
+		}
+		else
+			iter++;
 	}
 }
 

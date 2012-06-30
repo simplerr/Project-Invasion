@@ -74,6 +74,9 @@ void Player::update(float dt)
 	// Set the camera position.
 	gCamera->setPosition(getPosition());
 
+	// Update the camera.
+	gCamera->update(dt);
+
 	setRotation(D3DXVECTOR3(0.0f, atan2f(gCamera->getDirection().x, gCamera->getDirection().z), 0));
 
 	SkinnedMesh::update(dt);
@@ -82,6 +85,9 @@ void Player::update(float dt)
 	
 void Player::draw()
 {
+	// Update the view matrix of the camera.
+	//gCamera->updateView();
+
 	//SkinnedMesh::draw();
 	D3DXVECTOR3 knifePos = gCamera->getPosition();
 	knifePos += gCamera->getDirection() * 15.0f;

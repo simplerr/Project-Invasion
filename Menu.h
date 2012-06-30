@@ -50,6 +50,9 @@ public:
 
 	void setSize(int x, int y, int width, int height);
 	void setPressable(string name, bool b);
+	void setVisible(bool visible);
+	void setBkgdTexture(string source);
+	bool getVisible();
 
 	boost::function<bool(string name)> callback;
 
@@ -60,6 +63,7 @@ public:
 
 private:
 	vector<MenuItem*> mItemList;
+	IDirect3DTexture9* mBkgdTexture;
 	RECT mBackgroundRect;
 	NavigationType mNavigation;
 	HWND mhMainWnd;
@@ -71,4 +75,5 @@ private:
 	int mIdCounter;
 	int mBreakCount;
 	bool mUseFonts;
+	bool mVisible;
 };

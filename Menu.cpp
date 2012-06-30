@@ -50,6 +50,8 @@ Menu::Menu(std::string menuName, NavigationType navigation, MenuType type, int b
 	mUseFonts = useFonts;
 	mType = type;
 	mBreakCount = breakCount;
+	setVisible(true);
+	mBkgdTexture = NULL;
 }
 
 Menu::~Menu()
@@ -83,6 +85,18 @@ void Menu::addMenuItem(MenuItem* newItem)
 
 void Menu::draw(void)
 {	
+	if(!getVisible())
+		return;
+
+	if(mBkgdTexture != NULL) {
+		Rect rect;
+		rect.right = mBackgroundRect.right;
+		rect.left = mBackgroundRect.left;
+		rect.top = mBackgroundRect.top;
+		rect.bottom = mBackgroundRect.bottom;
+		gGraphics->drawScreenTexture(mBkgdTexture, rect);
+	}
+
 	for(int i = 0; i < mItemList.size(); i++)
 	{	
 		mItemList[i]->draw();
@@ -91,6 +105,9 @@ void Menu::draw(void)
 
 void Menu::update(Vector mousePos)
 {
+	if(!getVisible())
+		return;
+
 	if(mNavigation == MOUSE)
 	{
 		for(int i = 0; i < mItemList.size(); i++)
@@ -266,4 +283,19 @@ void Menu::setPressable(std::string name, bool b)
 		if(item->itemName == name)
 			item->pressable = b;
 	}
+}
+
+void Menu::setVisible(bool visible)
+{
+	mVisible = visible;
+}
+
+void Menu::setBkgdTexture(string source)
+{
+	mBkgdTexture = gGraphics->loadTexture(source);
+}
+
+bool Menu::getVisible()
+{
+	return mVisible;
 }
