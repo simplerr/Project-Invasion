@@ -249,6 +249,9 @@
     <ClInclude Include="EnergyPowerup.h">
       <Filter>Header Files\World\Powerups</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -415,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="EnergyPowerup.cpp">
       <Filter>Source Files\World\Powerups</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

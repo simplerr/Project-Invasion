@@ -64,10 +64,6 @@ void SelectLevel::update(double dt)
 void SelectLevel::draw()
 {
 	mMenu->draw();
-
-	char buffer[256];
-	sprintf(buffer, "x: %f, y: %f", gInput->mousePosition().x, gInput->mousePosition().y);
-	gGraphics->drawText(buffer, 40, 300);
 }
 
 void SelectLevel::onLostDevice()

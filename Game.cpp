@@ -31,6 +31,7 @@
 #include "EnemyHandler.h"
 #include "WeaponHandler.h"
 #include "SkillHandler.h"
+#include "MainMenu.h"
 #include "vld.h"
 
 //#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
@@ -102,7 +103,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 
 	// Set the current state.
 	mCurrentState = NULL;
-	changeState(SelectLevel::Instance());
+	changeState(MainMenu::Instance());
 	mState = 0;
 }
 
@@ -154,8 +155,6 @@ void Game::update(float dt)
 //! Draws everything.
 void Game::draw()
 {
-	gGraphics->drawFont("test!", 400, 200, 32, D3DCOLOR_ARGB(255, 230, 174, 6));
-
 	// Draw the current state.
 	mCurrentState->draw();
 

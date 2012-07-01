@@ -21,6 +21,7 @@ public:
 	void update(float dt);
 	void move();
 	void rotate();
+	void rotate(float pitch, float yaw);
 	void drawDebug();
 	void updateView();
 

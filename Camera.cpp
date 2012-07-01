@@ -108,6 +108,29 @@ void Camera::rotate()
 	mTarget = mPosition + direction;
 }
 
+void Camera::rotate(float pitch, float yaw)
+{
+	// Increase the pitch and yaw angles.
+	mPitch += pitch;
+	mYaw += yaw;
+
+	// Limit to PI/2 radians.
+	if(mPitch > 0)
+		mPitch = min(mPitch, 1.54f);
+	else
+		mPitch = max(mPitch, -1.54f);
+	
+	// Calculate the new direction.
+	D3DXVECTOR3 direction;
+	float r = cosf(mPitch);
+	direction.y = sinf(mPitch);
+	direction.z = r * cosf(mYaw);
+	direction.x = r * sinf(mYaw);
+
+	// Set the new target.
+	mTarget = mPosition + direction;
+}
+
 void Camera::drawDebug()
 {
 	char buffer[256];
