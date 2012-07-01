@@ -16,12 +16,20 @@ class EnemyHandler;
 class GameState;
 class RenderTarget;
 
+enum InitStates
+{
+	STARTUP,
+	INIT,
+	RUNNING
+};
+
 class Game : public Runnable
 {
 public:
 	Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYPE devType, DWORD requestedVP);
 	~Game();
 
+	void init();
 	void update(float dt);
 	void draw();
 	void changeState(GameState* state);
@@ -32,5 +40,6 @@ public:
 private:
 	GameState*	mCurrentState;
 	GfxStats*	mGfxStats;
-	int			mState;
+	IDirect3DTexture9* mLoadingTexture;
+	InitStates	mInitState;
 };

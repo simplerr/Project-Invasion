@@ -84,6 +84,12 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	InitAllVertexDeclarations();
 	
 	gGraphics		= new Graphics();
+	mLoadingTexture = gGraphics->loadTexture("data/loading.png");
+	mInitState		= STARTUP;
+}
+
+void Game::init()
+{
 	gCamera			= new Camera();
 	gMeshFactory	= new MeshFactory();
 	gEffectManager	= new EffectManager();
@@ -110,7 +116,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	// Set the current state.
 	mCurrentState = NULL;
 	changeState(MainMenu::Instance());
-	mState = 0;
+	mInitState = RUNNING;
 }
 
 //! Destructor.
@@ -151,34 +157,34 @@ void Game::changeState(GameState* state)
 //! Updates everything.
 void Game::update(float dt)
 {
-	// Update the keystate.
-	gInput->update(dt);
+	if(mInitState == INIT)
+		init();
+	else if(mInitState == RUNNING)
+	{
+		// Update the keystate.
+		gInput->update(dt);
 
-	// Update the current state.
-	mCurrentState->update(dt);
-	mGfxStats->update(dt);
+		// Update the current state.
+		mCurrentState->update(dt);
+		mGfxStats->update(dt);
+	}
 }
 	
 //! Draws everything.
 void Game::draw()
 {
-	// Draw the current state.
-	mCurrentState->draw();
+	if(mInitState == STARTUP) {
+		gGraphics->drawScreenTexture(mLoadingTexture, 600, 400, 1200, 800);
+		mInitState = INIT;
+	}
+	if(mInitState == RUNNING)
+	{
+		// Draw the current state.
+		mCurrentState->draw();
 
-	// Debug (very slow).
-	mGfxStats->display();
-	//gCamera->drawDebug();
-
-	// Temporary switching between states.
-	if(gInput->keyPressed(VK_F2)) {
-		if(mState == 0) {
-			changeState(EditorState::Instance());
-			mState = 1;
-		}
-		else {
-			changeState(PlayState::Instance());
-			mState = 0;
-		}
+		// Debug (very slow).
+		mGfxStats->display();
+		//gCamera->drawDebug();
 	}
 }
 
@@ -186,7 +192,9 @@ void Game::draw()
 LRESULT Game::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	// Let the current state handle messages.
-	mCurrentState->msgProc(msg, wParam, lParam);
+	if(mInitState == RUNNING)
+		mCurrentState->msgProc(msg, wParam, lParam);
+
 	LRESULT result = Runnable::msgProc(msg, wParam, lParam);
 	return result;
 }
