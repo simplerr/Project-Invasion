@@ -42,7 +42,7 @@ public:
 	Menu(string name, NavigationType navigation, MenuType type = HOR, int breakCount = 4, bool useFonts = false, int itemAmount = 2, int spacing = 30);
 	~Menu();
 
-	void update(Vector mousePos);
+	bool update(Vector mousePos);
 	void draw(void);
 
 	void addMenuItem(MenuItem* newItem);

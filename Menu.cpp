@@ -105,10 +105,10 @@ void Menu::draw(void)
 	}	
 }
 
-void Menu::update(Vector mousePos)
+bool Menu::update(Vector mousePos)
 {
 	if(!getVisible())
-		return;
+		return true;
 
 	if(mNavigation == MOUSE)
 	{
@@ -125,7 +125,7 @@ void Menu::update(Vector mousePos)
 				item->state = SELECTED;
 				if(gInput->keyPressed(VK_LBUTTON) && item->pressable)	{
 					if(!callback(item->itemName))
-						break;
+						return false;
 				}		
 			}
 			else
@@ -167,12 +167,13 @@ void Menu::update(Vector mousePos)
 				if(item->id == mIdCounter && item->pressable)	
 				{
 					if(!callback(item->itemName))
-						break;
+						return false;
 				}					
 			}
 		}
 	}
 
+	return true;
 }
 
 void Menu::buildMenu(int itemWidth, int itemHeight)

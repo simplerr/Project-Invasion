@@ -138,6 +138,7 @@
     <ClInclude Include="PowerupSpawner.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="TerrainManager.h" />
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SelectLevel.h" />
     <ClInclude Include="Skill.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Powerup.cpp" />
     <ClCompile Include="PowerupSpawner.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="TerrainManager.cpp" />
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SelectLevel.cpp" />
     <ClCompile Include="Skill.cpp" />

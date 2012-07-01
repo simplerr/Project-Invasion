@@ -96,18 +96,18 @@ void PlayState::update(double dt)
 	mWorld->update(dt);
 	mActiveLevel->update(dt);
 
-	if(mActiveLevel->getState() == LEVEL_COMPLETED || 1 ) {
+	if(mActiveLevel->getState() == LEVEL_COMPLETED) {
 		if(gInput->keyPressed(VK_RETURN)) {
 			string name = mActiveLevel->getName();
 			int levelNum = atoi(name.c_str());
-			if(levelNum < gLevelHandler->getNumLevels() && 0) {
+			if(levelNum < gLevelHandler->getNumLevels()) {
 				char buffer[10];
-				//setLevel(itoa(levelNum+1, buffer, 10));
+				setLevel(itoa(levelNum+1, buffer, 10));
 			}
-			else
+			else {
+				ShowCursor(true);
 				changeState(SelectLevel::Instance());
-
-			// [TODO] M For menu, R for retry etc...
+			}
 		}
 	}
 

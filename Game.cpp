@@ -32,6 +32,7 @@
 #include "WeaponHandler.h"
 #include "SkillHandler.h"
 #include "MainMenu.h"
+#include "TerrainManager.h"
 #include "vld.h"
 
 //#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
@@ -48,6 +49,8 @@ LevelHandler*		gLevelHandler	= 0;
 EnemyHandler*		gEnemyHandler	= 0;
 WeaponHandler*		gWeaponHandler	= 0;
 SkillHandler*		gSkillHandler	= 0;
+TerrainManager*		gTerrainManager	= 0;
+
 
 // Use Windows 7 looking controls.
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
@@ -88,16 +91,19 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	gWeaponHandler	= new WeaponHandler();
 	gSkillHandler	= new SkillHandler();
 	gEnemyHandler	= new EnemyHandler();
+	gTerrainManager = new TerrainManager();
 	gLevelHandler->loadLevels();
 	gGraphics->init();
 	
 	mGfxStats = new GfxStats();
 
-	// Pre-load the enemy models.
+	// Pre-load models.
 	LPD3DXFRAME root;
 	ID3DXAnimationController* animCtrl;
 	gMeshFactory->loadSkinnedMesh("data/models/toro/toro.x", root, animCtrl);
 	gMeshFactory->loadSkinnedMesh("data/models/monster/monster.x", root, animCtrl);
+	gMeshFactory->loadSkinnedMesh("data/models/mp5/mp5.x", root, animCtrl);
+	gMeshFactory->loadSkinnedMesh("data/models/smith/smith.x", root, animCtrl);
 
 	ShowCursor(false);
 
@@ -121,6 +127,7 @@ Game::~Game()
 	delete gEnemyHandler;
 	delete gWeaponHandler;
 	delete gSkillHandler;
+	delete gTerrainManager;
 	delete mGfxStats;
 	ReleaseCOM(gd3dDevice);
 

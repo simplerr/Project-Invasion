@@ -15,11 +15,12 @@
 #include "RenderTarget.h"
 #include "Player.h"
 #include "Powerup.h"
+#include "TerrainManager.h"
 
 World::World()
 {
 	// Create the terrain.
-	mTerrain = new Terrain(D3DXVECTOR3(0, 0, 0), 257, 257, 100, 100, 16.0f);
+	mTerrain = gTerrainManager->getTerrain("data/heightmap17_257.raw");
 
 	// Create the skybox.
 	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
@@ -29,7 +30,6 @@ World::World()
 World::~World()
 {
 	// Cleanup.
-	delete mTerrain;
 	delete mSky;
 
 	for(int i = 0; i < mObjectList.size(); i++) {

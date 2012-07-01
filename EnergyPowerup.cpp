@@ -4,7 +4,7 @@
 #include "Graphics.h"
 
 EnergyPowerup::EnergyPowerup(D3DXVECTOR3 position)
-	: Powerup("data/models/castle/castle.x", position, ENERGY_POWERUP)
+	: Powerup(position, ENERGY_POWERUP)
 {
 	mEnergy = 50;
 	setMinimapTexture("data/energy_icon_minimap.png");

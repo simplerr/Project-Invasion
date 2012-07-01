@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Mesh.h"
+#include "Object3D.h"
 class PowerupSpawner;
 class Player;
 
-class Powerup : public Mesh
+class Powerup : public Object3D
 {
 public:
-	Powerup(string source, D3DXVECTOR3 position, ObjectType type);
+	Powerup(D3DXVECTOR3 position, ObjectType type);
 	~Powerup();
 
 	void update(float dt);

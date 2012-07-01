@@ -5,13 +5,13 @@
 #include "Input.h"
 #include "Mesh.h"
 
-Terrain::Terrain(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, float heightScale)
+Terrain::Terrain(string source, int rows, int colums, float dx, float dz, float heightScale)
 {
-	mTerrainMesh = new Mesh(center, TERRAIN);
+	mTerrainMesh = new Mesh(D3DXVECTOR3(0, 0, 0), TERRAIN);
 	mRows = rows;
 	mColums = colums;
 	mHeightmap = new Heightmap();
-	mHeightmap->loadRAW(rows, colums, "data/heightmap17_257.raw", heightScale, 0.0f);
+	mHeightmap->loadRAW(rows, colums, source, heightScale, 0.0f);
 	mMaterial = Material(WHITE, WHITE, BLACK, 16);
 	mPosition = D3DXVECTOR3(0, 0, 0);
 
@@ -20,7 +20,7 @@ Terrain::Terrain(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, f
 	
 	mNumVertices = rows*colums;
 	mNumTriangles = (rows-1)*(colums-1)*2;
-	build(center, rows, colums, dx, dz, verts, indices);
+	build(D3DXVECTOR3(0, 0, 0), rows, colums, dx, dz, verts, indices);
 
 	// Create the mesh.
 	D3DVERTEXELEMENT9 elems[MAX_FVF_DECL_SIZE];

@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "PlayState.h"
 #include "SelectLevel.h"
+#include "MainMenu.h"
 
 Gui::Gui(Player* player)
 {
@@ -89,7 +90,7 @@ void Gui::setPlayer(Player* player)
 bool Gui::menuMessage(string message)
 {
 	if(message == "MainMenu") {
-		PlayState::Instance()->changeState(SelectLevel::Instance());
+		PlayState::Instance()->changeState(MainMenu::Instance());
 		ShowCursor(false);
 		return false;
 	}

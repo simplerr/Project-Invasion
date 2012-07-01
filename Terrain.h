@@ -11,7 +11,7 @@ class Graphics;
 class Terrain
 {
 public:
-	Terrain(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, float heightScale = 1.0f);
+	Terrain(string source, int rows, int colums, float dx, float dz, float heightScale = 1.0f);
 	~Terrain();
 
 	void build(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, vector<D3DXVECTOR3>& verts, vector<DWORD>& indices);

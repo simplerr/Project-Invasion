@@ -56,7 +56,6 @@ void SelectLevel::init(Game* game)
 	mSideMenu->buildMenu(128, 80);
 	mSideMenu->connect(&SelectLevel::menuMessage, this);
 
-
 	// Create the world.
 	mWorld = new World();
 	mLight = new Light(D3DXVECTOR3(0, 25, 0), D3DXVECTOR3(0, -1, 0), Material(WHITE, 0), 32, 1600.0f);
@@ -71,8 +70,6 @@ void SelectLevel::init(Game* game)
 	// Setup the camera.
 	gCamera->setPosition(D3DXVECTOR3(0, 5000, 0));
 	gCamera->setDirection(D3DXVECTOR3(0, -0.6, 0.4));
-
-	ShowCursor(true);
 }
 	
 void SelectLevel::cleanup()
@@ -85,16 +82,17 @@ void SelectLevel::cleanup()
 
 void SelectLevel::update(double dt)
 {
-	mMenu->update(gInput->mousePosition());
-	mSideMenu->update(gInput->mousePosition());
-
-	gCamera->rotate(0, 0.001);
-	gCamera->updateView();
-
 	// Spot light in the looking direction.
 	mLight->setPosition(gCamera->getPosition() + D3DXVECTOR3(0, 5, 0));
 	D3DXVECTOR3 t;
 	mLight->setDirection(-*D3DXVec3Normalize(&t, &(gCamera->getPosition() - gCamera->getTarget())));
+
+	// Only update the other menu if the state havent changed.
+	if(mMenu->update(gInput->mousePosition())) 
+		mSideMenu->update(gInput->mousePosition());
+
+	gCamera->rotate(0, 0.001);
+	gCamera->updateView();
 }
 	
 void SelectLevel::draw()
