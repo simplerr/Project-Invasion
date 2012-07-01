@@ -28,12 +28,12 @@ MenuItem::~MenuItem()
 
 void MenuItem::draw()
 {
-	if(state == STANDARD)
+	if(state == STANDARD || state == INACTIVE)
 		gGraphics->drawScreenTexture(standardTexture, rect);
 	else if(state == SELECTED)
 		gGraphics->drawScreenTexture(onSelectTexture, rect);
-	else if(state == INACTIVE)
-		gGraphics->drawScreenTexture(inactiveTexture, rect);
+	//else if(state == INACTIVE)
+	//	gGraphics->drawScreenTexture(inactiveTexture, rect);
 }
 
 void MenuItem::setId(int id)
@@ -60,6 +60,8 @@ Menu::~Menu()
 	{
 		delete mItemList[i];
 	}
+
+	mItemList.clear();
 }
 
 void Menu::setSize(int x, int y, int width, int height)

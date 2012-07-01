@@ -30,6 +30,7 @@ protected:
 	MainMenu() {};
 private:
 	static MainMenu mMainMenu;
+	IDirect3DTexture9*	mLogo;
 	Menu* mMenu;
 	World* mWorld;
 	Light* mLight;

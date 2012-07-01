@@ -8,6 +8,14 @@ LevelHandler::LevelHandler() : mDocument("data/levels.xml")
 	
 LevelHandler::~LevelHandler()
 {
+	saveProgress();
+
+	for(int i = 0; i < mLevelList.size(); i++)
+		delete mLevelList[i];
+}
+
+void LevelHandler::saveProgress()
+{
 	// Update the CompletedWaves attribute.
 	TiXmlElement* root = mDocument.FirstChildElement();
 
@@ -20,9 +28,6 @@ LevelHandler::~LevelHandler()
 		int j = mLevelList[i]->getCompletedWaves();
 		waves->SetAttribute("completed", mLevelList[i]->getCompletedWaves());
 	}
-
-	for(int i = 0; i < mLevelList.size(); i++)
-		delete mLevelList[i];
 
 	mDocument.SaveFile("data\\levels.xml");
 }

@@ -226,5 +226,5 @@ void Level::deleteSpawners()
 		mSpawnList[i] = NULL;
 	}
 
-	mSpawnList.clear();
+	//mSpawnList.clear();
 }

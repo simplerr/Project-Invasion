@@ -16,6 +16,7 @@ public:
 	~LevelHandler();
 
 	void loadLevels();
+	void saveProgress();
 	void deleteSpawners();
 
 	Level* getLevel(int num);

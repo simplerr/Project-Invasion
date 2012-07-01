@@ -22,7 +22,7 @@
         <Desc>:D This is the second level! I see you didn&apos;t die on the last one!</Desc>
         <DifficultyAdjusts speed="0.5f" health="0.1f" damage="0.1f" />
         <SpawnPosition x="0" y="2000" z="0" />
-        <Waves completed="2">
+        <Waves completed="0">
             <Wave enemies="1" initialEnemies="1" spawnRate="1.0f" />
             <Wave enemies="1" initialEnemies="1" spawnRate="1.0f" />
         </Waves>

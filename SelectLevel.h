@@ -12,6 +12,7 @@ public:
 
 	void draw();
 
+	IDirect3DTexture9* checkMark;
 	int numLevel;
 	int waves;
 	int completedWaves;
@@ -41,5 +42,9 @@ protected:
 	SelectLevel() {};
 private:
 	static SelectLevel mSelectLevel;
+	IDirect3DTexture9*	mLogo;
 	Menu* mMenu;
+	Menu* mSideMenu;
+	World* mWorld;
+	Light* mLight;
 };	// Class

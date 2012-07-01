@@ -69,6 +69,7 @@ void PlayState::cleanup()
 	delete mGui;
 	delete mRenderTarget;
 	gLevelHandler->deleteSpawners();
+	gLevelHandler->saveProgress();
 }
 
 void PlayState::update(double dt)

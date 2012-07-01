@@ -27,6 +27,8 @@ void MainMenu::init(Game* game)
 	mWorld->addLight(mLight); 
 	mWorld->addAmbientLight(D3DCOLOR_ARGB(200, 100, 100, 100));
 
+	mLogo = gGraphics->loadTexture("data/logo.png");
+
 	// Set the graphics light list.
 	gGraphics->setLightList(mWorld->getLights());
 
@@ -59,6 +61,7 @@ void MainMenu::update(double dt)
 void MainMenu::draw()
 {
 	mWorld->draw();
+	gGraphics->drawScreenTexture(mLogo, 600, 125, 610*1.2, 93*1.2);
 	mMenu->draw();
 }
 

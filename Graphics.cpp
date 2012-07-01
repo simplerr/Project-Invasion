@@ -155,7 +155,7 @@ void Graphics::initFonts()
 	D3DXFONT_DESC fontDesc;
 	fontDesc.Height          = 28;
     fontDesc.Width           = 14;
-    fontDesc.Weight          = 0;
+    fontDesc.Weight          = 7;
     fontDesc.MipLevels       = 1;
     fontDesc.Italic          = false;
     fontDesc.CharSet         = DEFAULT_CHARSET;
