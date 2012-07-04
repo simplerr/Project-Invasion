@@ -31,7 +31,7 @@ void SelectLevel::init(Game* game)
 
 	for(int i = 0; i < gLevelHandler->getNumLevels(); i++) {
 		string name = gLevelHandler->getLevel(i)->getName();
-		LevelItem* item = new LevelItem(name, "data/level_standard_text.png", "data/level_glow_text.png", "data/level_invalid_text.png");
+		LevelItem* item = new LevelItem(name, "data/buttons/level_standard_text.png", "data/buttons/level_glow_text.png", "data/buttons/level_invalid_text.png");
 		item->waves = gLevelHandler->getLevel(i)->getNumWaves();
 		item->completedWaves = gLevelHandler->getLevel(i)->getCompletedWaves();
 
@@ -51,9 +51,9 @@ void SelectLevel::init(Game* game)
 	// Side menu.
 	mSideMenu = new Menu("SideMenu", NavigationType::MOUSE, HOR); 
 	mSideMenu->setSize(1000, 700, 256, 512);
-	MenuItem* item = new MenuItem("MainMenu", "data/menu_standard.png", "data/menu_glow.png");
+	MenuItem* item = new MenuItem("MainMenu", "data/buttons/back_standard.png", "data/buttons/back_glow.png");
 	mSideMenu->addMenuItem(item);
-	mSideMenu->buildMenu(128, 80);
+	mSideMenu->buildMenu(116*1.5, 50*1.5);
 	mSideMenu->connect(&SelectLevel::menuMessage, this);
 
 	// Create the world.
@@ -93,6 +93,12 @@ void SelectLevel::update(double dt)
 
 	gCamera->rotate(0, 0.001);
 	gCamera->updateView();
+
+	// Go to main menu on ESC.
+	if(gInput->keyPressed(VK_ESCAPE)) {
+		changeState(MainMenu::Instance());
+		ShowCursor(false);
+	}
 }
 	
 void SelectLevel::draw()
@@ -105,12 +111,12 @@ void SelectLevel::draw()
 
 void SelectLevel::onLostDevice()
 {
-
+	mWorld->onLostDevice();
 }
 
 void SelectLevel::onResetDevice()
 {
-
+	mWorld->onResetDevice();
 }
 
 void SelectLevel::pause()
@@ -125,8 +131,10 @@ void SelectLevel::resume()
 
 bool SelectLevel::menuMessage(string message)
 {
-	if(message == "MainMenu")
+	if(message == "MainMenu") {
 		changeState(MainMenu::Instance());
+		ShowCursor(false);
+	}
 	else {
 		changeState(PlayState::Instance());
 		PlayState::Instance()->setLevel(message);
@@ -161,7 +169,14 @@ void LevelItem::draw()
 
 	char buffer[256];
 	sprintf(buffer, "LEVEL %s", itemName.c_str());
-	gGraphics->drawText(buffer, rect.left + 5, rect.top , WHITE, 30);
+	float size = 30;
+	float yoffset = -5;
+	if(gGame->widthRatio() != 1.0f) {
+		size = 45;
+		yoffset = 10 * gGame->heightRatio();
+	}
+	
+	gGraphics->drawText(buffer, rect.left * gGame->widthRatio() + 5 * gGame->widthRatio(), rect.top * gGame->heightRatio() + yoffset, WHITE, size);
 
 	if(this->state == INACTIVE)
 		gGraphics->drawScreenTexture(inactiveTexture, rect);

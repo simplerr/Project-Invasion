@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "Graphics.h"
 #include "Vector.h"
+#include "Game.h"
 
 MenuItem::MenuItem(string name, string standardTextureSource, string onSelectTextureSource, string inactiveTextureSource)
 {
@@ -109,6 +110,9 @@ bool Menu::update(Vector mousePos)
 {
 	if(!getVisible())
 		return true;
+
+	//mousePos.x *= gGame->widthRatio();
+	//mousePos.y *= gGame->heightRatio();
 
 	if(mNavigation == MOUSE)
 	{

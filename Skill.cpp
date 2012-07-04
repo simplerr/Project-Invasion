@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "World.h"
 #include "Graphics.h"
+#include "Game.h"
 
 Skill::Skill(string name, World* world, Player* player)
 {
@@ -52,7 +53,10 @@ void Skill::draw(Rect rect)
 		// Cooldown number.
 		char buffer[256];
 		sprintf(buffer, "%.2f", cd);
-		gGraphics->drawText(buffer, rect.left, rect.top-20, WHITE, 16);
+		float size = 16;
+		if(gGame->widthRatio() != 1.0f)
+			size = 22;
+		gGraphics->drawText(buffer, rect.left * gGame->widthRatio() + 15, rect.top * gGame->heightRatio() + 25, WHITE, size);
 	}
 }
 

@@ -48,8 +48,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Axel\Desktop\boost_1_46_1\;F:\Users\Axel\Documents\Visual Studio 11\Memory_and_Exception_Trace\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <IncludePath>F:\Program Files (x86)\Visual Leak Detector\include;C:\Users\Axel\Desktop\boost_1_46_1\;F:\Users\Axel\Documents\Visual Studio 11\Memory_and_Exception_Trace\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>F:\Program Files (x86)\Visual Leak Detector\lib\Win32;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -81,7 +81,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Axel\Desktop\boost_1_46_1\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Axel\Desktop\boost_1_46_1\;F:\Program Files (x86)\Visual Leak Detector\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -229,7 +229,9 @@
     <Xml Include="data\enemies.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="data\levels.xml" />
+    <Xml Include="data\levels.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="data\skills.xml" />
     <Xml Include="data\weapons.xml">
       <SubType>Designer</SubType>

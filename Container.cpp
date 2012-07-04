@@ -117,19 +117,6 @@ void Container::draw()
 			if(mSlotList[i].taken)
 				gGraphics->drawScreenTexture(mSlotList[i].item->getTexture(), rect.left + rect.getWidth()/2, rect.top + rect.getHeight()/2, rect.getWidth()-12, rect.getHeight()-12);
 
-			// Numbers.
-			if(mSlotList[i].slotId == SKILL && mSlotList[i].taken){
-				string str = string(1, c[i]);
-				gGraphics->drawText(str, mSlotList[i].rect.right-10,mSlotList[i].rect.top-8, D3DCOLOR_RGBA(255, 128, 0, 255));
-
-				// Skillinfo.
-				if(pointInsideRect(gInput->mousePosition(), rect) && mSlotList[i].item != NULL) 
-				{
-					//gGraphics->drawScreenTexture(mSkillBG, v.x+70, v.y-70 , 170, 100);
-					//gGraphics->drawText("dynamic_cast<Skill*>(mSlotList[i].item)->getName()", v.x+4, v.y-110, D3DCOLOR_RGBA(255, 128, 0, 255));
-				}
-			}
-
 			// Draw the slot item.
 			if(mSlotList[i].taken)
 				mSlotList[i].item->draw(rect);

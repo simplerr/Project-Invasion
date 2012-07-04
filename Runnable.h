@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <string>
 #include "d3dUtil.h"
+#include "Rect.h"
 
 void showMsg(std::string msg);
 
@@ -49,6 +50,8 @@ public:
 	D3DPRESENT_PARAMETERS	getPresParams();
 	int						getScreenWidth();
 	int						getScreenHeight();
+	float					widthRatio();
+	float					heightRatio();
 
 	bool			isDeviceLost();
 	virtual void	onLostDevice() {}
@@ -75,6 +78,7 @@ private:
 	bool	mDeviceLost;
 	bool	mPaused;
 	bool	mKilled;
+	Rect	mResolutionRatio;
 };	// Class
 
 // Global

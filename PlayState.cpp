@@ -134,7 +134,7 @@ void PlayState::draw()
 	mWorld->drawToMinimap(mRenderTarget);
 
 	// Draw the crosshair.
-	gGraphics->drawScreenTexture(mTexture, gGame->getScreenWidth()/2, gGame->getScreenHeight()/2, 32, 32, false);
+	gGraphics->drawScreenTexture(mTexture, 600, 400, 32, 32, false);
 
 	// Draw the Gui.
 	mGui->draw();

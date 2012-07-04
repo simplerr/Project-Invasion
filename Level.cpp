@@ -6,6 +6,7 @@
 #include "PowerupSpawner.h"
 #include "Input.h"
 #include "LevelHandler.h"
+#include "Game.h"
 
 Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Spawner*> spawnList)
 {
@@ -16,7 +17,7 @@ Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Sp
 	mSpawnList = spawnList;
 	mSpawnDelta = mTimer = 0.0f;
 	mSpawnedEnemies = 0;
-	mStatusText = new StatusText("nothing", 400, 400, 0.0f);
+	mStatusText = new StatusText("nothing", 0.3 * gGame->getScreenWidth(), 0.3 * gGame->getScreenHeight(), 0.0f);
 	mPowerupSpawner = NULL;
 }
 	
@@ -113,16 +114,16 @@ void Level::draw()
 	static char buffer[256];
 	if(mState == PLAYING) {
 		sprintf(buffer, "Enemies left: %i", mWaveList[mCurrentWave]->getEnemiesLeft());
-		gGraphics->drawText(buffer, 925, 50, RED);
+		gGraphics->drawText(buffer, gGame->getScreenWidth() * 0.85, 50, RED);
 	}
 	else if(mState == WAVE_COMPLETED) {
 		sprintf(buffer, "Time untill next wave: %.2f", mTimer);
-		gGraphics->drawText(buffer, 925, 50, RED);
+		gGraphics->drawText(buffer, gGame->getScreenWidth() * 0.85, 50, RED);
 	}
 
 	int completed = mState == LEVEL_COMPLETED ? mWaveList.size() : mCurrentWave;
 	sprintf(buffer, "Waves completed: %i/%i", max(0, completed), mWaveList.size());
-	gGraphics->drawText(buffer, 925, 75, RED);
+	gGraphics->drawText(buffer, gGame->getScreenWidth() * 0.85, 75, RED);
 }
 
 void Level::launchNextWave()

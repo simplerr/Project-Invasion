@@ -40,8 +40,8 @@ Gui::Gui(Player* player)
 	mMenu->setVisible(false);
 	//mMenu->setBkgdTexture("data/menu_border.png");
 
-	MenuItem* menu = new MenuItem("MainMenu", "data/menu_standard.png", "data/menu_glow.png");
-	MenuItem* restart = new MenuItem("Restart", "data/restart_standard.png", "data/restart_glow.png");
+	MenuItem* menu = new MenuItem("MainMenu", "data/buttons/menu_standard.png", "data/buttons/menu_glow.png");
+	MenuItem* restart = new MenuItem("Restart", "data/buttons/restart_standard.png", "data/buttons/restart_glow.png");
 
 	mMenu->addMenuItem(menu);
 	mMenu->addMenuItem(restart);

@@ -1,6 +1,7 @@
 #include "Bar.h"
 #include "Graphics.h"
 #include "Rect.h"
+#include "Game.h"
 
 Bar::Bar(string barTexture, string iconTexture, float max)
 {
@@ -41,7 +42,7 @@ void Bar::draw()
 	// Draw text.
 	char buffer[256];
 	sprintf(buffer, "%.0f/%.0f", mCurrent, mMax);
-	gGraphics->drawText(buffer, mPosition.x-54, mPosition.y-41, BLACK, 18);
+	gGraphics->drawText(buffer, mPosition.x * gGame->widthRatio() - 40, mPosition.y * gGame->heightRatio() - 10, WHITE, 18);
 }
 	
 void Bar::setPosition(float x, float y)

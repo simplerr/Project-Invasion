@@ -16,9 +16,9 @@ void MainMenu::init(Game* game)
 	// Create the menu.
 	mMenu = new Menu("MainMenu", NavigationType::MOUSE, HOR); 
 	mMenu->setSize(1000, 700, 256, 512);
-	mMenu->addMenuItem(new MenuItem("SelectLevel", "data/menu_standard.png", "data/menu_glow.png"));
-	mMenu->addMenuItem(new MenuItem("Credits", "data/restart_standard.png", "data/restart_glow.png"));
-	mMenu->buildMenu(128, 80);
+	mMenu->addMenuItem(new MenuItem("SelectLevel", "data/buttons/play_standard.png", "data/buttons/play_glow.png"));
+	mMenu->addMenuItem(new MenuItem("Quit", "data/buttons/quit_standard.png", "data/buttons/quit_glow.png"));
+	mMenu->buildMenu(116*1.5, 50*1.5);
 	mMenu->connect(&MainMenu::menuMessage, this);
 
 	// Create the world.
@@ -67,12 +67,12 @@ void MainMenu::draw()
 
 void MainMenu::onLostDevice()
 {
-
+	mWorld->onLostDevice();
 }
 
 void MainMenu::onResetDevice()
 {
-
+	mWorld->onResetDevice();
 }
 
 void MainMenu::pause()
@@ -89,10 +89,8 @@ bool MainMenu::menuMessage(string message)
 {
 	if(message == "SelectLevel") 
 		changeState(SelectLevel::Instance());
-	else if(message == "Credits") {
-		changeState(PlayState::Instance());
-		PlayState::Instance()->setLevel("1");
-	}
+	else if(message == "Quit") 
+		SendMessage(gGame->getMainWnd(), WM_CLOSE, 0, 0);
 	else
 		return true;
 

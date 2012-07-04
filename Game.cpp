@@ -71,7 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
 	gGame = &game;
 
 	gInput = new Input();
-	gGame->init();
+	//gGame->init();
 
 	// Run the game
 	return gGame->run();
@@ -83,6 +83,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 {
 	InitAllVertexDeclarations();
 	
+	mCurrentState	= NULL;
 	gGraphics		= new Graphics();
 	mLoadingTexture = gGraphics->loadTexture("data/loading.png");
 	mInitState		= STARTUP;
@@ -117,6 +118,8 @@ void Game::init()
 	mCurrentState = NULL;
 	changeState(MainMenu::Instance());
 	mInitState = RUNNING;
+
+	//gGame->switchScreenMode();
 }
 
 //! Destructor.
@@ -186,6 +189,13 @@ void Game::draw()
 		mGfxStats->display();
 		//gCamera->drawDebug();
 	}
+
+	/*char buffer[256];
+	sprintf(buffer, "ratio: %f, %f", widthRatio(), heightRatio());
+	gGraphics->drawText(buffer, 600 * widthRatio(), 400 * heightRatio());
+
+	sprintf(buffer, "x: %f, y: %f", gInput->mousePosition().x, gInput->mousePosition().y);
+	gGraphics->drawText(buffer, 100 * widthRatio(), 400 * heightRatio());*/
 }
 
 //! The starting msgProc function.
@@ -195,26 +205,31 @@ LRESULT Game::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	if(mInitState == RUNNING)
 		mCurrentState->msgProc(msg, wParam, lParam);
 
+	gInput->msgProc(msg, wParam, lParam);
 	LRESULT result = Runnable::msgProc(msg, wParam, lParam);
 	return result;
 }
 
 void Game::onLostDevice()
 {
+	if(mCurrentState != NULL) {
 	// Pass on to the current state.
 	mCurrentState->onLostDevice();
 
 	mGfxStats->onLostDevice();
 	gGraphics->onLostDevice();
 	gEffectManager->onLostDevice();
+	}
 }
 	
 void Game::onResetDevice()
 {
+	if(mCurrentState != NULL) {
 	// Pass on to the current state.
 	mCurrentState->onResetDevice();
 
 	mGfxStats->onResetDevice();
 	gGraphics->onResetDevice();
 	gEffectManager->onResetDevice();
+	}
 }

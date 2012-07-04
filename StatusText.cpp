@@ -1,6 +1,7 @@
 #include "Vector.h"
 #include "Graphics.h"
 #include "StatusText.h"
+#include "Game.h."
 
 //! Constructor.
 StatusText::StatusText()
@@ -31,7 +32,7 @@ StatusText::~StatusText()
 void StatusText::draw()
 {
 	if(mTime > 0)	{
-		gGraphics->drawText(mText, mPosition.x, mPosition.y, mColor);
+		gGraphics->drawText(mText, mPosition.x * gGame->widthRatio(), mPosition.y * gGame->heightRatio(), mColor);
 	}
 }
 

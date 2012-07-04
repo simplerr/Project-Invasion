@@ -72,7 +72,7 @@ void Graphics::onResetDevice()
 	gd3dDevice->SetTransform(D3DTS_WORLD, &m);
     gd3dDevice->SetTransform(D3DTS_VIEW, &m);
 
-    D3DXMatrixOrthoOffCenterRH (&m, 0, 1200, 800, 0, 0, 1);
+    D3DXMatrixOrthoOffCenterRH(&m, 0, 1200, 800, 0, 0, 1);
     gd3dDevice->SetTransform(D3DTS_PROJECTION, &m);
 }
 

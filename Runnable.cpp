@@ -30,6 +30,9 @@ Runnable::Runnable(HINSTANCE hInstance, std::string caption, int width, int heig
 	initWindow();
 	initDiRectX();
 	setRenderStates();
+
+	mResolutionRatio.right = 1.0f;
+	mResolutionRatio.bottom = 1.0f;
 }
 
 Runnable::~Runnable()
@@ -322,11 +325,19 @@ LRESULT Runnable::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 void Runnable::switchScreenMode()
 {
+	bool bb = false;
 	// Switch to fullscreen mode.
 	if(md3dPP.Windowed)
 	{
-		int width  = GetSystemMetrics(SM_CXSCREEN);
-		int height = GetSystemMetrics(SM_CYSCREEN);
+		// Old window rect.
+		RECT rect;
+		GetWindowRect(gGame->getMainWnd(), &rect);
+		rect.right = rect.right - rect.left;
+		rect.bottom = rect.bottom - rect.top;
+
+		// Screen dimensions, will be the backbuffers dimensions.
+		float width  = GetSystemMetrics(SM_CXSCREEN);
+		float height = GetSystemMetrics(SM_CYSCREEN);
 
 		md3dPP.BackBufferFormat = D3DFMT_X8R8G8B8;
 		md3dPP.BackBufferWidth  = width;
@@ -338,25 +349,32 @@ void Runnable::switchScreenMode()
 
 		// Update the position.
 		SetWindowPos(mhMainWindow, HWND_TOP, 0, 0, width, height, SWP_NOZORDER | SWP_SHOWWINDOW);	
+		
+		// Calculate resolution ratio.
+		mResolutionRatio.bottom = height / (float)rect.bottom;
+		mResolutionRatio.right = width / (float)rect.right;
 	}
 	// Switch to windowed mode.
 	else
 	{
+		bb = true;
 		RECT R = {0, 0, 1200, 800};
-		AdjustWindowRect(&R, WS_OVERLAPPEDWINDOW, false);
+		// [NOTE] For some reasion AdjustWindowRect() shouldn't be used.
+		//AdjustWindowRect(&R, WS_OVERLAPPEDWINDOW, false);
 		md3dPP.BackBufferFormat = D3DFMT_UNKNOWN;
-		md3dPP.BackBufferWidth  = 1200;
-		md3dPP.BackBufferHeight = 800;
+		md3dPP.BackBufferWidth  = 0;
+		md3dPP.BackBufferHeight = 0;
 		md3dPP.Windowed         = true;
 	
 		// Change the window style to a more windowed friendly style.
 		SetWindowLongPtr(mhMainWindow, GWL_STYLE, WS_OVERLAPPEDWINDOW);
 
-		// If we call SetWindowLongPtr, MSDN states that we need to call
-		// SetWindowPos for the change to take effect.  In addition, we 
-		// need to call this function anyway to update the window dimensions.
+		// Needed for the changes to take effect.
 		SetWindowPos(mhMainWindow, HWND_NOTOPMOST, GetSystemMetrics(SM_CXSCREEN)/2-(1200/2), GetSystemMetrics(SM_CYSCREEN)/2-(800/2),
 			R.right, R.bottom, SWP_SHOWWINDOW);
+
+		mResolutionRatio.bottom = 1.0f;
+		mResolutionRatio.right = 1.0f;
 	}
 
 	// Reset the device with the changes.
@@ -409,12 +427,16 @@ void Runnable::setFps(float fps)
 
 int	Runnable::getScreenWidth()
 {
-	return mWidth;
+	RECT rect;
+	GetWindowRect(gGame->getMainWnd(), &rect);
+	return rect.right - rect.left;
 }
 
 int	Runnable::getScreenHeight()
 {
-	return mHeight;
+	RECT rect;
+	GetWindowRect(gGame->getMainWnd(), &rect);
+	return rect.bottom - rect.top;
 }
 void showMsg(std::string msg)	{
 	MessageBox(gGame->getMainWnd(), msg.c_str(), 0, 0);
@@ -454,4 +476,14 @@ void Runnable::drawAll()
 
 	// Present the backbuffer
 	HR(gd3dDevice->Present(0, 0, 0, 0));
+}
+
+float Runnable::widthRatio()
+{
+	return mResolutionRatio.right;
+}
+	
+float Runnable::heightRatio()
+{
+	return mResolutionRatio.bottom;
 }

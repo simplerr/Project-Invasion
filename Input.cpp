@@ -122,11 +122,23 @@ bool Input::keyReleased(int key)
 */
 Vector Input::mousePosition()
 {
-	//return mMousePosition;
 	POINT pos;
 	GetCursorPos(&pos);
 	ScreenToClient(gGame->getMainWnd(), &pos);
-	return Vector(pos.x, pos.y);
+
+	RECT r;
+	GetWindowRect(gGame->getMainWnd(), &r);
+	float width = r.right - r.left;
+	float height = r.bottom - r.top;
+
+	GetClientRect(gGame->getMainWnd(), &r);
+	Vector position = mMousePosition;
+	position.x = (mMousePosition.x / (float)r.right) * width;
+	position.y = (mMousePosition.y / (float)r.bottom) * height;
+
+	position.x /= gGame->widthRatio();
+	position.y /= gGame->heightRatio();
+	return position;
 }
 
 //! Set the mouse position.
