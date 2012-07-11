@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "Terrain.h"
 #include "Mesh.h"
+#include "AABB.h"
 
 float angle;
 float Y;
@@ -40,6 +41,7 @@ void Camera::update(float dt)
 	rotate();
 	
 	updateView();
+	//buildWorldFrustumPlanes();
 }
 
 void Camera::updateView()
@@ -129,6 +131,79 @@ void Camera::rotate(float pitch, float yaw)
 
 	// Set the new target.
 	mTarget = mPosition + direction;
+}
+
+bool Camera::isVisible(const AABB& box)const
+{
+	// Test assumes frustum planes face inward.
+
+	D3DXVECTOR3 P;
+	D3DXVECTOR3 Q;
+
+	//      N  *Q                    *P
+	//      | /                     /
+	//      |/                     /
+	// -----/----- Plane     -----/----- Plane    
+	//     /                     / |
+	//    /                     /  |
+	//   *P                    *Q  N
+	//
+	// PQ forms diagonal most closely aligned with plane normal.
+
+	// For each frustum plane, find the box diagonal (there are four main
+	// diagonals that intersect the box center point) that points in the
+	// same direction as the normal along each axis (i.e., the diagonal 
+	// that is most aligned with the plane normal).  Then test if the box
+	// is in front of the plane or not.
+	for(int i = 0; i < 6; ++i)
+	{
+		// For each coordinate axis x, y, z...
+		for(int j = 0; j < 3; ++j)
+		{
+			// Make PQ point in the same direction as the plane normal on this axis.
+			if( mFrustumPlanes[i][j] >= 0.0f )
+			{
+				P[j] = box.min[j];
+				Q[j] = box.max[j];
+			}
+			else 
+			{
+				P[j] = box.max[j];
+				Q[j] = box.min[j];
+			}
+		}
+
+		// If box is in negative half space, it is behind the plane, and thus, completely
+		// outside the frustum.  Note that because PQ points roughly in the direction of the 
+		// plane normal, we can deduce that if Q is outside then P is also outside--thus we
+		// only need to test Q.
+		if( D3DXPlaneDotCoord(&mFrustumPlanes[i], &Q) < 0.0f  ) // outside
+			return false;
+	}
+	return true;
+}
+
+void Camera::buildWorldFrustumPlanes()
+{
+	// Note: Extract the frustum planes in world space.
+
+	D3DXMATRIX VP = mView * mProj;
+
+	D3DXVECTOR4 col0(VP(0,0), VP(1,0), VP(2,0), VP(3,0));
+	D3DXVECTOR4 col1(VP(0,1), VP(1,1), VP(2,1), VP(3,1));
+	D3DXVECTOR4 col2(VP(0,2), VP(1,2), VP(2,2), VP(3,2));
+	D3DXVECTOR4 col3(VP(0,3), VP(1,3), VP(2,3), VP(3,3));
+
+	// Planes face inward.
+	mFrustumPlanes[0] = (D3DXPLANE)(col2);        // near
+	mFrustumPlanes[1] = (D3DXPLANE)(col3 - col2); // far
+	mFrustumPlanes[2] = (D3DXPLANE)(col3 + col0); // left
+	mFrustumPlanes[3] = (D3DXPLANE)(col3 - col0); // right
+	mFrustumPlanes[4] = (D3DXPLANE)(col3 - col1); // top
+	mFrustumPlanes[5] = (D3DXPLANE)(col3 + col1); // bottom
+
+	for(int i = 0; i < 6; i++)
+		D3DXPlaneNormalize(&mFrustumPlanes[i], &mFrustumPlanes[i]);
 }
 
 void Camera::drawDebug()

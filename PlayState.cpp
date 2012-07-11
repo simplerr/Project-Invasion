@@ -60,6 +60,7 @@ void PlayState::init(Game* game)
 	mGui = new Gui(mPlayer);
 
 	mPaused = false;
+	mGameOver = false;
 }
 	
 void PlayState::cleanup()
@@ -74,8 +75,8 @@ void PlayState::cleanup()
 
 void PlayState::update(double dt)
 {
-	// Toggle the menu.
-	if(gInput->keyPressed(VK_ESCAPE)) {
+	// Toggle the menu. Player dead?
+	if(gInput->keyPressed(VK_ESCAPE) || (mPlayer->getHealth() <= 0 && !mGui->isMenuVisible())) {
 		mGui->toggleMenu();
 		mPaused = !mPaused;
 
@@ -83,6 +84,10 @@ void PlayState::update(double dt)
 			ShowCursor(true);
 		else
 			ShowCursor(false);
+
+		// Game over.
+		if(!gInput->keyPressed(VK_ESCAPE))
+			mGameOver = true;
 	}
 
 	// Update the Gui.
@@ -133,14 +138,14 @@ void PlayState::draw()
 	mActiveLevel->draw();
 	mWorld->drawToMinimap(mRenderTarget);
 
-	// Draw the crosshair.
-	gGraphics->drawScreenTexture(mTexture, 600, 400, 32, 32, false);
-
 	// Draw the Gui.
 	mGui->draw();
 
-	// Minimap.
-	gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 230, 230);
+	// Minimap and crosshair.
+	if(!getGameOver()) {
+		gGraphics->drawScreenTexture(mTexture, 600, 400, 32, 32, false);
+		gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 230, 230);
+	}
 }
 
 void PlayState::onLostDevice()
@@ -195,6 +200,7 @@ void PlayState::setLevel(string name)
 void PlayState::restartLevel()
 {
 	setLevel(mActiveLevel->getName());
+	mGameOver = false;
 }
 
 Wave* PlayState::getCurrentWave()
@@ -205,6 +211,11 @@ Wave* PlayState::getCurrentWave()
 void PlayState::setPaused(bool paused)
 {
 	mPaused = paused;
+}
+
+bool PlayState::getGameOver()
+{
+	return mGameOver;
 }
 
 void PlayState::pause()

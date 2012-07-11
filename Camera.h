@@ -4,6 +4,7 @@
 
 class Graphics;
 class Terrain;
+struct AABB;
 
 enum CameraType
 {
@@ -38,6 +39,11 @@ public:
 	float getYaw();
 	float getPitch();
 
+	// Box coordinates should be relative to world space.
+	bool isVisible(const AABB& box)const;
+
+	void buildWorldFrustumPlanes();
+
 	D3DXMATRIX getViewMatrix();
 	D3DXMATRIX getProjectionMatrix();
 	D3DXVECTOR3 getPosition();
@@ -58,6 +64,14 @@ private:
 	float		mHeightOffset;
 	float height;
 	float mYaw, mPitch;
+
+	// Frustum Planes
+	D3DXPLANE mFrustumPlanes[6]; // [0] = near
+	                             // [1] = far
+	                             // [2] = left
+	                             // [3] = right
+	                             // [4] = top
+	                             // [5] = bottom
 };
 
 extern Camera* gCamera;

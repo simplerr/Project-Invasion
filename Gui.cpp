@@ -33,8 +33,9 @@ Gui::Gui(Player* player)
 	mAmmoBar->setPosition(1075, 750);
 
 	mUiBorder = gGraphics->loadTexture("data/ui_border.png");
+	mGameOverTexture= gGraphics->loadTexture("data/game_over.png");
 
-	// The menu.
+	// The pause menu.
 	mMenu = new Menu("InGameMenu", NavigationType::MOUSE, VER); 
 	mMenu->setSize(600, 400, 256, 512);
 	mMenu->setVisible(false);
@@ -71,9 +72,17 @@ void Gui::update(float dt)
 	
 void Gui::draw()
 {
-	gGraphics->drawScreenTexture(mUiBorder, 1058, 710, 285, 180);
+	// Don't draw UI when game over, add a red layer.
+	if(PlayState::Instance()->getGameOver()) {
+		gGraphics->drawScreenTexture(mGameOverTexture, 600, 400, 1200, 800);
+		mMenu->draw();
+		return;
+	}
 
 	mMenu->draw();
+
+	gGraphics->drawScreenTexture(mUiBorder, 1058, 710, 285, 180);
+	
 	mSkillBar->draw();
 	mHealthBar->draw();
 	mAmmoBar->draw();
@@ -107,4 +116,9 @@ bool Gui::menuMessage(string message)
 void Gui::toggleMenu()
 {
 	mMenu->setVisible(!mMenu->getVisible());
+}
+
+bool Gui::isMenuVisible()
+{
+	return mMenu->getVisible();
 }

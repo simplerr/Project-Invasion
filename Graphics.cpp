@@ -334,14 +334,15 @@ void Graphics::drawTerrain(Terrain* terrain)
 	HR(mFX->SetTexture(mhBlendMap, mBlendMap));
 
 	// Begin passes.
-	UINT numPasses = 0;
-	HR(mFX->Begin(&numPasses, 0));
-	for(UINT i = 0; i < numPasses; ++i)
-	{
-		HR(mFX->BeginPass(i));
-		terrain->getMesh()->getMesh()->DrawSubset(0);
-		HR(mFX->EndPass());
+	HR(mFX->Begin(0, 0));
+	HR(mFX->BeginPass(0));
+
+	for(UINT i = 0; i < terrain->mSubGridMeshes.size(); ++i) {
+		//if(gCamera->isVisible(terrain->mSubGridBndBoxes[i]))
+			HR(terrain->mSubGridMeshes[i]->DrawSubset(0));
 	}
+		
+	HR(mFX->EndPass());
 	HR(mFX->End());
 }
 

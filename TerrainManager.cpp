@@ -4,6 +4,7 @@
 TerrainManager::TerrainManager()
 {
 	loadTerrain("data/heightmap17_257.raw", 257, 257, 100, 100, 16.0f);
+	//loadTerrain("data/heightmap17_257.raw", 257, 257, 1, 1, 1);
 }
 	
 TerrainManager::~TerrainManager()

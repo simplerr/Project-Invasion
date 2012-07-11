@@ -3,10 +3,12 @@
 #include "d3dUtil.h"
 #include "Heightmap.h"
 #include "Material.h"
+#include "Vertex.h"
 using namespace std;
 
 class Mesh;
 class Graphics;
+struct AABB;
 
 class Terrain
 {
@@ -15,6 +17,7 @@ public:
 	~Terrain();
 
 	void build(D3DXVECTOR3 center, int rows, int colums, float dx, float dz, vector<D3DXVECTOR3>& verts, vector<DWORD>& indices);
+	void buildSubGridMesh(RECT& R, VertexPNT* gridVerts); 
 	void draw();
 
 	void smothOut(int x, int z, int radius);
@@ -27,7 +30,11 @@ public:
 	int getTriangles();
 	int getColums();
 	int getRows();
+
+	std::vector<ID3DXMesh*> mSubGridMeshes;
+	std::vector<AABB>		mSubGridBndBoxes;
 private:
+	
 	Mesh*					mTerrainMesh;
 	Heightmap*				mHeightmap;
 	D3DXVECTOR3				mPosition;

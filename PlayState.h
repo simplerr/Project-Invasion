@@ -29,6 +29,7 @@ public:
 	void setLevel(string name);
 	void restartLevel();
 	void setPaused(bool paused);
+	bool getGameOver();
 	Wave* getCurrentWave();
 
 	static PlayState* Instance() {
@@ -48,4 +49,5 @@ private:
 	Gui*		mGui;
 	bool		mRotate;
 	bool		mPaused;
+	bool		mGameOver;
 };	// Class
