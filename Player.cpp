@@ -96,6 +96,8 @@ void Player::draw()
 	mWeapon->setRotation(gCamera->getDirection());
 	mWeapon->draw();
 
+	gCamera->drawDebug();
+
 	//drawDebug();
 }
 

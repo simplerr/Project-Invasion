@@ -98,7 +98,7 @@ void World::update(float dt)
 			object->setOnGround(true);
 		else
 			object->setOnGround(false);
-	
+
 		// Update the object.
 		object->update(dt);
 

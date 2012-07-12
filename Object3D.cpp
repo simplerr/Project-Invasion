@@ -13,12 +13,13 @@ Object3D::Object3D(D3DXVECTOR3 position, ObjectType type)
 	setType(type);
 	setFriction(1.0f);
 	setMinimapTexture("data/white.bmp");
+	mAlive = true;
 	mMaterial.specularPower = 128;
 }
 	
 Object3D::~Object3D()
 {
-	int a = 1;
+	
 }
 
 void Object3D::init()
