@@ -4,6 +4,8 @@
 #include "World.h"
 #include "BloodPSystem.h"
 
+#define MAX_SPEED_ADJUST 1.5f
+
 Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
 	: SkinnedMesh(data.filename, position, ENEMY)
 {
@@ -15,7 +17,7 @@ Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
 	mActionState = AS_IDLING;
 	mAttackTimer = 0.0f;
 	mPatrolTimer = 0.0f;
-	setSpeedAdjust(min(data.speed, 3));
+	setSpeedAdjust(min(data.speed, MAX_SPEED_ADJUST));
 	setMinimapTexture("data/enemy_icon.png");
 }
 
@@ -66,7 +68,7 @@ void Enemy::update(float dt)
 			mTargetPosition = calculateIdlePosition();
 			mActionState = AS_PATROLLING;
 			setAnimation(2);
-			setSpeedAdjust(min(mData.speed, 3));
+			setSpeedAdjust(min(mData.speed, MAX_SPEED_ADJUST));
 		}
 		mPatrolTimer = 0.0f;
 	}
@@ -95,7 +97,7 @@ void Enemy::update(float dt)
 	else
 	{
 		setAnimation(2);
-		setSpeedAdjust(min(mData.speed, 3));
+		setSpeedAdjust(min(mData.speed, MAX_SPEED_ADJUST));
 		mActionState = AS_CHASING;
 	}
 

@@ -34,6 +34,7 @@ public:
 	void getObjectsInRadius(vector<Object3D*>& objects, D3DXVECTOR3 position, float radius, ObjectType type);
 
 	void setGravity(float gravity);
+	void setFriction(float friction);
 	float getGravity();
 
 	vector<Light*>* getLights();
@@ -50,4 +51,5 @@ private:
 	Terrain*				mTerrain;
 	Sky*					mSky;
 	float					mGravity;
+	float					mFriction;
 };

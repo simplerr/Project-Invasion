@@ -195,15 +195,15 @@ int Runnable::run()
 			QueryPerformanceCounter((LARGE_INTEGER*)&currTimeStamp);
 			float dt = (currTimeStamp - prevTimeStamp)*secsPerCnt;
 				
-			//if(mDeltaSum < (float)1/60)	{
-			//	mDeltaSum += dt;
-			//}
-			//else	{
+			if(mDeltaSum < (float)1/60)	{
+				mDeltaSum += dt;
+			}
+			else	{
 				gInput->poll();
 
 				// Update everything
-				//if(mDeltaSum < .25) // FPS is capped - todo
-					update(dt);
+				if(mDeltaSum < .25) // FPS is capped - todo
+					update(mDeltaSum);
 
 				// Draw everything
 				drawAll();				
@@ -213,7 +213,7 @@ int Runnable::run()
 
 				time += mDeltaSum;
 				mDeltaSum = 0;
-			//}	
+			}	
 			// Prepare for next iteration: The current time stamp becomes the previous time stamp for the next iteration
 			prevTimeStamp = currTimeStamp;
 		}

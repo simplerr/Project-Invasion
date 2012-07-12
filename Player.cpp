@@ -14,8 +14,8 @@ Player::Player(D3DXVECTOR3 position)
 {
 	mElapsed	= 0.0f;
 	mJumping	= false;
-	mWalkAccel	= 0.1;
-	mMaxSpeed	= 1.1f;
+	mWalkAccel	= 0.5;
+	mMaxSpeed	= 30.0f;
 	mHealth = 100.0f;
 	mEnergy = 100.0f;
 	mArmor = 0.0f;
@@ -96,8 +96,7 @@ void Player::draw()
 	mWeapon->setRotation(gCamera->getDirection());
 	mWeapon->draw();
 
-	gCamera->drawDebug();
-
+	//gCamera->drawDebug();
 	//drawDebug();
 }
 
@@ -156,7 +155,7 @@ void Player::pollInput()
 	if(gInput->keyDown(VK_SPACE) && getOnGround())
 	{
 		setAnimation(0, 0.0f);
-		accelerate(0, 2.5f, 0);
+		accelerate(0, 20.5f, 0);
 		mJumping = true;
 		mElapsed = 0.0f;
 	}

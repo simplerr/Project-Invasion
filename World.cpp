@@ -24,7 +24,8 @@ World::World()
 
 	// Create the skybox.
 	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
-	setGravity(-0.13f);
+	setGravity(-1.3f);
+	setFriction(-0.08f);
 }
 	
 World::~World()
@@ -108,8 +109,7 @@ void World::update(float dt)
 		// Friction.
 		if(object->getOnGround())
 		{
-			float friction = 0.12f;
-			D3DXVECTOR3 velocity = object->getVelocity() * -friction * object->getFriction();
+			D3DXVECTOR3 velocity = object->getVelocity() * mFriction * object->getFriction();
 			object->accelerate(velocity.x, 0.0f, velocity.z);
 		}
 
@@ -405,6 +405,11 @@ Terrain* World::getTerrain()
 void World::setGravity(float gravity)
 {
 	mGravity = gravity;
+}
+
+void World::setFriction(float friction)
+{
+	mFriction = friction;
 }
 	
 float World::getGravity()
