@@ -5,7 +5,7 @@
 SkillHandler::SkillHandler()
 {
 	// Load all different skills.
-	TiXmlDocument doc("data\\skills.xml");
+	TiXmlDocument doc("data\\xml\\skills.xml");
 	doc.LoadFile();
 
 	// Get the root element

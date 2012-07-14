@@ -7,7 +7,7 @@ Bar::Bar(string barTexture, string iconTexture, float max)
 {
 	mBarTexture = gGraphics->loadTexture(barTexture);
 	mIconTexture = gGraphics->loadTexture(iconTexture);
-	mBorderTexture= gGraphics->loadTexture("data\\bar_border.bmp");
+	mBorderTexture= gGraphics->loadTexture("data\\imgs\\bar_border.bmp");
 	mMax = max;
 	mCurrent = max;
 	mWidth = 210;

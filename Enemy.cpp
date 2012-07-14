@@ -18,7 +18,7 @@ Enemy::Enemy(EnemyData data, D3DXVECTOR3 position)
 	mAttackTimer = 0.0f;
 	mPatrolTimer = 0.0f;
 	setSpeedAdjust(min(data.speed, MAX_SPEED_ADJUST));
-	setMinimapTexture("data/enemy_icon.png");
+	setMinimapTexture("data/imgs/enemy_icon.png");
 }
 
 Enemy::~Enemy()
@@ -152,7 +152,7 @@ void Enemy::attacked(float damage)
 
 	// Add blood effect.
 	BloodPSystem* bloodEffect = new BloodPSystem(getPosition(), "particle.fx", "ParticleTech", 
-	"smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 200, 0.02f);
+	"data/imgs/smoke.dds", D3DXVECTOR3(-3.0f, -9.8f, 0.0f), AABB(), 200, 0.02f);
 	bloodEffect->setLifetime(0.30f);
 	getWorld()->addObject(bloodEffect);
 }

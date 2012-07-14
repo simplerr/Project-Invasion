@@ -38,6 +38,7 @@ public:
 	float getGravity();
 
 	vector<Light*>* getLights();
+	vector<Object3D*>* getObjects();
 
 	Terrain* getTerrain();
 	Object3D* getIntersectedObject(D3DXVECTOR3 position, D3DXVECTOR3 direction, DWORD& faceIndex, float& distance);

@@ -6,7 +6,7 @@
 
 Skill::Skill(string name, World* world, Player* player)
 {
-	mDarkTexture = gGraphics->loadTexture("data\\dark.png");
+	mDarkTexture = gGraphics->loadTexture("data\\imgs\\dark.png");
 
 	mData = gSkillHandler->getData(name);
 	mWorld = world;

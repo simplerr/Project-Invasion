@@ -5,7 +5,7 @@
 
 Font::Font()
 {
-	loadFont("data\\font.bmp");
+	loadFont("data\\imgs\\font.bmp");
 	mCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?'\"-+=/\\%()<>:;";
 
 	// Load the effect

@@ -8,6 +8,9 @@
 #include "LevelHandler.h"
 #include "Game.h"
 #include "Sound.h"
+#include "PlayState.h"
+
+float vv;
 
 Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Spawner*> spawnList)
 {
@@ -67,18 +70,20 @@ void Level::update(float dt)
 		// Sound code.
 		mSoundEffectDelta += dt;
 		if(mSoundEffectDelta >= mRandomEffectDelay) {
-			gSound->setVolume(0.15);
+			float closest = closestEnemyDist();
+			float volume = min(150 / closest, 0.4);
+			vv = volume;
 			int num = rand() % 5;
 			if(num == 0)
-				gSound->playEffect("data/sound/zombie_pain1.wav");
+				gSound->playEffect("data/sound/zombie_pain1.wav", volume);
 			else if(num == 1)
-				gSound->playEffect("data/sound/zombie_pain2.wav");
+				gSound->playEffect("data/sound/zombie_pain2.wav", volume);
 			else if(num == 2)
-				gSound->playEffect("data/sound/nemesis_pain1.wav");
+				gSound->playEffect("data/sound/nemesis_pain1.wav", volume);
 			else if(num == 3)
-				gSound->playEffect("data/sound/nemesis_pain2.wav");
+				gSound->playEffect("data/sound/nemesis_pain2.wav", volume);
 			else if(num == 4)
-				gSound->playEffect("data/sound/nemesis_pain3.wav");
+				gSound->playEffect("data/sound/nemesis_pain3.wav", volume);
 
 			mSoundEffectDelta = 0;
 			mRandomEffectDelay = 0.5 + float((rand() % 101)) / 100.0f;
@@ -135,6 +140,9 @@ void Level::update(float dt)
 
 void Level::draw()
 {
+	if(PlayState::Instance()->isMenuVisible())
+		return;
+
 	mPowerupSpawner->draw();
 
 	mStatusText->draw();
@@ -150,7 +158,7 @@ void Level::draw()
 	}
 
 	int completed = mState == LEVEL_COMPLETED ? mWaveList.size() : mCurrentWave;
-	sprintf(buffer, "Waves completed: %i/%i", max(0, completed), mWaveList.size());
+	sprintf(buffer, "vol: %f Waves completed: %i/%i", vv, max(0, completed), mWaveList.size());
 	gGraphics->drawText(buffer, gGame->getScreenWidth() * 0.85, 75, RED);
 }
 
@@ -257,4 +265,22 @@ void Level::deleteSpawners()
 	}
 
 	//mSpawnList.clear();
+}
+
+float Level::closestEnemyDist()
+{
+	vector<Object3D*>* objects = mWorld->getObjects();
+	float closest = 999999;
+	for(int i = 1; i < objects->size(); i++)
+	{
+		D3DXVECTOR3 diff = mPlayer->getPosition() - objects->operator[](i)->getPosition();
+		float dist = sqrt(diff.x * diff.x + diff.z * diff.z);
+		if(dist < closest)
+			closest = dist;
+	}
+
+	if(closest == 999999)
+		return 1.0f;
+
+	return closest;
 }

@@ -96,6 +96,7 @@
     </FxCompile>
     <FxCompile>
       <ShaderModel>2.0</ShaderModel>
+      <AdditionalIncludeDirectories>data/effects/</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -229,16 +230,10 @@
     <FxCompile Include="sky.fx" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="data\enemies.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-    <Xml Include="data\levels.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-    <Xml Include="data\skills.xml" />
-    <Xml Include="data\weapons.xml">
-      <SubType>Designer</SubType>
-    </Xml>
+    <Xml Include="data\xml\enemies.xml" />
+    <Xml Include="data\xml\levels.xml" />
+    <Xml Include="data\xml\skills.xml" />
+    <Xml Include="data\xml\weapons.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -23,7 +23,7 @@ Container::Container(int x, int y , int width, int height)
 	mHeight = height;
 
 	// Load textures
-	mSkillSlot = gGraphics->loadTexture("data\\skill_slot.png");
+	mSkillSlot = gGraphics->loadTexture("data\\imgs\\skill_slot.png");
 
 	// Not visible to start with
 	hide();

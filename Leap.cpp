@@ -21,8 +21,9 @@ void Leap::update(float dt)
 	{
 		D3DXVECTOR3 diff = mPlayer->getPosition() - mStartPos;
 		mLeapedDist = sqrt(diff.x * diff.x + diff.z * diff.z);
-		if(mLeapedDist >= mData.range) {
+		if(mLeapedDist >= mData.range && mPlayer->getOnGround()) {
 			mPlayer->setFriction(1.0f);
+			mPlayer->setMaximumSpeed(10.0f);
 			mLeapedDist = -1;
 		}
 	}
@@ -37,4 +38,5 @@ void Leap::useAbility()
 	mPlayer->setFriction(0.0f);
 	mLeapedDist = 0.0f;
 	mStartPos = mPlayer->getPosition();
+	mPlayer->setMaximumSpeed(40);
 }

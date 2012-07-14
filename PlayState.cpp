@@ -40,9 +40,6 @@ void PlayState::init(Game* game)
 	mPlayer = new Player(D3DXVECTOR3(0, 2000, 5000));
 	mWorld->addObject(mPlayer);
 
-	// Load the crosshair texture.
-	mTexture = gGraphics->loadTexture("data/aim.png");
-
 	// Hide the cursor.
 	ShowCursor(false);
 
@@ -64,7 +61,6 @@ void PlayState::init(Game* game)
 	mGameOver = false;
 
 	gSound->muteMusic(true);
-	gSound->playEffect("data/sound/prepare.wav");
 }
 	
 void PlayState::cleanup()
@@ -140,16 +136,15 @@ void PlayState::draw()
 	// Draw the world.
 	mWorld->draw();
 	mActiveLevel->draw();
+
+	// Draw world from above to texture.
 	mWorld->drawToMinimap(mRenderTarget);
+
+	// Set the map texture.
+	mGui->setMapTexture(mRenderTarget->getTexture());
 
 	// Draw the Gui.
 	mGui->draw();
-
-	// Minimap and crosshair.
-	if(!getGameOver()) {
-		gGraphics->drawScreenTexture(mTexture, 600, 400, 32, 32, false);
-		gGraphics->drawScreenTexture(mRenderTarget->getTexture(), 128, 672, 230, 230);
-	}
 }
 
 void PlayState::onLostDevice()
@@ -190,6 +185,8 @@ void PlayState::limitCursor()
 
 void PlayState::setLevel(string name)
 {
+	gSound->playEffect("data/sound/prepare.wav");
+
 	// Get the new level, reset and init the new one.
 	gLevelHandler->loadLevels();
 	mActiveLevel = gLevelHandler->getLevel(name);
@@ -221,6 +218,11 @@ void PlayState::setPaused(bool paused)
 bool PlayState::getGameOver()
 {
 	return mGameOver;
+}
+
+bool PlayState::isMenuVisible()
+{
+	return mGui->isMenuVisible();
 }
 
 void PlayState::pause()

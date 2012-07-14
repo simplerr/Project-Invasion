@@ -5,7 +5,7 @@
 WeaponHandler::WeaponHandler()
 {
 	// Load all different items
-	TiXmlDocument doc("data\\weapons.xml");
+	TiXmlDocument doc("data\\xml\\weapons.xml");
 	doc.LoadFile();
 
 	// Get the root element

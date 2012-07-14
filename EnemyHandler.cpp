@@ -5,7 +5,7 @@
 EnemyHandler::EnemyHandler()
 {
 	// Load all different items
-	TiXmlDocument doc("data\\enemies.xml");
+	TiXmlDocument doc("data\\xml\\enemies.xml");
 	doc.LoadFile();
 
 	// Get the root element

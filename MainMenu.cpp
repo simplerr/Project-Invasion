@@ -17,16 +17,16 @@ void MainMenu::init(Game* game)
 	// Create the menu.
 	mMenu = new Menu("MainMenu", NavigationType::MOUSE, HOR); 
 	mMenu->setSize(880, 700, 256, 512);
-	mMenu->addMenuItem(new MenuItem("SelectLevel", "data/buttons/play_standard.png", "data/buttons/play_glow.png"));
-	mMenu->addMenuItem(new MenuItem("About", "data/buttons/about_standard.png", "data/buttons/about_glow.png"));
-	mMenu->addMenuItem(new MenuItem("Quit", "data/buttons/quit_standard.png", "data/buttons/quit_glow.png"));
+	mMenu->addMenuItem(new MenuItem("SelectLevel", "data/imgs/buttons/play_standard.png", "data/imgs/buttons/play_glow.png"));
+	mMenu->addMenuItem(new MenuItem("About", "data/imgs/buttons/about_standard.png", "data/imgs/buttons/about_glow.png"));
+	mMenu->addMenuItem(new MenuItem("Quit", "data/imgs/buttons/quit_standard.png", "data/imgs/buttons/quit_glow.png"));
 	mMenu->buildMenu(116*1.5, 50*1.5);
 	mMenu->connect(&MainMenu::menuMessage, this);
 
 	// Side menu.
 	mAboutMenu = new Menu("SideMenu", NavigationType::MOUSE, HOR); 
 	mAboutMenu->setSize(1000, 700, 256, 512);
-	MenuItem* item = new MenuItem("Back", "data/buttons/back_standard.png", "data/buttons/back_glow.png");
+	MenuItem* item = new MenuItem("Back", "data/imgs/buttons/back_standard.png", "data/imgs/buttons/back_glow.png");
 	mAboutMenu->addMenuItem(item);
 	mAboutMenu->buildMenu(116*1.5, 50*1.5);
 	mAboutMenu->connect(&MainMenu::menuMessage, this);
@@ -37,8 +37,8 @@ void MainMenu::init(Game* game)
 	mWorld->addLight(mLight); 
 	mWorld->addAmbientLight(D3DCOLOR_ARGB(200, 100, 100, 100));
 
-	mLogo = gGraphics->loadTexture("data/logo.png");
-	mAboutTexture = gGraphics->loadTexture("data/about.png");
+	mLogo = gGraphics->loadTexture("data/imgs/logo.png");
+	mAboutTexture = gGraphics->loadTexture("data/imgs/about.png");
 
 	// Set the graphics light list.
 	gGraphics->setLightList(mWorld->getLights());

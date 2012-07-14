@@ -23,9 +23,9 @@ World::World()
 	mTerrain = gTerrainManager->getTerrain("data/heightmap17_257.raw");
 
 	// Create the skybox.
-	mSky = new Sky("data/grassenvmap1024.dds", 10000.0f);
+	mSky = new Sky("data/imgs/grassenvmap1024.dds", 10000.0f);
 	setGravity(-1.3f);
-	setFriction(-0.08f);
+	setFriction(-0.18f);
 }
 	
 World::~World()
@@ -109,7 +109,9 @@ void World::update(float dt)
 		// Friction.
 		if(object->getOnGround())
 		{
-			D3DXVECTOR3 velocity = object->getVelocity() * mFriction * object->getFriction();
+			D3DXVECTOR3 norm;
+			D3DXVec3Normalize(&norm, &object->getVelocity());
+			D3DXVECTOR3 velocity = norm * mFriction * object->getFriction();//object->getVelocity()
 			object->accelerate(velocity.x, 0.0f, velocity.z);
 		}
 
@@ -391,6 +393,11 @@ void World::addLight(Light* light)
 vector<Light*>* World::getLights()
 {
 	return &mLightList;
+}
+
+vector<Object3D*>* World::getObjects()
+{
+	return &mObjectList;
 }
 
 void World::addAmbientLight(D3DXCOLOR color)

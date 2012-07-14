@@ -12,7 +12,7 @@ Object3D::Object3D(D3DXVECTOR3 position, ObjectType type)
 	setHeightOffset(30.0f);
 	setType(type);
 	setFriction(1.0f);
-	setMinimapTexture("data/white.bmp");
+	setMinimapTexture("data/imgs/white.bmp");
 	setVisible(true);
 	mAlive = true;
 	mMaterial.specularPower = 128;

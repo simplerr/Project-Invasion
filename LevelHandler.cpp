@@ -1,7 +1,7 @@
 #include "LevelHandler.h"
 #include "Spawner.h"
 
-LevelHandler::LevelHandler() : mDocument("data/levels.xml")
+LevelHandler::LevelHandler() : mDocument("data/xml/levels.xml")
 {
 	
 }
@@ -29,7 +29,7 @@ void LevelHandler::saveProgress()
 		waves->SetAttribute("completed", mLevelList[i]->getCompletedWaves());
 	}
 
-	mDocument.SaveFile("data\\levels.xml");
+	mDocument.SaveFile("data\\xml\\levels.xml");
 }
 
 void LevelHandler::loadLevels()

@@ -87,7 +87,7 @@ Game::Game(HINSTANCE hInstance, string caption, int width, int height, D3DDEVTYP
 	
 	mCurrentState	= NULL;
 	gGraphics		= new Graphics();
-	mLoadingTexture = gGraphics->loadTexture("data/loading.png");
+	mLoadingTexture = gGraphics->loadTexture("data/imgs/loading.png");
 	mInitState		= STARTUP;
 }
 

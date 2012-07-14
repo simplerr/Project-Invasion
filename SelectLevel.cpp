@@ -31,7 +31,7 @@ void SelectLevel::init(Game* game)
 
 	for(int i = 0; i < gLevelHandler->getNumLevels(); i++) {
 		string name = gLevelHandler->getLevel(i)->getName();
-		LevelItem* item = new LevelItem(name, "data/buttons/level_standard_text.png", "data/buttons/level_glow_text.png", "data/buttons/level_invalid_text.png");
+		LevelItem* item = new LevelItem(name, "data/imgs/buttons/level_standard_text.png", "data/imgs/buttons/level_glow_text.png", "data/imgs/buttons/level_invalid_text.png");
 		item->waves = gLevelHandler->getLevel(i)->getNumWaves();
 		item->completedWaves = gLevelHandler->getLevel(i)->getCompletedWaves();
 
@@ -51,7 +51,7 @@ void SelectLevel::init(Game* game)
 	// Side menu.
 	mSideMenu = new Menu("SideMenu", NavigationType::MOUSE, HOR); 
 	mSideMenu->setSize(1000, 700, 256, 512);
-	MenuItem* item = new MenuItem("MainMenu", "data/buttons/back_standard.png", "data/buttons/back_glow.png");
+	MenuItem* item = new MenuItem("MainMenu", "data/imgs/buttons/back_standard.png", "data/imgs/buttons/back_glow.png");
 	mSideMenu->addMenuItem(item);
 	mSideMenu->buildMenu(116*1.5, 50*1.5);
 	mSideMenu->connect(&SelectLevel::menuMessage, this);
@@ -65,7 +65,7 @@ void SelectLevel::init(Game* game)
 	// Set the graphics light list.
 	gGraphics->setLightList(mWorld->getLights());
 
-	mLogo = gGraphics->loadTexture("data/logo.png");
+	mLogo = gGraphics->loadTexture("data/imgs/logo.png");
 
 	// Setup the camera.
 	gCamera->setPosition(D3DXVECTOR3(0, 5000, 0));
@@ -151,7 +151,7 @@ void SelectLevel::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 LevelItem::LevelItem(string name, string standardTextureSource, string onSelectTextureSource, string inactiveTextureSource)
 	: MenuItem(name, standardTextureSource, onSelectTextureSource, inactiveTextureSource)
 {
-	checkMark = gGraphics->loadTexture("data/checkmark.png");
+	checkMark = gGraphics->loadTexture("data/imgs/checkmark.png");
 
 	numLevel = 1;
 	waves = 1;

@@ -450,16 +450,16 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="data\weapons.xml">
+    <Xml Include="data\xml\enemies.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="data\enemies.xml">
+    <Xml Include="data\xml\levels.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="data\skills.xml">
+    <Xml Include="data\xml\skills.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="data\levels.xml">
+    <Xml Include="data\xml\weapons.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

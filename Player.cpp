@@ -15,8 +15,8 @@ Player::Player(D3DXVECTOR3 position)
 {
 	mElapsed	= 0.0f;
 	mJumping	= false;
-	mWalkAccel	= 0.5;
-	mMaxSpeed	= 30.0f;
+	mWalkAccel	= 0.6;
+	mMaxSpeed	= 10.0f;
 	mHealth = 100.0f;
 	mEnergy = 100.0f;
 	mArmor = 0.0f;
@@ -27,8 +27,8 @@ Player::Player(D3DXVECTOR3 position)
 	mBoost = false;
 	mDrawModel = false;
 
-	setMinimapTexture("data/player_icon.png");
-	mRedTexture = gGraphics->loadTexture("data/red_transparent.png");
+	setMinimapTexture("data/imgs/player_icon.png");
+	mRedTexture = gGraphics->loadTexture("data/imgs/red_transparent.png");
 	mDeltaHitTime = 100;
 }
 
@@ -140,8 +140,6 @@ void Player::attacked(float damage)
 	// Dead.
 	if(mHealth <= 0) {
 		gSound->playEffect("data/sound/humiliation.wav");
-		//gCamera->setPosition(getPosition() + D3DXVECTOR3(0, 2000, 0));
-		//gCamera->setDirection(D3DXVECTOR3(0, -1, 0));
 	}
 
 	mDeltaHitTime = 0.0f;
@@ -152,18 +150,21 @@ void Player::pollInput()
 	// Movement.
 	D3DXVECTOR3 nv = mVelocity;	
 	D3DXVECTOR3 dir = gCamera->getDirection();
+	D3DXVECTOR3 right = gCamera->getRight();
 	dir.y = 0.0f;
+	right.y = 0.0f;
 
 	D3DXVec3Normalize(&dir, &dir);
+	D3DXVec3Normalize(&right, &right);
 
 	if(gInput->keyDown('W')) 
 		nv += dir * mWalkAccel;
 	if(gInput->keyDown('S')) 
 		nv += -dir * mWalkAccel;
 	if(gInput->keyDown('A')) 
-		nv += -gCamera->getRight() * mWalkAccel;
+		nv += -right * mWalkAccel;
 	if(gInput->keyDown('D')) 
-		nv += gCamera->getRight()  * mWalkAccel;
+		nv += right  * mWalkAccel;
 	if(gInput->keyDown('F')) {
 		nv += dir * mWalkAccel * 10.0f;
 		mBoost = true;
@@ -179,6 +180,12 @@ void Player::pollInput()
 	if(!mBoost) {
 		if(sqrt(nv.x * nv.x + nv.z * nv.z) < mMaxSpeed)
 			mVelocity = nv;
+		else {
+			D3DXVec3Normalize(&nv, &nv);
+			float yVel = mVelocity.y;
+			mVelocity = nv * mMaxSpeed;
+			mVelocity.y = yVel;
+		}
 	}
 	else {
 		if(sqrt(nv.x * nv.x + nv.z * nv.z) < mMaxSpeed+10.0f)
@@ -234,6 +241,11 @@ void Player::setEnergy(float energy)
 {
 	mEnergy = energy;
 	mEnergy = min(mEnergy, 100);
+}
+
+void Player::setMaximumSpeed(float speed)
+{
+	mMaxSpeed = speed;
 }
 
 int Player::getAmmo()

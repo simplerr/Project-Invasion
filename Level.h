@@ -40,6 +40,7 @@ public:
 	void setCompletedWaves(int wavesCompleted);
 	bool completedWave();
 	void deleteSpawners();
+	float closestEnemyDist();
 
 	Wave* getCurrentWave();
 	LevelState getState();

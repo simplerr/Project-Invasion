@@ -30,6 +30,7 @@ public:
 	void restartLevel();
 	void setPaused(bool paused);
 	bool getGameOver();
+	bool isMenuVisible();
 	Wave* getCurrentWave();
 
 	static PlayState* Instance() {

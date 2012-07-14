@@ -21,7 +21,7 @@ Graphics::Graphics()
 	initEffect();
 	initFonts();
 
-	mWhiteTexture = loadTexture("data/white.bmp");
+	mWhiteTexture = loadTexture("data/imgs/white.bmp");
 
 	// TESTING.. 
 	D3DVERTEXELEMENT9 elems[MAX_FVF_DECL_SIZE];
@@ -134,10 +134,10 @@ void Graphics::initEffect()
 	mhBoneTransform   = mFX->GetParameterByName(0, "gBoneTransform");
 
 	// Load textures from file - TODO: move to Terrain
-	mTex0 = loadTexture("data/grass.dds");
-	mTex1 = loadTexture("data/stone.dds");
-	mTex2 = loadTexture("data/dirt.dds");
-	mBlendMap = loadTexture("data/blendmap.jpg");
+	mTex0 = loadTexture("data/imgs/grass.dds");
+	mTex1 = loadTexture("data/imgs/stone.dds");
+	mTex2 = loadTexture("data/imgs/dirt.dds");
+	mBlendMap = loadTexture("data/imgs/blendmap.jpg");
 }
 
 void Graphics::initBuffers()

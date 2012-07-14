@@ -29,6 +29,7 @@ public:
 
 	void setArmor(float armor);
 	void setEnergy(float energy);
+	void setMaximumSpeed(float speed);
 private:
 	Weapon* mWeapon;
 	IDirect3DTexture9* mRedTexture;
