@@ -82,13 +82,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Users\Axel\Desktop\boost_1_46_1\;F:\Program Files (x86)\Visual Leak Detector\include;</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d9.lib;d3dx9d.lib;dxguid.lib;DxErr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;DxErr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
@@ -138,6 +139,7 @@
     <ClInclude Include="PowerupSpawner.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="TerrainManager.h" />
     <ClInclude Include="Runnable.h" />
     <ClInclude Include="SelectLevel.h" />
@@ -197,6 +199,7 @@
     <ClCompile Include="Powerup.cpp" />
     <ClCompile Include="PowerupSpawner.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="TerrainManager.cpp" />
     <ClCompile Include="Runnable.cpp" />
     <ClCompile Include="SelectLevel.cpp" />

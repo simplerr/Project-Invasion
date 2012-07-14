@@ -3,12 +3,13 @@
     <!-- The first level -->
     <Level>
         <Name>1</Name>
-        <Desc>:D This is the first level! Good luck and try to not die!</Desc>
+        <Desc>This is the first level! Good luck and try to not die!</Desc>
         <DifficultyAdjusts speed="0.1f" health="0.1f" damage="0.1f" />
         <SpawnPosition x="0" y="2000" z="0" />
-        <Waves completed="2">
-            <Wave enemies="20" initialEnemies="10" spawnRate="1.0f" />
-            <Wave enemies="1" initialEnemies="1" spawnRate="1.0f" />
+        <Waves completed="3">
+            <Wave enemies="5" initialEnemies="3" spawnRate="1.0f" />
+            <Wave enemies="10" initialEnemies="5" spawnRate="1.0f" />
+            <Wave enemies="15" initialEnemies="6" spawnRate="1.0f" />
         </Waves>
         <Spawns>
             <Spawn x="0" y="2000" z="0" />
@@ -19,12 +20,45 @@
     <!-- The second level -->
     <Level>
         <Name>2</Name>
-        <Desc>:D This is the second level! I see you didn&apos;t die on the last one!</Desc>
-        <DifficultyAdjusts speed="0.5f" health="0.1f" damage="0.1f" />
+        <Desc>This is the second level! I see you didn&apos;t die on the last one!</Desc>
+        <DifficultyAdjusts speed="0.1f" health="0.1f" damage="0.1f" />
         <SpawnPosition x="0" y="2000" z="0" />
         <Waves completed="2">
-            <Wave enemies="1" initialEnemies="1" spawnRate="1.0f" />
-            <Wave enemies="1" initialEnemies="1" spawnRate="1.0f" />
+            <Wave enemies="10" initialEnemies="7" spawnRate="1.0f" />
+            <Wave enemies="15" initialEnemies="8" spawnRate="1.0f" />
+            <Wave enemies="17" initialEnemies="9" spawnRate="1.0f" />
+        </Waves>
+        <Spawns>
+            <Spawn x="0" y="2000" z="0" />
+            <Spawn x="0" y="2000" z="2000" />
+            <Spawn x="0" y="2000" z="-2000" />
+        </Spawns>
+    </Level>
+    <Level>
+        <Name>3</Name>
+        <Desc>This is the third level! Good job getting this far!</Desc>
+        <DifficultyAdjusts speed="0.1f" health="0.1f" damage="0.1f" />
+        <SpawnPosition x="0" y="2000" z="0" />
+        <Waves completed="2">
+            <Wave enemies="15" initialEnemies="7" spawnRate="1.0f" />
+            <Wave enemies="20" initialEnemies="11" spawnRate="1.0f" />
+            <Wave enemies="25" initialEnemies="13" spawnRate="1.0f" />
+        </Waves>
+        <Spawns>
+            <Spawn x="0" y="2000" z="0" />
+            <Spawn x="0" y="2000" z="2000" />
+            <Spawn x="0" y="2000" z="-2000" />
+        </Spawns>
+    </Level>
+    <Level>
+        <Name>4</Name>
+        <Desc>This is the fourth and last level! You will wipe!</Desc>
+        <DifficultyAdjusts speed="0.1f" health="0.1f" damage="0.1f" />
+        <SpawnPosition x="0" y="2000" z="0" />
+        <Waves completed="2">
+            <Wave enemies="25" initialEnemies="13" spawnRate="1.0f" />
+            <Wave enemies="35" initialEnemies="17" spawnRate="1.0f" />
+            <Wave enemies="45" initialEnemies="25" spawnRate="1.0f" />
         </Waves>
         <Spawns>
             <Spawn x="0" y="2000" z="0" />

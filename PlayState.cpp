@@ -16,6 +16,7 @@
 #include "Level.h"
 #include "SelectLevel.h"
 #include "Gui.h"
+#include "Sound.h"
 
 PlayState PlayState::mPlayState;
 
@@ -61,6 +62,9 @@ void PlayState::init(Game* game)
 
 	mPaused = false;
 	mGameOver = false;
+
+	gSound->muteMusic(true);
+	gSound->playEffect("data/sound/prepare.wav");
 }
 	
 void PlayState::cleanup()
@@ -75,7 +79,7 @@ void PlayState::cleanup()
 
 void PlayState::update(double dt)
 {
-	// Toggle the menu. Player dead?
+	// Toggle the menu with ESCAPE or game over.
 	if(gInput->keyPressed(VK_ESCAPE) || (mPlayer->getHealth() <= 0 && !mGui->isMenuVisible())) {
 		mGui->toggleMenu();
 		mPaused = !mPaused;
@@ -199,6 +203,7 @@ void PlayState::setLevel(string name)
 
 void PlayState::restartLevel()
 {
+	mWorld->reset();
 	setLevel(mActiveLevel->getName());
 	mGameOver = false;
 }

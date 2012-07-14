@@ -6,6 +6,7 @@
 #include "Leap.h"
 #include "World.h"
 #include "SkillHandler.h"
+#include "Sound.h"
 
 SkillBar::SkillBar(Player* player, World* world) : Container(425, 750, 700, 110)
 {
@@ -36,8 +37,10 @@ void SkillBar::update(float dt)
 	// TODO: Check for right press with the mouse
 	// TODO: Check for right press with the mouse, e and q
 	for(int i = 0; i < mSlotList.size(); i++) {
-		if(gInput->keyPressed(49 + i) && mSlotList[i].taken)
+		if(gInput->keyPressed(49 + i) && mSlotList[i].taken) {
 			((Skill*)mSlotList[i].item)->ability();
+			gSound->playEffect("data/sound/skill_used.wav");
+		}
 	}
 }
 

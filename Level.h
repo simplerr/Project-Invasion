@@ -65,4 +65,6 @@ private:
 	int mCurrentWave;
 	int mSpawnedEnemies;
 	int mCompletedWaves;
+	float mSoundEffectDelta;
+	float mRandomEffectDelay;
 };

@@ -33,6 +33,7 @@
 #include "SkillHandler.h"
 #include "MainMenu.h"
 #include "TerrainManager.h"
+#include "Sound.h"
 #include "vld.h"
 
 //#include "F:/Users/Axel/Documents/Visual Studio 11/Memory_and_Exception_Trace/Stackwalker.h"
@@ -50,6 +51,7 @@ EnemyHandler*		gEnemyHandler	= 0;
 WeaponHandler*		gWeaponHandler	= 0;
 SkillHandler*		gSkillHandler	= 0;
 TerrainManager*		gTerrainManager	= 0;
+Sound*				gSound			= 0;
 
 
 // Use Windows 7 looking controls.
@@ -99,10 +101,12 @@ void Game::init()
 	gSkillHandler	= new SkillHandler();
 	gEnemyHandler	= new EnemyHandler();
 	gTerrainManager = new TerrainManager();
+	gSound			= new Sound();
 	gLevelHandler->loadLevels();
 	gGraphics->init();
 	
 	mGfxStats = new GfxStats();
+	gSound->setVolume(0.3f);
 
 	// Pre-load models.
 	LPD3DXFRAME root;
@@ -119,7 +123,7 @@ void Game::init()
 	changeState(MainMenu::Instance());
 	mInitState = RUNNING;
 
-	//gGame->switchScreenMode();
+	gGame->switchScreenMode();
 }
 
 //! Destructor.
@@ -137,6 +141,7 @@ Game::~Game()
 	delete gWeaponHandler;
 	delete gSkillHandler;
 	delete gTerrainManager;
+	delete gSound;
 	delete mGfxStats;
 	ReleaseCOM(gd3dDevice);
 
@@ -169,7 +174,7 @@ void Game::update(float dt)
 
 		// Update the current state.
 		mCurrentState->update(dt);
-		mGfxStats->update(dt);
+		//mGfxStats->update(dt);
 	}
 }
 	
@@ -186,7 +191,7 @@ void Game::draw()
 		mCurrentState->draw();
 
 		// Debug (very slow).
-		mGfxStats->display();
+		//mGfxStats->display();
 		//gCamera->drawDebug();
 	}
 

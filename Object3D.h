@@ -55,6 +55,7 @@ public:
 	void setWorld(World* world);
 	void setType(ObjectType type);
 	void setId(int id);
+	void setVisible(bool visible);
 	void kill();
 
 	Dimensions	getScale();
@@ -67,6 +68,7 @@ public:
 	AABB		getAABB();
 	bool		getOnGround();
 	bool		getAlive();
+	bool		getVisible();
 	float		getFriction();
 	float		getHeightOffset();
 	int			getId();
@@ -91,6 +93,7 @@ protected:
 	ObjectType			mType;
 	bool				mOnGround;
 	bool				mAlive;
+	bool				mVisible;
 	float				mHeightOffset;
 	float				mFriction;
 	int					mId;

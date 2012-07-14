@@ -154,10 +154,16 @@ void World::draw()
 
 	// Draw all the objects.
 	for(int i = 0; i < mObjectList.size(); i++) {
-		if(!mObjectList[i]->getAlive())
+		if(!mObjectList[i]->getAlive() || !mObjectList[i]->getVisible()) {
 			continue;
+			int asda = 1;
+		}
 		mObjectList[i]->draw();
 	}
+
+	/*char buffer[256];
+	sprintf(buffer, "objects: %i", mObjectList.size());
+	gGraphics->drawText(buffer, 300, 400);*/
 
 	//gGraphics->drawRay(gCamera->getPosition(), gCamera->getDirection(), 200.0f, 20.0f);
 	/*for(int i = 0; i < mLightList.size(); i++) {
@@ -238,8 +244,10 @@ void World::reset()
 			mObjectList[i] = NULL;
 			iter = mObjectList.erase(iter);	
 		}
-		else
+		else {
 			iter++;
+			i++;
+		}
 	}
 }
 

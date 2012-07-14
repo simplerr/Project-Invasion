@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "SelectLevel.h"
 #include "PlayState.h"
+#include "Sound.h"
 
 MainMenu MainMenu::mMainMenu;
 
@@ -15,11 +16,20 @@ void MainMenu::init(Game* game)
 
 	// Create the menu.
 	mMenu = new Menu("MainMenu", NavigationType::MOUSE, HOR); 
-	mMenu->setSize(1000, 700, 256, 512);
+	mMenu->setSize(880, 700, 256, 512);
 	mMenu->addMenuItem(new MenuItem("SelectLevel", "data/buttons/play_standard.png", "data/buttons/play_glow.png"));
+	mMenu->addMenuItem(new MenuItem("About", "data/buttons/about_standard.png", "data/buttons/about_glow.png"));
 	mMenu->addMenuItem(new MenuItem("Quit", "data/buttons/quit_standard.png", "data/buttons/quit_glow.png"));
 	mMenu->buildMenu(116*1.5, 50*1.5);
 	mMenu->connect(&MainMenu::menuMessage, this);
+
+	// Side menu.
+	mAboutMenu = new Menu("SideMenu", NavigationType::MOUSE, HOR); 
+	mAboutMenu->setSize(1000, 700, 256, 512);
+	MenuItem* item = new MenuItem("Back", "data/buttons/back_standard.png", "data/buttons/back_glow.png");
+	mAboutMenu->addMenuItem(item);
+	mAboutMenu->buildMenu(116*1.5, 50*1.5);
+	mAboutMenu->connect(&MainMenu::menuMessage, this);
 
 	// Create the world.
 	mWorld = new World();
@@ -28,6 +38,7 @@ void MainMenu::init(Game* game)
 	mWorld->addAmbientLight(D3DCOLOR_ARGB(200, 100, 100, 100));
 
 	mLogo = gGraphics->loadTexture("data/logo.png");
+	mAboutTexture = gGraphics->loadTexture("data/about.png");
 
 	// Set the graphics light list.
 	gGraphics->setLightList(mWorld->getLights());
@@ -37,6 +48,12 @@ void MainMenu::init(Game* game)
 	gCamera->setDirection(D3DXVECTOR3(0, -0.6, 0.4));
 
 	ShowCursor(true);
+
+	gSound->muteMusic(false);
+	gSound->playMusic("data/sound/menu_loop.wav", true, 0);
+	gSound->setVolume(0.15f);
+
+	mShowingAbout = false;
 }
 	
 void MainMenu::cleanup()
@@ -47,9 +64,15 @@ void MainMenu::cleanup()
 
 void MainMenu::update(double dt)
 {
-	mMenu->update(gInput->mousePosition());
+	if(gInput->keyPressed(VK_ESCAPE))
+		mShowingAbout = false;
+
+	if(!mShowingAbout)
+		mMenu->update(gInput->mousePosition());
+	else
+		mAboutMenu->update(gInput->mousePosition());
+
 	gCamera->rotate(0, 0.001);
-	//gCamera->rotate();
 	gCamera->updateView();
 
 	// Spot light in the looking direction.
@@ -62,7 +85,13 @@ void MainMenu::draw()
 {
 	mWorld->draw();
 	gGraphics->drawScreenTexture(mLogo, 600, 125, 610*1.2, 93*1.2);
-	mMenu->draw();
+
+	if(!mShowingAbout)
+		mMenu->draw();
+	else {
+		mAboutMenu->draw();
+		gGraphics->drawScreenTexture(mAboutTexture, 600, 400, 356, 356);
+	}
 }
 
 void MainMenu::onLostDevice()
@@ -91,6 +120,10 @@ bool MainMenu::menuMessage(string message)
 		changeState(SelectLevel::Instance());
 	else if(message == "Quit") 
 		SendMessage(gGame->getMainWnd(), WM_CLOSE, 0, 0);
+	else if(message == "About") 
+		mShowingAbout = true;
+	else if(message == "Back")
+		mShowingAbout = false;
 	else
 		return true;
 

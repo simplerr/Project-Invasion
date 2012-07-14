@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "LevelHandler.h"
 #include "Game.h"
+#include "Sound.h"
 
 Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Spawner*> spawnList)
 {
@@ -19,6 +20,9 @@ Level::Level(string name, string description, D3DXVECTOR3 playerSpawn, vector<Sp
 	mSpawnedEnemies = 0;
 	mStatusText = new StatusText("nothing", 0.3 * gGame->getScreenWidth(), 0.3 * gGame->getScreenHeight(), 0.0f);
 	mPowerupSpawner = NULL;
+
+	mSoundEffectDelta = 0.0f;
+	mRandomEffectDelay = 1.0f;
 }
 	
 Level::~Level()
@@ -58,6 +62,29 @@ void Level::init(World* world, Player* player)
 
 void Level::update(float dt)
 {
+	if(mState == PLAYING)
+	{
+		// Sound code.
+		mSoundEffectDelta += dt;
+		if(mSoundEffectDelta >= mRandomEffectDelay) {
+			gSound->setVolume(0.15);
+			int num = rand() % 5;
+			if(num == 0)
+				gSound->playEffect("data/sound/zombie_pain1.wav");
+			else if(num == 1)
+				gSound->playEffect("data/sound/zombie_pain2.wav");
+			else if(num == 2)
+				gSound->playEffect("data/sound/nemesis_pain1.wav");
+			else if(num == 3)
+				gSound->playEffect("data/sound/nemesis_pain2.wav");
+			else if(num == 4)
+				gSound->playEffect("data/sound/nemesis_pain3.wav");
+
+			mSoundEffectDelta = 0;
+			mRandomEffectDelay = 0.5 + float((rand() % 101)) / 100.0f;
+		}
+	}
+
 	mPowerupSpawner->update(dt);
 
 	mSpawnDelta += dt;
@@ -94,6 +121,7 @@ void Level::update(float dt)
 			}
 			// Last wave.
 			else if(mCurrentWave > mWaveList.size() - 2) {
+				gLevelHandler->saveProgress();
 				setState(LEVEL_COMPLETED, 2000.0f);
 
 				if(atoi(getName().c_str()) < gLevelHandler->getNumLevels())
@@ -141,6 +169,7 @@ void Level::launchNextWave()
 	spawnEnemies(mWaveList[mCurrentWave]->getInitialEnemies());
 
 	mPlayer->reset();
+	gSound->playEffect("data/sound/prepare2.wav");
 }
 
 void Level::spawnEnemies(int enemies)

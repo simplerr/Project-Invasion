@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "Vector.h"
 #include "Game.h"
+#include "Sound.h"
 
 MenuItem::MenuItem(string name, string standardTextureSource, string onSelectTextureSource, string inactiveTextureSource)
 {
@@ -128,6 +129,7 @@ bool Menu::update(Vector mousePos)
 			{
 				item->state = SELECTED;
 				if(gInput->keyPressed(VK_LBUTTON) && item->pressable)	{
+					gSound->playEffect("data/sound/button.wav");
 					if(!callback(item->itemName))
 						return false;
 				}		

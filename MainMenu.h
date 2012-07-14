@@ -31,7 +31,10 @@ protected:
 private:
 	static MainMenu mMainMenu;
 	IDirect3DTexture9*	mLogo;
+	IDirect3DTexture9*  mAboutTexture;
 	Menu* mMenu;
+	Menu* mAboutMenu;
 	World* mWorld;
 	Light* mLight;
+	bool mShowingAbout;
 };	// Class

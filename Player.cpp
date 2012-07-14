@@ -8,6 +8,7 @@
 #include "Skill.h"
 #include "Leap.h"
 #include "IronArmor.h"
+#include "Sound.h"
 
 Player::Player(D3DXVECTOR3 position) 
 	: SkinnedMesh("data/models/smith/smith.x", position, PLAYER)
@@ -24,8 +25,11 @@ Player::Player(D3DXVECTOR3 position)
 	setSpeedAdjust(3.2f);
 	setHeightOffset(100.0f);
 	mBoost = false;
+	mDrawModel = false;
 
 	setMinimapTexture("data/player_icon.png");
+	mRedTexture = gGraphics->loadTexture("data/red_transparent.png");
+	mDeltaHitTime = 100;
 }
 
 Player::~Player()
@@ -44,6 +48,8 @@ void Player::init()
 
 void Player::update(float dt)
 {
+	mDeltaHitTime += dt;
+
 	// Walking or running.
 	if(getVelocity().x != 0 || getVelocity().y != 0 && getOnGround()) {
 		float speed = sqrt(	getVelocity().x * getVelocity().x + getVelocity().z * getVelocity().z);
@@ -88,13 +94,21 @@ void Player::draw()
 	// Update the view matrix of the camera.
 	//gCamera->updateView();
 
-	//SkinnedMesh::draw();
+	if(mDrawModel)
+		SkinnedMesh::draw();
+
 	D3DXVECTOR3 knifePos = gCamera->getPosition();
 	knifePos += gCamera->getDirection() * 15.0f;
 
 	mWeapon->setPosition(knifePos);
 	mWeapon->setRotation(gCamera->getDirection());
-	mWeapon->draw();
+
+	// Don't draw weapon if dead.
+	if(mWeapon->getVisible())
+		mWeapon->draw();
+
+	if(mDeltaHitTime < 0.17f)
+		gGraphics->drawScreenTexture(mRedTexture, 600, 400, 1200, 800);
 
 	//gCamera->drawDebug();
 	//drawDebug();
@@ -105,18 +119,38 @@ void Player::reset()
 	mEnergy = 100.0f;
 	mHealth = 100.0f;
 	mWeapon->setAmmo(100);
+	mWeapon->setVisible(true);
+	mDeltaHitTime = 99;
+	mDrawModel = false;
 }
 
 void Player::attacked(float damage)
 {
 	mHealth -= max(damage - mArmor, 0);
 	mHealth = max(0, mHealth);
+
+	int num = rand() % 3;
+	if(num == 0)
+		gSound->playEffect("data/sound/hit1.wav", 0.9f);
+	if(num == 1)
+		gSound->playEffect("data/sound/hit2.wav", 0.9f);
+	if(num == 2)
+		gSound->playEffect("data/sound/hit3.wav", 0.9f);
+
+	// Dead.
+	if(mHealth <= 0) {
+		gSound->playEffect("data/sound/humiliation.wav");
+		//gCamera->setPosition(getPosition() + D3DXVECTOR3(0, 2000, 0));
+		//gCamera->setDirection(D3DXVECTOR3(0, -1, 0));
+	}
+
+	mDeltaHitTime = 0.0f;
 }
 
 void Player::pollInput()
 {
 	// Movement.
-	D3DXVECTOR3 nv = mVelocity;
+	D3DXVECTOR3 nv = mVelocity;	
 	D3DXVECTOR3 dir = gCamera->getDirection();
 	dir.y = 0.0f;
 
@@ -220,6 +254,12 @@ int Player::getEnergy()
 void Player::useEnergy(int usedEnergy)
 {
 	mEnergy -=  usedEnergy;
-
 	mEnergy = max(mEnergy, 0);
+}
+
+void Player::toggleWeapon()
+{
+	mWeapon->setVisible(!mWeapon->getVisible());
+	mDrawModel = !mDrawModel;
+	setAnimation(2);
 }

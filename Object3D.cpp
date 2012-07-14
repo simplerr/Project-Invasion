@@ -13,6 +13,7 @@ Object3D::Object3D(D3DXVECTOR3 position, ObjectType type)
 	setType(type);
 	setFriction(1.0f);
 	setMinimapTexture("data/white.bmp");
+	setVisible(true);
 	mAlive = true;
 	mMaterial.specularPower = 128;
 }
@@ -125,6 +126,11 @@ void Object3D::setId(int id)
 	mId = id;
 }
 
+void Object3D::setVisible(bool visible)
+{
+	mVisible = visible;
+}
+
 D3DXVECTOR3 Object3D::getPosition()
 {
 	return mPosition;
@@ -133,6 +139,11 @@ D3DXVECTOR3 Object3D::getPosition()
 D3DXVECTOR3 Object3D::getVelocity()
 {
 	return mVelocity;
+}
+
+bool Object3D::getVisible()
+{
+	return mVisible;
 }
 
 Dimensions Object3D::getScale()

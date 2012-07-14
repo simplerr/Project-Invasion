@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "World.h"
 #include "Graphics.h"
+#include "Sound.h"
 
 Weapon::Weapon(WeaponData data, D3DXVECTOR3 position)
 	: SkinnedMesh(data.filename, position, WEAPON)
@@ -59,6 +60,8 @@ void Weapon::triggerDown()
 
 		mDeltaTime = 0.0f;
 		mAmmo--;
+		gSound->setVolume(0.15f);
+		gSound->playEffect("data/sound/mp5.wav");
 	}
 	else if(getAmmo() <= 0) {
 		setAnimation(5);
@@ -83,6 +86,7 @@ void Weapon::reload()
 		setAnimation(3, 0.0f);
 		mReloadElapsed = 0.0f;
 		mRealoading = true;
+		gSound->playEffect("data/sound/mp5_reload.wav");
 	}
 }
 

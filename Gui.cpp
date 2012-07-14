@@ -116,6 +116,13 @@ bool Gui::menuMessage(string message)
 void Gui::toggleMenu()
 {
 	mMenu->setVisible(!mMenu->getVisible());
+
+	if(mMenu->getVisible()) {
+		gCamera->setPosition(mPlayer->getPosition() + D3DXVECTOR3(0, 1000, 0));
+		gCamera->setDirection(D3DXVECTOR3(0, -1, 0));
+	}
+
+	mPlayer->toggleWeapon();
 }
 
 bool Gui::isMenuVisible()

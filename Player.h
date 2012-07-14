@@ -24,18 +24,22 @@ public:
 	int getHealth();
 	int getEnergy();
 
+	void toggleWeapon();
 	void useEnergy(int usedEnergy);
 
 	void setArmor(float armor);
 	void setEnergy(float energy);
 private:
 	Weapon* mWeapon;
+	IDirect3DTexture9* mRedTexture;
 	float	mElapsed;
 	bool	mJumping;
 	bool	mBoost;
+	bool	mDrawModel;
 	float	mWalkAccel;
 	float	mMaxSpeed;
 	float	mHealth;
 	float	mArmor;
 	float	mEnergy;
+	float	mDeltaHitTime;
 };
